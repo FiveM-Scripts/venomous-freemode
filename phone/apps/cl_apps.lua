@@ -1,22 +1,22 @@
-App = {
+Apps = {
     ["main"] = AppMain
 
 }
 
-function App.Start(app)
-    App.CurrentApp = App[app]
-    if App.CurrentApp and App.CurrentApp.Init then
-        App.CurrentApp.Init()
+function Apps.Start(app)
+    Apps.CurrentApp = Apps[app]
+    if Apps.CurrentApp and Apps.CurrentApp.Init then
+        Apps.CurrentApp.Init()
     end
 end
 
-function App.Kill()
-    if App.CurrentApp then
-        if App.CurrentApp == App["main"] then
-            App.CurrentApp = nil
+function Apps.Kill()
+    if Apps.CurrentApp then
+        if Apps.CurrentApp == Apps["main"] then
+            Apps.CurrentApp = nil
             Phone.Kill()
         else
-            App.Start("main")
+            Apps.Start("main")
         end
     end
 end
@@ -25,8 +25,8 @@ Citizen.CreateThread(function()
     while true do
         Wait(0)
 
-        if App.CurrentApp and App.CurrentApp.Tick then
-            App.CurrentApp.Tick()
+        if Apps.CurrentApp and Apps.CurrentApp.Tick then
+            Apps.CurrentApp.Tick()
         end
     end
 end)
