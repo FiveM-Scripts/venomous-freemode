@@ -41,11 +41,7 @@ Citizen.CreateThread(function()
             SetTextRenderId(1)
             
             if IsControlJustPressed(0, 202) then
-                PlaySoundFrontend(-1, "Hang_Up", "Phone_SoundSet_Michael")
-                SetScaleformMovieAsNoLongerNeeded(Phone.Scaleform)
-                Phone.Scaleform = nil
-                Phone.Visible = false
-                DestroyMobilePhone()
+                Phone.Kill()
             end
         elseif IsControlJustPressed(0, 300) then
             PlaySoundFrontend(-1, "Pull_Out", "Phone_SoundSet_Default")
@@ -57,6 +53,7 @@ Citizen.CreateThread(function()
             Phone.Visible = true
             SetMobilePhoneScale(285.0)
             CreateMobilePhone(0)
+            App.Start("main")
         end
 
         --[[for i = 0, 1000 do
@@ -66,3 +63,12 @@ Citizen.CreateThread(function()
         end]]--
     end
 end)
+
+function Phone.Kill()
+    PlaySoundFrontend(-1, "Hang_Up", "Phone_SoundSet_Michael")
+    App.Kill()
+    SetScaleformMovieAsNoLongerNeeded(Phone.Scaleform)
+    Phone.Scaleform = nil
+    Phone.Visible = false
+    DestroyMobilePhone()
+end
