@@ -40,8 +40,8 @@ Citizen.CreateThread(function()
 			DrawScaleformMovie(Phone.Scaleform, 0.0998, 0.1775, 0.1983, 0.364, 255, 255, 255, 255);
             SetTextRenderId(1)
             
-            if IsControlJustPressed(0, 202) and (not Apps.CurrentApp or not Apps.CurrentApp.OverrideBack) then
-                Phone.Kill()
+            if IsControlJustPressed(0, 202) and not Apps.CurrentApp.OverrideBack then
+                Apps.Kill()
             end
         elseif IsControlJustPressed(0, 300) then
             PlaySoundFrontend(-1, "Pull_Out", "Phone_SoundSet_Default")
@@ -53,7 +53,7 @@ Citizen.CreateThread(function()
             Phone.Visible = true
             SetMobilePhoneScale(285.0)
             CreateMobilePhone(0)
-            Apps.Start("main")
+            Apps.Start("Main")
         end
 
         --[[for i = 0, 1000 do
@@ -65,7 +65,6 @@ Citizen.CreateThread(function()
 end)
 
 function Phone.Kill()
-    PlaySoundFrontend(-1, "Hang_Up", "Phone_SoundSet_Michael")
     Apps.Kill()
     SetScaleformMovieAsNoLongerNeeded(Phone.Scaleform)
     Phone.Scaleform = nil

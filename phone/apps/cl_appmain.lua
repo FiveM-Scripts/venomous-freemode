@@ -51,6 +51,8 @@ function AppMain.Tick()
             if selectedItem < 0 then
                 selectedItem = 8
             end
+        elseif IsControlJustPressed(0, 255) then
+            Apps.Start(selectedItem + 1)
         else
             navigated = false
         end

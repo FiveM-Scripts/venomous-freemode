@@ -1,6 +1,6 @@
 Apps = {
-    ["main"] = AppMain
-
+    ["Main"] = AppMain,
+    AppSettings
 }
 
 function Apps.Start(app)
@@ -12,11 +12,12 @@ end
 
 function Apps.Kill()
     if Apps.CurrentApp then
-        if Apps.CurrentApp == Apps["main"] then
+        PlaySoundFrontend(-1, "Hang_Up", "Phone_SoundSet_Michael")
+        if Apps.CurrentApp == Apps["Main"] then
             Apps.CurrentApp = nil
             Phone.Kill()
         else
-            Apps.Start("main")
+            Apps.Start("Main")
         end
     end
 end
