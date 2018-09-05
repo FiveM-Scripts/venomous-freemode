@@ -26,7 +26,7 @@ function AppMain.Tick()
         if Apps[i] and Apps[i].AppName then
             PushScaleformMovieFunctionParameterString(Apps[i].AppName)
         else
-            PushScaleformMovieFunctionParameterString()
+            PushScaleformMovieFunctionParameterString("")
         end
         PopScaleformMovieFunctionVoid()
 
