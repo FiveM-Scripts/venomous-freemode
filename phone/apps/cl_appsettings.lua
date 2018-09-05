@@ -1,5 +1,5 @@
 AppSettings = {
-    AppSettings = "Settings",
+    AppName = "Settings",
     AppIcon = 24
 }
 
