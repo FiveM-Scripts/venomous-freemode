@@ -30,6 +30,7 @@ function AppMain.Tick()
         end
         PopScaleformMovieFunctionVoid()
 
+        local navigated = true
         if IsControlJustPressed(0, 300) then
             selectedItem = selectedItem - 3
 			if selectedItem < 0 then
@@ -37,7 +38,7 @@ function AppMain.Tick()
             end
         elseif IsControlJustPressed(0, 299) then
             selectedItem = selectedItem + 3
-			if selectedItem > 9 then
+			if selectedItem > 8 then
                 selectedItem = selectedItem - 9
             end
         elseif IsControlJustPressed(0, 307) then
@@ -50,6 +51,11 @@ function AppMain.Tick()
             if selectedItem < 0 then
                 selectedItem = 8
             end
+        else
+            navigated = false
+        end
+        if navigated then
+            PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Default")
         end
     end
 end
