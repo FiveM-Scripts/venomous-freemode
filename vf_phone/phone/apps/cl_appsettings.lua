@@ -198,7 +198,7 @@ function AppSettings.Tick()
             currentSubSettingMenu = nil
             selectedItem = 0
         else
-            navigated = false
+            navigated = false -- don't play duplicate sound
             Apps.Kill()
         end
     else
