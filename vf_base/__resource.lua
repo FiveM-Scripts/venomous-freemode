@@ -5,17 +5,17 @@ resource_version '1.0'
 dependencies {'mysql-async', 'NativeUI'}
 
 client_scripts {
-    'vf_base/config/freemode.lua',
-    'vf_base/config/spawn.lua',
-    'vf_base/utils/player.lua',
-    'vf_base/utils/screens.lua',
-    'vf_base/client/character.lua',
-	'vf_base/client/spawn.lua',
+    'config/freemode.lua',
+    'config/spawn.lua',
+    'utils/player.lua',
+    'utils/screens.lua',
+    'client/character.lua',
+    'client/spawn.lua',
 }
 
 server_scripts {
     '@mysql-async/lib/MySQL.lua',
-    'vf_base/config/freemode.lua',
-    'vf_base/server/database.lua',
-    'vf_base/server/general.lua'
+    'config/freemode.lua',
+    'server/database.lua',
+    'server/general.lua'
 }
