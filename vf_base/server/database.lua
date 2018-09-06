@@ -1,0 +1,1 @@
+-- Todo: create the database tables automatically to speed up the installation process.
