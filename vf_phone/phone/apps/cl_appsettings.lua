@@ -100,6 +100,25 @@ local settings = {
                 end
             }
         }
+    },
+    {
+        SettingName = "Sleep Mode",
+        SettingIcon = 26,
+        Items = {
+            {
+                ItemName = "On",
+                OnSelect = function()
+                    Phone.SleepMode = true
+                end
+            },
+            {
+                ItemName = "Off",
+                ItemIcon = 1,
+                OnSelect = function()
+                    Phone.SleepMode = false
+                end
+            }
+        }
     }
 }
 local selectedItem
@@ -165,9 +184,9 @@ function AppSettings.Tick()
             selectedItem = 0
         end
     elseif IsControlJustPressed(0, 255) then
-        if currentSubSettingMenu then
+        if currentSubSettingMenu and currentSubSettingMenu.Items[selectedItem + 1].OnSelect then
             currentSubSettingMenu.Items[selectedItem + 1].OnSelect()
-        else
+        elseif settings[selectedItem + 1] then
             currentSubSettingMenu = settings[selectedItem + 1]
             selectedItem = 0
         end

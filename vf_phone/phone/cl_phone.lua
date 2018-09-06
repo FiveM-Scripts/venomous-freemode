@@ -1,7 +1,8 @@
 Phone = {
     Visible = false,
     Theme = 5,
-    Wallpaper = 11
+    Wallpaper = 11,
+    SleepMode = false
 }
 local wasBackOverridenByApp = false -- To stop duplicate back input when backing from app with back key overriden
 
@@ -23,7 +24,7 @@ Citizen.CreateThread(function()
             PopScaleformMovieFunctionVoid()
 
             PushScaleformMovieFunction(Phone.Scaleform, "SET_SLEEP_MODE")
-            PushScaleformMovieFunctionParameterBool(false)
+            PushScaleformMovieFunctionParameterBool(Phone.SleepMode)
             PopScaleformMovieFunctionVoid()
 
             PushScaleformMovieFunction(Phone.Scaleform, "SET_THEME")
