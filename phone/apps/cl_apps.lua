@@ -4,9 +4,11 @@ Apps = {
 }
 
 function Apps.Start(app)
-    Apps.CurrentApp = Apps[app]
-    if Apps.CurrentApp and Apps.CurrentApp.Init then
-        Apps.CurrentApp.Init()
+    if Apps[app] then
+        Apps.CurrentApp = Apps[app]
+        if Apps.CurrentApp.Init then
+            Apps.CurrentApp.Init()
+        end
     end
 end
 
