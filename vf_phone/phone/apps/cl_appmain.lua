@@ -1,8 +1,8 @@
 AppMain = {}
-local selectedItem
+local selectedItem = 4
 
 function AppMain.Init()
-    selectedItem = 4
+    
 end
 
 function AppMain.Tick()

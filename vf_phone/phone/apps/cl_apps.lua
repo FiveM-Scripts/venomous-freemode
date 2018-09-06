@@ -14,8 +14,8 @@ end
 
 function Apps.Kill()
     if Apps.CurrentApp then
-        PlaySoundFrontend(-1, "Hang_Up", "Phone_SoundSet_Michael")
         if Apps.CurrentApp == Apps["Main"] then
+            PlaySoundFrontend(-1, "Hang_Up", "Phone_SoundSet_Michael")
             Apps.CurrentApp = nil
             Phone.Kill()
         else

@@ -1,6 +1,9 @@
 Phone = {
-    Visible = false
+    Visible = false,
+    Theme = 5,
+    Wallpaper = 11
 }
+local wasBackOverridenByApp = false -- To stop duplicate back input when backing from app with back key overriden
 
 Citizen.CreateThread(function()
     while true do
@@ -23,16 +26,20 @@ Citizen.CreateThread(function()
             PushScaleformMovieFunctionParameterBool(false)
             PopScaleformMovieFunctionVoid()
 
-            PushScaleformMovieFunction(Phone.Scaleform, "SET_BACKGROUND_IMAGE")
-            PushScaleformMovieFunctionParameterInt(5)
+            PushScaleformMovieFunction(Phone.Scaleform, "SET_THEME")
+            PushScaleformMovieFunctionParameterInt(Phone.Theme)
             PopScaleformMovieFunctionVoid()
 
-            PushScaleformMovieFunction(Phone.Scaleform, "SET_THEME")
-            PushScaleformMovieFunctionParameterInt(5)
+            PushScaleformMovieFunction(Phone.Scaleform, "SET_BACKGROUND_IMAGE")
+            PushScaleformMovieFunctionParameterInt(Phone.Wallpaper)
             PopScaleformMovieFunctionVoid()
 
             PushScaleformMovieFunction(Phone.Scaleform, "SET_SIGNAL_STRENGTH")
             PushScaleformMovieFunctionParameterInt(GetZoneScumminess(GetZoneAtCoords(GetEntityCoords(PlayerPedId()))))
+            PopScaleformMovieFunctionVoid()
+
+            PushScaleformMovieFunction(Phone.Scaleform, "SET_DATA_SLOT_EMPTY")
+            PushScaleformMovieFunctionParameterInt(13)
             PopScaleformMovieFunctionVoid()
 
             local renderID = GetMobilePhoneRenderId()
@@ -40,8 +47,14 @@ Citizen.CreateThread(function()
 			DrawScaleformMovie(Phone.Scaleform, 0.0998, 0.1775, 0.1983, 0.364, 255, 255, 255, 255);
             SetTextRenderId(1)
             
-            if IsControlJustPressed(0, 202) and not Apps.CurrentApp.OverrideBack then
-                Apps.Kill()
+            if Apps.CurrentApp.OverrideBack then
+                wasBackOverridenByApp = true
+            elseif IsControlJustPressed(0, 202) then
+                if wasBackOverridenByApp then
+                    wasBackOverridenByApp = false
+                else
+                    Apps.Kill()
+                end
             end
         elseif IsControlJustPressed(0, 300) then
             PlaySoundFrontend(-1, "Pull_Out", "Phone_SoundSet_Default")
@@ -71,3 +84,6 @@ function Phone.Kill()
     Phone.Visible = false
     DestroyMobilePhone()
 end
+
+--TriggerMusicEvent("MP_MC_CMH_SUB_PREP_START")
+--TriggerMusicEvent("MP_MC_ACTION_HFIN")
