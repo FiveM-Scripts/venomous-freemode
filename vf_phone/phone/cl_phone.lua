@@ -85,6 +85,3 @@ function Phone.Kill()
     Phone.Visible = false
     DestroyMobilePhone()
 end
-
---TriggerMusicEvent("MP_MC_CMH_SUB_PREP_START")
---TriggerMusicEvent("MP_MC_ACTION_HFIN")
