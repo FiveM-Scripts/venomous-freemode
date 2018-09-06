@@ -7,4 +7,4 @@ A freemode gamemode fully written from scratch. It's aiming for modularity by sp
 This allows you to remove parts at your will, add custom extensions without conflicting resources and even use single parts outside of the gamemode.
 
 ## Changelog    
-All notable changes to this project will be documented [here](https://github.com/FiveM-Scripts/venomous-freemode/CHANGELOG.md).
+All notable changes to this project will be documented [here](CHANGELOG.md).
