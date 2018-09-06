@@ -1,6 +1,10 @@
 Phone = {
-    Visible = false
+    Visible = false,
+    Theme = 5,
+    Wallpaper = 11,
+    SleepMode = false
 }
+local wasBackOverridenByApp = false -- To stop duplicate back input when backing from app with back key overriden
 
 Citizen.CreateThread(function()
     while true do
@@ -20,15 +24,15 @@ Citizen.CreateThread(function()
             PopScaleformMovieFunctionVoid()
 
             PushScaleformMovieFunction(Phone.Scaleform, "SET_SLEEP_MODE")
-            PushScaleformMovieFunctionParameterBool(false)
-            PopScaleformMovieFunctionVoid()
-
-            PushScaleformMovieFunction(Phone.Scaleform, "SET_BACKGROUND_IMAGE")
-            PushScaleformMovieFunctionParameterInt(5)
+            PushScaleformMovieFunctionParameterBool(Phone.SleepMode)
             PopScaleformMovieFunctionVoid()
 
             PushScaleformMovieFunction(Phone.Scaleform, "SET_THEME")
-            PushScaleformMovieFunctionParameterInt(5)
+            PushScaleformMovieFunctionParameterInt(Phone.Theme)
+            PopScaleformMovieFunctionVoid()
+
+            PushScaleformMovieFunction(Phone.Scaleform, "SET_BACKGROUND_IMAGE")
+            PushScaleformMovieFunctionParameterInt(Phone.Wallpaper)
             PopScaleformMovieFunctionVoid()
 
             PushScaleformMovieFunction(Phone.Scaleform, "SET_SIGNAL_STRENGTH")
@@ -40,8 +44,14 @@ Citizen.CreateThread(function()
 			DrawScaleformMovie(Phone.Scaleform, 0.0998, 0.1775, 0.1983, 0.364, 255, 255, 255, 255);
             SetTextRenderId(1)
             
-            if IsControlJustPressed(0, 202) and not Apps.CurrentApp.OverrideBack then
-                Apps.Kill()
+            if Apps.CurrentApp.OverrideBack then
+                wasBackOverridenByApp = true
+            elseif IsControlJustPressed(0, 202) then
+                if wasBackOverridenByApp then
+                    wasBackOverridenByApp = false
+                else
+                    Apps.Kill()
+                end
             end
         elseif IsControlJustPressed(0, 300) then
             PlaySoundFrontend(-1, "Pull_Out", "Phone_SoundSet_Default")

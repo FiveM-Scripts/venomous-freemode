@@ -1,9 +1,5 @@
 AppMain = {}
-local selectedItem
-
-function AppMain.Init()
-    selectedItem = 4
-end
+local selectedItem = 4
 
 function AppMain.Tick()
     for i = 1, 10 do
