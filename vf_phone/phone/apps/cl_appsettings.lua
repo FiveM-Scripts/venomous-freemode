@@ -130,8 +130,11 @@ function AppSettings.Init()
 end
 
 function AppSettings.Tick()
-    local i = 0
+    PushScaleformMovieFunction(Phone.Scaleform, "SET_DATA_SLOT_EMPTY")
+    PushScaleformMovieFunctionParameterInt(13)
+    PopScaleformMovieFunctionVoid()
 
+    local i = 0
     if currentSubSettingMenu then
         for _, item in ipairs(currentSubSettingMenu.Items) do
             PushScaleformMovieFunction(Phone.Scaleform, "SET_DATA_SLOT")
@@ -195,6 +198,7 @@ function AppSettings.Tick()
             currentSubSettingMenu = nil
             selectedItem = 0
         else
+            navigated = false
             Apps.Kill()
         end
     else

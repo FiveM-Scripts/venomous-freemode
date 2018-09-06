@@ -1,10 +1,6 @@
 AppMain = {}
 local selectedItem = 4
 
-function AppMain.Init()
-    
-end
-
 function AppMain.Tick()
     for i = 1, 10 do
         PushScaleformMovieFunction(Phone.Scaleform, "SET_DATA_SLOT")

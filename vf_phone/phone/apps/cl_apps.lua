@@ -1,5 +1,6 @@
 Apps = {
     ["Main"] = AppMain,
+    AppPlayerlist,
     AppSettings
 }
 
@@ -19,6 +20,7 @@ function Apps.Kill()
             Apps.CurrentApp = nil
             Phone.Kill()
         else
+            PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Default")
             Apps.Start("Main")
         end
     end

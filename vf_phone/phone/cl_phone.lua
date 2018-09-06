@@ -39,10 +39,6 @@ Citizen.CreateThread(function()
             PushScaleformMovieFunctionParameterInt(GetZoneScumminess(GetZoneAtCoords(GetEntityCoords(PlayerPedId()))))
             PopScaleformMovieFunctionVoid()
 
-            PushScaleformMovieFunction(Phone.Scaleform, "SET_DATA_SLOT_EMPTY")
-            PushScaleformMovieFunctionParameterInt(13)
-            PopScaleformMovieFunctionVoid()
-
             local renderID = GetMobilePhoneRenderId()
 			SetTextRenderId(renderId)
 			DrawScaleformMovie(Phone.Scaleform, 0.0998, 0.1775, 0.1983, 0.364, 255, 255, 255, 255);
