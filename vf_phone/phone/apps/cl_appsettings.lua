@@ -178,7 +178,7 @@ function AppSettings.Tick()
             end
         end
     elseif IsControlJustPressed(0, 299) then
-        if selectedItem < #settings - 1 or (currentSubSettingMenu and selectedItem < #currentSubSettingMenu.Items - 1) then
+        if (not currentSubSettingMenu and selectedItem < #settings - 1) or (currentSubSettingMenu and selectedItem < #currentSubSettingMenu.Items - 1) then
             selectedItem = selectedItem + 1
         else
             selectedItem = 0
