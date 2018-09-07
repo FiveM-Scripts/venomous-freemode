@@ -41,7 +41,6 @@ AddEventHandler('playerSpawned', function(spawn)
 		showLoadingPromt("PCARD_JOIN_GAME", 8000)		
 		Citizen.Wait(8000)
 		TriggerServerEvent('freemode:GetPlayerCharacters')
-		--N_0xd8295af639fd9cb8(playerPed)
 	end
 end)
 
@@ -50,10 +49,10 @@ Citizen.CreateThread(function()
 	while true do
 		Wait(1)
 		if firstTick then
-			if GetEntityHealth(PlayerPedId()) <= 0 or IsEntityDead(PlayerPedId()) then			
+			if GetEntityHealth(PlayerPedId()) <= 0 or IsEntityDead(PlayerPedId()) then
 				deathscale = RequestDeathScreen()
 
-				if IsControlJustPressed(0, 24) then
+				if IsControlJustPressed(0, 24) and HasScaleformMovieLoaded(deathscale) then
 					DoScreenFadeOut(800)
 					while not IsScreenFadedOut() do
 						HideHudAndRadarThisFrame()
@@ -77,15 +76,14 @@ Citizen.CreateThread(function()
 					ClearPedWetness(PlayerPedId())
 					StopScreenEffect("DeathFailOut")
 
-					locksound = false
+					SetScaleformMovieAsNoLongerNeeded(deathscale)
+					SetScaleformMovieAsNoLongerNeeded(Instructional)					
 
 					DoScreenFadeIn(800)
 					while not IsScreenFadedIn() do
 						Citizen.Wait(0)
 					end
-
-					SetScaleformMovieAsNoLongerNeeded(deathscale)
-					SetScaleformMovieAsNoLongerNeeded(Instructional)
+					locksound = false
 				end
 			else
 				if HasScaleformMovieLoaded(deathscale) then
