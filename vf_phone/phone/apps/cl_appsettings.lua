@@ -4,6 +4,16 @@ AppSettings = {
     OverrideBack = true
 }
 
+local function _SetTheme(theme)
+    Phone.Theme = theme
+    SetResourceKvpInt("vf_phone_theme", theme)
+end
+
+local function _SetWallpaper(wallpaper)
+    Phone.Wallpaper = wallpaper
+    SetResourceKvpInt("vf_phone_wallpaper", wallpaper)
+end
+
 local settings = {
     {
         SettingName = "Theme",
@@ -12,43 +22,43 @@ local settings = {
             {
                 ItemName = "Theme 1",
                 OnSelect = function()
-                    Phone.Theme = 1
+                    _SetTheme(1)
                 end
             },
             {
                 ItemName = "Theme 2",
                 OnSelect = function()
-                    Phone.Theme = 2
+                    _SetTheme(2)
                 end
             },
             {
                 ItemName = "Theme 3",
                 OnSelect = function()
-                    Phone.Theme = 3
+                    _SetTheme(3)
                 end
             },
             {
                 ItemName = "Theme 4",
                 OnSelect = function()
-                    Phone.Theme = 4
+                    _SetTheme(4)
                 end
             },
             {
                 ItemName = "Theme 5",
                 OnSelect = function()
-                    Phone.Theme = 5
+                    _SetTheme(5)
                 end
             },
             {
                 ItemName = "Theme 6",
                 OnSelect = function()
-                    Phone.Theme = 6
+                    _SetTheme(6)
                 end
             },
             {
                 ItemName = "Theme 7",
                 OnSelect = function()
-                    Phone.Theme = 7
+                    _SetTheme(7)
                 end
             }
         }
@@ -60,43 +70,43 @@ local settings = {
             {
                 ItemName = "Wallpaper 1",
                 OnSelect = function()
-                    Phone.Wallpaper = 5
+                    _SetWallpaper(5)
                 end
             },
             {
                 ItemName = "Wallpaper 2",
                 OnSelect = function()
-                    Phone.Wallpaper = 6
+                    _SetWallpaper(6)
                 end
             },
             {
                 ItemName = "Wallpaper 3",
                 OnSelect = function()
-                    Phone.Wallpaper = 7
+                    _SetWallpaper(7)
                 end
             },
             {
                 ItemName = "Wallpaper 4",
                 OnSelect = function()
-                    Phone.Wallpaper = 8
+                    _SetWallpaper(8)
                 end
             },
             {
                 ItemName = "Wallpaper 5",
                 OnSelect = function()
-                    Phone.Wallpaper = 9
+                    _SetWallpaper(9)
                 end
             },
             {
                 ItemName = "Wallpaper 6",
                 OnSelect = function()
-                    Phone.Wallpaper = 10
+                    _SetWallpaper(10)
                 end
             },
             {
                 ItemName = "Wallpaper 7",
                 OnSelect = function()
-                    Phone.Wallpaper = 11
+                    _SetWallpaper(11)
                 end
             }
         }
