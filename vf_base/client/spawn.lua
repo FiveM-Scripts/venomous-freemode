@@ -52,46 +52,41 @@ Citizen.CreateThread(function()
 			if GetEntityHealth(PlayerPedId()) <= 0 or IsEntityDead(PlayerPedId()) then
 				deathscale = RequestDeathScreen()
 
-				if IsControlJustPressed(0, 24) and HasScaleformMovieLoaded(deathscale) then
-					DoScreenFadeOut(800)
-					while not IsScreenFadedOut() do
-						HideHudAndRadarThisFrame()
-						Citizen.Wait(1)
-					end
-
-					local x,y,z = table.unpack(GetEntityCoords(PlayerPedId()))
-					local _, vector = GetNthClosestVehicleNode(x, y, z, math.random(20, 180), 0, 0, 0)
-					success, vec3 = GetSafeCoordForPed(vector.x, vector.y, vector.z, false, 28)
-					heading = 0
-
-					if success then
-						x, y, z = table.unpack(vec3)
-					else
-						local temp = generateSpawn()
-						x, y, z = temp.x, temp.y, temp.z
-					end
-
-					NetworkResurrectLocalPlayer(x, y, z, 0.0, true, false)
-					ClearPedBloodDamage(PlayerPedId())
-					ClearPedWetness(PlayerPedId())
-					StopScreenEffect("DeathFailOut")
-
-					SetScaleformMovieAsNoLongerNeeded(deathscale)
-					SetScaleformMovieAsNoLongerNeeded(Instructional)					
-
-					DoScreenFadeIn(800)
-					while not IsScreenFadedIn() do
-						Citizen.Wait(0)
-					end
-					locksound = false
-				end
-			else
 				if HasScaleformMovieLoaded(deathscale) then
-					StopScreenEffect("DeathFailOut")
-					locksound = false
+					if IsControlJustPressed(0, 24) then
+						DoScreenFadeOut(500)
+						while not IsScreenFadedOut() do
+							HideHudAndRadarThisFrame()
+							Citizen.Wait(500)
+						end
 
-					SetScaleformMovieAsNoLongerNeeded(Instructional)
-					SetScaleformMovieAsNoLongerNeeded(deathscale)
+						local x,y,z = table.unpack(GetEntityCoords(PlayerPedId()))
+						local _, vector = GetNthClosestVehicleNode(x, y, z, math.random(20, 180), 0, 0, 0)
+						success, vec3 = GetSafeCoordForPed(vector.x, vector.y, vector.z, false, 28)
+						heading = 0
+
+						if success then
+							x, y, z = table.unpack(vec3)
+						else
+							local temp = generateSpawn()
+							x, y, z = temp.x, temp.y, temp.z
+						end
+
+						NetworkResurrectLocalPlayer(x, y, z, 0.0, true, false)
+						ClearPedBloodDamage(PlayerPedId())
+						ClearPedWetness(PlayerPedId())
+						StopScreenEffect("DeathFailOut")
+
+						SetScaleformMovieAsNoLongerNeeded(deathscale)
+						SetScaleformMovieAsNoLongerNeeded(Instructional)
+
+						DoScreenFadeIn(800)
+						while not IsScreenFadedIn() do
+							Citizen.Wait(0)
+						end
+
+						locksound = false
+					end
 				end
 			end
 		end

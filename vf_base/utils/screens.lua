@@ -1,3 +1,7 @@
+local warningDisplayed
+warning = nil
+deathscale = nil
+
 function showLoadingPromt(label, time)
     Citizen.CreateThread(function()
         BeginTextCommandBusyString(tostring(label))
@@ -125,7 +129,7 @@ function CreateWarningMessage(title, text, subtext)
 
     PopScaleformMovieFunctionVoid()
     PlaySoundFrontend(-1, "CHALLENGE_UNLOCKED", "HUD_AWARDS", true)
-
+    warningDisplayed = true
     return popup
 end
 
@@ -142,7 +146,7 @@ Citizen.CreateThread(function()
             HideHudAndRadarThisFrame()
         end
 
-        if HasScaleformMovieLoaded(warning) then
+        if HasScaleformMovieLoaded(warning) and warningDisplayed then
             DisplayWarningMessage(warning)
             if HasScaleformMovieLoaded(Warningbutton) then
                 DrawScaleformMovieFullscreen(Warningbutton, 255, 255, 255, 255, 0)
@@ -154,6 +158,7 @@ Citizen.CreateThread(function()
                 PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", true)
                 SetScaleformMovieAsNoLongerNeeded(Warningbutton)
                 SetScaleformMovieAsNoLongerNeeded(warning)
+                warningDisplayed = false
             end
         end
     end
