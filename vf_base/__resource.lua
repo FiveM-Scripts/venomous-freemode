@@ -5,6 +5,7 @@ resource_version '1.0'
 dependencies {'mysql-async', 'NativeUI'}
 
 client_scripts {
+    '@NativeUI/NativeUI.lua',
     'config/freemode.lua',
     'config/spawn.lua',
     'utils/player.lua',
