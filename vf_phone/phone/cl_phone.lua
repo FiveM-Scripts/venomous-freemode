@@ -63,6 +63,7 @@ Citizen.CreateThread(function()
             Phone.Visible = true
             SetMobilePhoneScale(285.0)
             CreateMobilePhone(0)
+            SetMobilePhonePosition()
             Apps.Start("Main")
         end
 
