@@ -1,5 +1,5 @@
 AppPlayerlist = {
-    AppName = "Playerlist",
+    AppName = GetLabelText("CELL_35"),
     AppIcon = 14
 }
 local selectedItem

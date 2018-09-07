@@ -1,5 +1,5 @@
 AppSettings = {
-    AppName = "Settings",
+    AppName = GetLabelText("CELL_16"),
     AppIcon = 24,
     OverrideBack = true
 }
