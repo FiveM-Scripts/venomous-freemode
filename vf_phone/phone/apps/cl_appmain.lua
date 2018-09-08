@@ -2,12 +2,12 @@ AppMain = {}
 local selectedItem = 4
 
 function AppMain.Tick()
-    for i = 1, 10 do
+    for i = 0, 8 do
         PushScaleformMovieFunction(Phone.Scaleform, "SET_DATA_SLOT")
         PushScaleformMovieFunctionParameterInt(1)
-        PushScaleformMovieFunctionParameterInt(i - 1)
-        if Apps[i] and Apps[i].AppIcon then
-            PushScaleformMovieFunctionParameterInt(Apps[i].AppIcon)
+        PushScaleformMovieFunctionParameterInt(i)
+        if Apps[i + 1] and Apps[i + 1].AppIcon then
+            PushScaleformMovieFunctionParameterInt(Apps[i + 1].AppIcon)
         else
             PushScaleformMovieFunctionParameterInt(3)
         end
