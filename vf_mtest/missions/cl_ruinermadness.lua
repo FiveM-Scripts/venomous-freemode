@@ -6,17 +6,24 @@ local destBlip
 local spawnEnemyTime
 
 AddTextEntry("m_ruinermadness_task", "Get the Insurgent to the ~y~hideout~w~.")
+DecorRegister("m_ruinermadness_entity", 2)
 
-function MissionRuinerMadness.Init()
-    -- Debugging stuff
-    --[[for vehicle in EntityEnum.EnumerateVehicles() do
-        DeleteVehicle(vehicle)
+local function cleanUpEntities()
+    for vehicle in EntityEnum.EnumerateVehicles() do
+        if DecorExistOn(vehicle, "m_ruinermadness_entity") then
+            DeleteVehicle(vehicle)
+        end
     end
+
     for ped in EntityEnum.EnumeratePeds() do
-        if not IsPedAPlayer(ped) then
+        if DecorExistOn(ped, "m_ruinermadness_entity") then
             DeletePed(ped)
         end
-    end]]--
+    end
+end
+
+function MissionRuinerMadness.Init()
+    cleanUpEntities()
 
     playerPed = PlayerPedId()
     destBlip = AddBlipForCoord(destCoords)
@@ -30,6 +37,7 @@ function MissionRuinerMadness.Init()
     end
     insurgent2 = CreateVehicle(insurgent2Hash, 2796.07, -707.95, 4.12, 101.43, true)
     SetModelAsNoLongerNeeded(insurgent2)
+    DecorSetBool(insurgent2, "m_ruinermadness_entity", true)
     SetVehicleDoorsLocked(insurgent2, 4)
     SetPedIntoVehicle(playerPed, insurgent2, -1)
     SetVehicleAsNoLongerNeeded(insurgent2)
@@ -58,9 +66,11 @@ function MissionRuinerMadness.Tick()
             end
             local ruiner2 = CreateVehicle(ruiner2Hash, coords.x, coords.y, coords.z, GetEntityHeading(playerPed), true)
             SetModelAsNoLongerNeeded(ruiner2Hash)
+            DecorSetBool(ruiner2, "m_ruinermadness_entity", true)
             SetVehicleDoorsLocked(ruiner2, 4)
             SetVehicleAsNoLongerNeeded(ruiner2)
             local enemy = CreatePed(4, GetEntityModel(playerPed), coords.x, coords.y, coords.z, 0.0, true)
+            DecorSetBool(enemy, "m_ruinermadness_entity", true)
             SetPedAsEnemy(enemy, true)
             SetPedAiBlip(enemy, true)
             SetPedIntoVehicle(enemy, ruiner2, -1)
@@ -77,7 +87,7 @@ function MissionRuinerMadness.Tick()
 end
 
 function MissionRuinerMadness.Kill()
-    DeleteVehicle(insurgent2)
+    cleanUpEntities()
     RemoveBlip(destBlip)
 
     SetMaxWantedLevel(5)
