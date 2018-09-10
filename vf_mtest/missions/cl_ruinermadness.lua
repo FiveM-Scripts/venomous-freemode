@@ -7,6 +7,7 @@ local spawnEnemyTime
 
 AddTextEntry("m_ruinermadness_task", "Get the Insurgent to the ~y~hideout~w~.")
 DecorRegister("m_ruinermadness_entity", 2)
+local enemyGroup = AddRelationshipGroup("m_ruinermadness_enemygroup")
 
 local function cleanUpEntities()
     for vehicle in EntityEnum.EnumerateVehicles() do
@@ -39,6 +40,7 @@ function MissionRuinerMadness.Init()
     SetModelAsNoLongerNeeded(insurgent2)
     DecorSetBool(insurgent2, "m_ruinermadness_entity", true)
     SetVehicleDoorsLocked(insurgent2, 4)
+    SetVehicleEngineOn(insurgent2, true, true)
     SetPedIntoVehicle(playerPed, insurgent2, -1)
     SetVehicleAsNoLongerNeeded(insurgent2)
 
@@ -57,28 +59,53 @@ function MissionRuinerMadness.Tick()
     spawnEnemyTime = spawnEnemyTime - 100
     if spawnEnemyTime <= 0 then
         local found, coords = FindSpawnPointInDirection(playerCoords.x, playerCoords.y, playerCoords.z,
-            playerCoords.x, playerCoords.y, playerCoords.z, 150.0)
+            playerCoords.x, playerCoords.y, playerCoords.z, 100.0)
         if found then
             local ruiner2Hash = GetHashKey("ruiner2")
             RequestModel(ruiner2Hash)
             while not HasModelLoaded(ruiner2Hash) do
                 Wait(0)
             end
-            local ruiner2 = CreateVehicle(ruiner2Hash, coords.x, coords.y, coords.z, GetEntityHeading(playerPed), true)
+            local playerHeading = GetEntityHeading(insurgent2)
+            local targetHeading
+            if playerHeading < 181 then
+                targetHeading = playerHeading + 180
+            else
+                targetHeading = playerHeading - 180
+            end
+            local ruiner2 = CreateVehicle(ruiner2Hash, coords.x, coords.y, coords.z, targetHeading, true)
             SetModelAsNoLongerNeeded(ruiner2Hash)
             DecorSetBool(ruiner2, "m_ruinermadness_entity", true)
             SetVehicleDoorsLocked(ruiner2, 4)
+            SetVehicleEngineOn(ruiner2, true, true)
             SetVehicleAsNoLongerNeeded(ruiner2)
             local enemy = CreatePed(4, GetEntityModel(playerPed), coords.x, coords.y, coords.z, 0.0, true)
             DecorSetBool(enemy, "m_ruinermadness_entity", true)
+            SetPedRelationshipGroupHash(enemy, "m_ruinermadness_enemygroup")
+            SetPedCombatAttributes(enemy, 3, false)
+            SetPedCombatAttributes(enemy, 5, true)
+            SetPedCombatAttributes(enemy, 46, true)
             SetPedAsEnemy(enemy, true)
             SetPedAiBlip(enemy, true)
             SetPedIntoVehicle(enemy, ruiner2, -1)
-            TaskVehicleChase(enemy, playerPed)
+            TaskCombatPed(enemy, playerPed, 0, 16)
             SetPedKeepTask(enemy, true)
             SetPedAsNoLongerNeeded(enemy)
+            local enemy2 = CreatePed(4, GetEntityModel(playerPed), coords.x, coords.y, coords.z, 0.0, true)
+            DecorSetBool(enemy2, "m_ruinermadness_entity", true)
+            SetPedRelationshipGroupHash(enemy2, "m_ruinermadness_enemygroup")
+            SetPedCombatAttributes(enemy2, 3, false)
+            SetPedCombatAttributes(enemy2, 5, true)
+            SetPedCombatAttributes(enemy2, 46, true)
+            SetPedAsEnemy(enemy2, true)
+            SetPedAiBlip(enemy2, true)
+            SetPedIntoVehicle(enemy2, ruiner2, 0)
+            GiveWeaponToPed(enemy2, GetHashKey("WEAPON_APPISTOL"), 999999, false, true)
+            TaskCombatPed(enemy2, playerPed, 0, 16)
+            SetPedKeepTask(enemy2, true)
+            SetPedAsNoLongerNeeded(enemy2)
         end
-        spawnEnemyTime = 20000
+        spawnEnemyTime = 25000
     end
 
     if Vdist2(playerCoords, destCoords) < 5.0 or IsPedDeadOrDying(playerPed) then
