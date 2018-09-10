@@ -1,6 +1,5 @@
 Apps = {
     ["Main"] = AppMain,
-    AppPlayerlist,
     AppSettings
 }
 

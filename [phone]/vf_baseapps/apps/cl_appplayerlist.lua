@@ -11,3 +11,7 @@ end
 function AppPlayerlist.Tick()
 
 end
+
+AddEventHandler("vf_phone:setup", function()
+    TriggerEvent("vf_phone:addApp", AppPlayerlist)
+end)

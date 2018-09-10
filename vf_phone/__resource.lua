@@ -4,7 +4,7 @@ client_scripts {
     "utils/cl_utils.lua",
     "phone/cl_phone.lua",
     "phone/apps/cl_appmain.lua",
-    "phone/apps/cl_appplayerlist.lua",
     "phone/apps/cl_appsettings.lua",
-    "phone/apps/cl_apps.lua"
+    "phone/apps/cl_apps.lua",
+    "phone/apps/cl_api.lua"
 }
