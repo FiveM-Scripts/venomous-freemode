@@ -45,7 +45,7 @@ function MissionRuinerMadness.Init()
     SetVehicleAsNoLongerNeeded(insurgent2)
 
     SetMaxWantedLevel(0)
-    TriggerMusicEvent("MP_MC_CMH_SILO_FINALE_START")
+    TriggerMusicEvent("MP_MC_CMH_SUB_FINALE_START")
     TriggerMusicEvent("MP_MC_CMH_VEHICLE_CHASE")
 end
 
@@ -101,11 +101,12 @@ function MissionRuinerMadness.Tick()
             SetPedAiBlip(enemy2, true)
             SetPedIntoVehicle(enemy2, ruiner2, 0)
             GiveWeaponToPed(enemy2, GetHashKey("WEAPON_APPISTOL"), 999999, false, true)
+            SetPedAccuracy(enemy2, 80)
             TaskCombatPed(enemy2, playerPed, 0, 16)
             SetPedKeepTask(enemy2, true)
             SetPedAsNoLongerNeeded(enemy2)
         end
-        spawnEnemyTime = 25000
+        spawnEnemyTime = 15000
     end
 
     if Vdist2(playerCoords, destCoords) < 5.0 or IsPedDeadOrDying(playerPed) then
