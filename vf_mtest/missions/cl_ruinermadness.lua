@@ -45,7 +45,7 @@ function MissionRuinerMadness.Init()
     SetVehicleAsNoLongerNeeded(insurgent2)
 
     SetMaxWantedLevel(0)
-    TriggerMusicEvent("MP_MC_CMH_IAA_PREP_START")
+    TriggerMusicEvent("MP_MC_CMH_SILO_FINALE_START")
     TriggerMusicEvent("MP_MC_CMH_VEHICLE_CHASE")
 end
 
