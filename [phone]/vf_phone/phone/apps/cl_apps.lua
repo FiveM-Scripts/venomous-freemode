@@ -19,6 +19,9 @@ function Apps.Kill()
             Apps.CurrentApp = nil
             Phone.Kill()
         else
+            if Apps.CurrentApp.Kill then
+                Apps.CurrentApp.Kill()
+            end
             PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Default")
             Apps.Start("Main")
         end
