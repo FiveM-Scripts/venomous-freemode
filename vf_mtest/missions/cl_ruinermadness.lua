@@ -115,6 +115,7 @@ end
 
 function MissionRuinerMadness.Kill()
     cleanUpEntities()
+    ClearPrints()
     RemoveBlip(destBlip)
 
     SetMaxWantedLevel(5)
