@@ -4,5 +4,6 @@ client_scripts {
     "cl_pos.lua",
     "cl_entityenum.lua",
     "missions/cl_ruinermadness.lua",
+    "missions/cl_dispatch.lua",
     "cl_missionmenu.lua"
 }

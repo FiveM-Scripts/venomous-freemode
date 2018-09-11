@@ -1,5 +1,6 @@
 Missions = {
-    MissionRuinerMadness
+    MissionRuinerMadness,
+    MissionDispatch
 }
 local currentMission
 
