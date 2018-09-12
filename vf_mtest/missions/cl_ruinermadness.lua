@@ -1,5 +1,5 @@
 MissionRuinerMadness = {
-    "Ruiner Madness"
+    MissionName = "Ruiner Madness"
 }
 local playerPed
 local insurgent2

@@ -5,9 +5,12 @@ Apps = {
 
 function Apps.Start(app)
     if Apps[app] then
+        if Apps.CurrentApp and Apps.CurrentApp ~= Apps["Main"] then
+            Apps.Kill()
+        end
         Apps.CurrentApp = Apps[app]
         if Apps.CurrentApp.Init then
-            Apps.CurrentApp.Init()
+            Apps.CurrentApp.Init(Phone.Scaleform)
         end
     end
 end
@@ -22,6 +25,7 @@ function Apps.Kill()
             if Apps.CurrentApp.Kill then
                 Apps.CurrentApp.Kill()
             end
+            Apps.CurrentApp = nil
             PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Default")
             Apps.Start("Main")
         end

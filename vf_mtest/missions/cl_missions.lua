@@ -35,8 +35,3 @@ Citizen.CreateThread(function()
         end
     end
 end)
-
--- For now
-Citizen.CreateThread(function()
-    Missions.Start(1)
-end)

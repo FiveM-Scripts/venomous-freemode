@@ -4,12 +4,12 @@ AppSettings = {
     OverrideBack = true
 }
 
-local function _SetTheme(theme)
+local function SetTheme(theme)
     Phone.Theme = theme
     SetResourceKvpInt("vf_phone_theme", theme)
 end
 
-local function _SetWallpaper(wallpaper)
+local function SetWallpaper(wallpaper)
     Phone.Wallpaper = wallpaper
     SetResourceKvpInt("vf_phone_wallpaper", wallpaper)
 end
@@ -22,43 +22,43 @@ local settings = {
             {
                 ItemName = "Theme 1",
                 OnSelect = function()
-                    _SetTheme(1)
+                    SetTheme(1)
                 end
             },
             {
                 ItemName = "Theme 2",
                 OnSelect = function()
-                    _SetTheme(2)
+                    SetTheme(2)
                 end
             },
             {
                 ItemName = "Theme 3",
                 OnSelect = function()
-                    _SetTheme(3)
+                    SetTheme(3)
                 end
             },
             {
                 ItemName = "Theme 4",
                 OnSelect = function()
-                    _SetTheme(4)
+                    SetTheme(4)
                 end
             },
             {
                 ItemName = "Theme 5",
                 OnSelect = function()
-                    _SetTheme(5)
+                    SetTheme(5)
                 end
             },
             {
                 ItemName = "Theme 6",
                 OnSelect = function()
-                    _SetTheme(6)
+                    SetTheme(6)
                 end
             },
             {
                 ItemName = "Theme 7",
                 OnSelect = function()
-                    _SetTheme(7)
+                    SetTheme(7)
                 end
             }
         }
@@ -70,43 +70,43 @@ local settings = {
             {
                 ItemName = "Wallpaper 1",
                 OnSelect = function()
-                    _SetWallpaper(5)
+                    SetWallpaper(5)
                 end
             },
             {
                 ItemName = "Wallpaper 2",
                 OnSelect = function()
-                    _SetWallpaper(6)
+                    SetWallpaper(6)
                 end
             },
             {
                 ItemName = "Wallpaper 3",
                 OnSelect = function()
-                    _SetWallpaper(7)
+                    SetWallpaper(7)
                 end
             },
             {
                 ItemName = "Wallpaper 4",
                 OnSelect = function()
-                    _SetWallpaper(8)
+                    SetWallpaper(8)
                 end
             },
             {
                 ItemName = "Wallpaper 5",
                 OnSelect = function()
-                    _SetWallpaper(9)
+                    SetWallpaper(9)
                 end
             },
             {
                 ItemName = "Wallpaper 6",
                 OnSelect = function()
-                    _SetWallpaper(10)
+                    SetWallpaper(10)
                 end
             },
             {
                 ItemName = "Wallpaper 7",
                 OnSelect = function()
-                    _SetWallpaper(11)
+                    SetWallpaper(11)
                 end
             }
         }
@@ -144,12 +144,11 @@ function AppSettings.Tick()
     PushScaleformMovieFunctionParameterInt(13)
     PopScaleformMovieFunctionVoid()
 
-    local i = 0
     if currentSubSettingMenu then
-        for _, item in ipairs(currentSubSettingMenu.Items) do
+        for i, item in ipairs(currentSubSettingMenu.Items) do
             PushScaleformMovieFunction(Phone.Scaleform, "SET_DATA_SLOT")
             PushScaleformMovieFunctionParameterInt(13)
-            PushScaleformMovieFunctionParameterInt(i)
+            PushScaleformMovieFunctionParameterInt(i - 1)
             if item.ItemIcon then
                 PushScaleformMovieFunctionParameterInt(item.ItemIcon)
             else
@@ -157,21 +156,19 @@ function AppSettings.Tick()
             end
             PushScaleformMovieFunctionParameterString(item.ItemName)
             PopScaleformMovieFunctionVoid()
-            i = i + 1
         end
     else
-        for _, setting in ipairs(settings) do
+        for i, setting in ipairs(settings) do
             PushScaleformMovieFunction(Phone.Scaleform, "SET_DATA_SLOT")
             PushScaleformMovieFunctionParameterInt(13)
-            PushScaleformMovieFunctionParameterInt(i)
+            PushScaleformMovieFunctionParameterInt(i - 1)
             if setting.SettingIcon then
                 PushScaleformMovieFunctionParameterInt(setting.SettingIcon)
             else
-                PushScaleformMovieFunctionParameterInt(0)
+                PushScaleformMovieFunctionParameterInt()
             end
             PushScaleformMovieFunctionParameterString(setting.SettingName)
             PopScaleformMovieFunctionVoid()
-            i = i + 1
         end
     end
 
