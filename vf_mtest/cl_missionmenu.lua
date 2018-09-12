@@ -1,6 +1,7 @@
 Missions = {
     MissionRuinerMadness,
-    MissionDispatch
+    MissionDispatch,
+    MissionSnitch
 }
 local currentMission
 
@@ -37,5 +38,5 @@ end)
 
 -- For now
 Citizen.CreateThread(function()
-    Missions.Start(1)
+     Missions.Start(GetRandomIntInRange(1, 3))
 end)

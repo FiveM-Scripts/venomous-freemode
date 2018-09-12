@@ -1,4 +1,4 @@
---[[Citizen.CreateThread(function()
+Citizen.CreateThread(function()
     while true do
         Wait(0)
 
@@ -7,4 +7,4 @@
         AddTextEntry("mtest_coords", "x:" .. coords.x .. "\ny:" .. coords.y .. "\nz:" .. coords.z .. "\nrot:" .. GetEntityHeading(playerPed))
         DisplayHelpTextThisFrame("mtest_coords")
     end
-end)]]--
+end)

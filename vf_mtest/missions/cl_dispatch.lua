@@ -125,8 +125,8 @@ function MissionDispatch.Init()
 
         SetModelAsNoLongerNeeded(vehicleHash)
 
-        TriggerMusicEvent("MP_MC_CMH_IAA_PREP_START")
-        TriggerMusicEvent("MP_MC_CMH_VEHICLE_CHASE")
+       -- TriggerMusicEvent("MP_MC_CMH_SILO_PREP_START")
+        TriggerMusicEvent("MP_MC_CMH_ACTION")
         missionStage = 1
     end
 end
