@@ -1,4 +1,6 @@
-MissionRuinerMadness = {}
+MissionRuinerMadness = {
+    "Ruiner Madness"
+}
 local playerPed
 local insurgent2
 local destCoords = vector3(-2310.72, 266.46, 169.6)

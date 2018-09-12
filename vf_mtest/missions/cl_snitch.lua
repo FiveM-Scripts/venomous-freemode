@@ -1,4 +1,6 @@
-MissionSnitch = {}
+MissionSnitch = {
+    MissionName = "Snitch"
+}
 
 local vehicleHash = "oracle"
 local destCoords = vector3(417.02288, -978.1325, 29.4316)

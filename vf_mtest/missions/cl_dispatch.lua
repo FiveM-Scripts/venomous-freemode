@@ -1,4 +1,6 @@
-MissionDispatch = {}
+MissionDispatch = {
+    MissionName = "Dispatch"
+}
 
 local vehicleHash = "jackal"
 local pilotHash = "s_m_m_pilot_01"
