@@ -5,7 +5,7 @@ Apps = {
 
 function Apps.Start(app)
     if Apps[app] then
-        if Apps.CurrentApp and Apps.CurrentApp ~= Apps["Main"] then
+        if app == "Main" then
             Apps.Kill()
         end
         Apps.CurrentApp = Apps[app]
@@ -17,15 +17,16 @@ end
 
 function Apps.Kill()
     if Apps.CurrentApp then
-        if Apps.CurrentApp == Apps["Main"] then
+        if Apps.CurrentApp.Kill then
+            Apps.CurrentApp.Kill()
+        end
+        local lastApp = Apps.CurrentApp
+        Apps.CurrentApp = nil
+
+        if lastApp == Apps["Main"] then
             PlaySoundFrontend(-1, "Hang_Up", "Phone_SoundSet_Michael")
-            Apps.CurrentApp = nil
             Phone.Kill()
         else
-            if Apps.CurrentApp.Kill then
-                Apps.CurrentApp.Kill()
-            end
-            Apps.CurrentApp = nil
             PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Default")
             Apps.Start("Main")
         end
