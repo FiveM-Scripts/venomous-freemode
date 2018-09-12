@@ -10,7 +10,7 @@ function Apps.Start(app)
         end
         Apps.CurrentApp = Apps[app]
         if Apps.CurrentApp.Init then
-            Apps.CurrentApp.Init(Phone.Scaleform)
+            Apps.CurrentApp.Init(Phone.Scaleform, Apps.Kill)
         end
     end
 end
