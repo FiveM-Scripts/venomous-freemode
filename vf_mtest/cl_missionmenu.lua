@@ -38,5 +38,5 @@ end)
 
 -- For now
 Citizen.CreateThread(function()
-     Missions.Start(GetRandomIntInRange(1, 3))
+     Missions.Start(GetRandomIntInRange(1, 4))
 end)
