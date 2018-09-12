@@ -6,5 +6,5 @@ client_scripts {
     "missions/cl_ruinermadness.lua",
     "missions/cl_dispatch.lua",
     "missions/cl_snitch.lua",    
-    "cl_missionmenu.lua"
+    "missions/cl_missions.lua"
 }
