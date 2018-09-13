@@ -7,7 +7,7 @@ AddEventHandler('onClientGameTypeStart', function()
         exports.spawnmanager:spawnPlayer({
             x = spawnPos.x,
             y = spawnPos.y,
-            z = spawnPos.z,
+            z = spawnPos.z-1.0,
             model = 'mp_m_freemode_01'
         })
     end)
@@ -18,6 +18,10 @@ end)
 
 AddEventHandler('playerSpawned', function(spawn)
 	local playerPed = PlayerPedId()
+	while not HasCollisionLoadedAroundEntity(playerPed) do
+		Wait(1)
+	end
+
 	if not IsPlayerSwitchInProgress() then
 		SetManualShutdownLoadingScreenNui(true)
 		SwitchOutPlayer(playerPed, 0, 1)

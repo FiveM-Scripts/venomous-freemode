@@ -209,17 +209,27 @@ function AddSaveSelection(menu)
             end
             local joinCoords = vector3(-1044.645, -2749.844, 21.36343-1.0)
 
-            DoScreenFadeOut(200)
-            while not IsScreenFadedOut() do
-            	Wait(200)
+            if not IsScreenFadedOut() then
+                DoScreenFadeOut(300)
+                while not IsScreenFadedOut() do
+                    Wait(400)
+                end
             end
 
         	SetEntityCoords(PlayerPedId(), -1044.645, -2749.844, 21.36343-1.0)
         	SetEntityHeading(PlayerPedId(), 328.147)
-        	_charPool:Remove()
-        	Wait(500)
+        	_charPool:Remove()            
+            while not HasCollisionLoadedAroundEntity(PlayerPedId()) do
+                Wait(100)
+            end
 
-        	DoScreenFadeIn(200)
+            if IsScreenFadedOut() then
+                DoScreenFadeIn(300)
+                while not IsScreenFadedIn() do
+                    Wait(200)
+                end
+            end
+
         	SimulatePlayerInputGait(PlayerId(), 1.0, 8500, 1.0, 1, 0)
         	hidehud = false
         end
