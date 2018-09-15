@@ -1,4 +1,5 @@
 function generateSpawn()
+    math.randomseed(GetGameTimer())
     local keys = {}
     for key, value in pairs(SpawnLocations) do
         keys[#keys+1] = key
