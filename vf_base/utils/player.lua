@@ -1,13 +1,11 @@
 function generateSpawn()
-	for i = 1, #SpawnLocations do
-		math.randomseed(GetGameTimer())
-		math.random(); math.random(); math.random();
-		
-		local number =  math.random(1, #SpawnLocations)
-		local location = SpawnLocations[number]
-
-		return location
-	end
+    local keys = {}
+    for key, value in pairs(SpawnLocations) do
+        keys[#keys+1] = key
+    end
+   
+    index = keys[math.random(1, #keys)]
+    return SpawnLocations[index]
 end
 
 function GetRandomMultiPlayerModel(modelhash)
