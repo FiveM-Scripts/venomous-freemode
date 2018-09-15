@@ -1,8 +1,7 @@
 firstTick = false
+local spawnPos = generateSpawn()
 
-AddEventHandler('onClientGameTypeStart', function()
-	local spawnPos = generateSpawn()
-    
+AddEventHandler('onClientGameTypeStart', function()  
     exports.spawnmanager:setAutoSpawnCallback(function()
         exports.spawnmanager:spawnPlayer({
             x = spawnPos.x,
