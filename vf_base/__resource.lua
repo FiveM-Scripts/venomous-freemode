@@ -1,6 +1,6 @@
 resource_manifest_version '05cfa83c-a124-4cfa-a768-c24a5811d8f9'
 resource_type 'gametype' { name = 'venomous-freemode' }
-resource_version '1.1'
+resource_version '1.0'
 
 dependencies {'mysql-async', 'NativeUI'}
 
@@ -11,7 +11,7 @@ client_scripts {
     'utils/player.lua',
     'utils/screens.lua',
     'client/character.lua',
-    'client/spawn.lua',
+    'client/spawn.lua'
 }
 
 server_scripts {
