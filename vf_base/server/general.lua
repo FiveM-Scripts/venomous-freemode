@@ -32,6 +32,6 @@ PerformHttpRequest("https://raw.githubusercontent.com/FiveM-Scripts/venomous-fre
     local version = GetResourceMetadata(GetCurrentResourceName(), 'resource_version', 0)
 
     if string.find(tostring(result), version) == nil then
-        print("\n\r[Venoumous Freemode] The version on this server is not up to date. Please update now.\n\r")
+        print("\n\r[Venomous Freemode] The version on this server is not up to date. Please update now.\n\r")
     end
 end, "GET", "", "")
