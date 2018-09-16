@@ -92,8 +92,8 @@ function CreateWarningMessage(title, text, subtext)
         Citizen.Wait(0)
     end
 
-   PushScaleformMovieFunction(Warningbutton, "CLEAR_ALL")
-   PopScaleformMovieFunctionVoid()
+    PushScaleformMovieFunction(Warningbutton, "CLEAR_ALL")
+    PopScaleformMovieFunctionVoid()
     
     PushScaleformMovieFunction(Warningbutton, "SET_CLEAR_SPACE")
     PushScaleformMovieFunctionParameterInt(200)
@@ -130,6 +130,7 @@ function CreateWarningMessage(title, text, subtext)
     PopScaleformMovieFunctionVoid()
     PlaySoundFrontend(-1, "CHALLENGE_UNLOCKED", "HUD_AWARDS", true)
     warningDisplayed = true
+
     return popup
 end
 
@@ -137,6 +138,21 @@ function DisplayWarningMessage(warning)
     ClearAllHelpMessages()
     HideHudAndRadarThisFrame()
     DrawScaleformMovieFullscreen(warning, 255, 255, 255, 255, 0)
+end
+
+function SetPlayerScores(currentRankLimit, nextRankLimit, playersPreviousXP, playersCurrentXP, rank)
+    if not HasHudScaleformLoaded(19) then
+        RequestHudScaleform(19)
+        Wait(10)
+    end
+
+    BeginScaleformMovieMethodHudComponent(19, "SET_RANK_SCORES")
+    PushScaleformMovieFunctionParameterInt(currentRankLimit)
+    PushScaleformMovieFunctionParameterInt(nextRankLimit)
+    PushScaleformMovieFunctionParameterInt(playersPreviousXP)
+    PushScaleformMovieFunctionParameterInt(playersCurrentXP)
+    PushScaleformMovieFunctionParameterInt(rank)
+    EndScaleformMovieMethodReturn()
 end
 
 Citizen.CreateThread(function()
@@ -160,6 +176,17 @@ Citizen.CreateThread(function()
                 SetScaleformMovieAsNoLongerNeeded(warning)
                 warningDisplayed = false
             end
+        end
+
+        if HasHudScaleformLoaded(19) then
+            BeginScaleformMovieMethodHudComponent(19, "OVERRIDE_ANIMATION_SPEED")
+            PushScaleformMovieFunctionParameterInt(2000)
+            EndScaleformMovieMethodReturn()
+
+            BeginScaleformMovieMethodHudComponent(19, "SET_COLOUR")
+            PushScaleformMovieFunctionParameterInt(116)
+            PushScaleformMovieFunctionParameterInt(123)
+            EndScaleformMovieMethodReturn()
         end
     end
 end)

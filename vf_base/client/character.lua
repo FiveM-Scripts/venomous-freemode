@@ -1,7 +1,7 @@
 _charPool = nil			
 
-RegisterNetEvent("freemode:NoCharacter")
-AddEventHandler("freemode:NoCharacter", function()
+RegisterNetEvent("vf_base:NoCharacter")
+AddEventHandler("vf_base:NoCharacter", function()
 	warning = CreateWarningMessage(GetLabelText("HUD_CONNPROB"), GetLabelText("TRAN_NOCHAR"))
 	local IsTeleported = false
 	while HasScaleformMovieLoaded(warning) and not IsTeleported do
@@ -13,8 +13,8 @@ AddEventHandler("freemode:NoCharacter", function()
 	end
 end)
 
-RegisterNetEvent("freemode:CreateCharacter")
-AddEventHandler("freemode:CreateCharacter", function()
+RegisterNetEvent("vf_base:CreateCharacter")
+AddEventHandler("vf_base:CreateCharacter", function()
 	EnterCharacterCreator()
 end)
 
@@ -207,30 +207,33 @@ function AddSaveSelection(menu)
             	submenu:Visible(not submenu:Visible())
             	DestroyCam(cam, true)
             end
+            
             local joinCoords = vector3(-1044.645, -2749.844, 21.36343-1.0)
 
             if not IsScreenFadedOut() then
-                DoScreenFadeOut(300)
+                DoScreenFadeOut(400)
                 while not IsScreenFadedOut() do
-                    Wait(400)
+                    Wait(50)
                 end
             end
 
         	SetEntityCoords(PlayerPedId(), -1044.645, -2749.844, 21.36343-1.0)
-        	SetEntityHeading(PlayerPedId(), 328.147)
-        	_charPool:Remove()            
+        	SetEntityHeading(PlayerPedId(), 328.147)        	           
             while not HasCollisionLoadedAroundEntity(PlayerPedId()) do
-                Wait(100)
+                Wait(1)
             end
+
+            _charPool:Remove()
 
             if IsScreenFadedOut() then
                 DoScreenFadeIn(300)
                 while not IsScreenFadedIn() do
-                    Wait(200)
+                    Wait(300)
                 end
             end
 
         	SimulatePlayerInputGait(PlayerId(), 1.0, 8500, 1.0, 1, 0)
+            SetPlayerScores(1, 2000, 1, 1000, 1)
         	hidehud = false
         end
     end

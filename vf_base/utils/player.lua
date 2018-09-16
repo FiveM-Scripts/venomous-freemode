@@ -1,6 +1,7 @@
 function generateSpawn()
-    math.randomseed(GetGameTimer())
+	math.randomseed(GetGameTimer())
     local keys = {}
+
     for key, value in pairs(SpawnLocations) do
         keys[#keys+1] = key
     end
@@ -51,3 +52,19 @@ function GetRandomMultiPlayerModel(modelhash)
 		SetModelAsNoLongerNeeded(modelhash)
 	end
 end
+
+RegisterNetEvent("vf_base:DisplayCashValue")
+AddEventHandler("vf_base:DisplayCashValue", function(value)
+	StatSetInt("MP0_WALLET_BALANCE", value, true)
+	ShowHudComponentThisFrame(4)
+
+	CancelEvent()
+end)
+
+RegisterNetEvent("vf_base:DisplayBankValue")
+AddEventHandler("vf_base:DisplayBankValue", function(value)
+	StatSetInt("BANK_BALANCE", value, true)
+	ShowHudComponentThisFrame(3)
+	
+	CancelEvent()
+end)

@@ -6,9 +6,32 @@ end
 
 StopResource('scoreboard')
 
+RegisterServerEvent('vf_base:LoadPlayer')
+AddEventHandler('vf_base:LoadPlayer', function()
+	local src = source
+	Player:Find(source, function(data)
+		if data then
+			local cash = data.cash
+			local bank = data.bank
 
-RegisterServerEvent('freemode:GetPlayerCharacters')
-AddEventHandler('freemode:GetPlayerCharacters', function()
-	-- todo: query the database table and verify that the player has a character, if not execute the following event.
-	TriggerClientEvent("freemode:NoCharacter", source)
+			TriggerEvent('vf_base:GetPlayerCharacters', src)			
+			TriggerClientEvent('vf_base:DisplayCashValue', src, cash)
+			TriggerClientEvent('vf_base:DisplayBankValue', src, bank)
+			--CancelEvent()
+		end
+	end)
 end)
+
+RegisterServerEvent('vf_base:GetPlayerCharacters')
+AddEventHandler('vf_base:GetPlayerCharacters', function()
+	local src = source
+	TriggerClientEvent("vf_base:NoCharacter", src)
+end)
+
+PerformHttpRequest("https://raw.githubusercontent.com/FiveM-Scripts/venomous-freemode/master/vf_base/__resource.lua", function(errorCode, result, headers)
+    local version = GetResourceMetadata(GetCurrentResourceName(), 'resource_version', 0)
+
+    if string.find(tostring(result), version) == nil then
+        print("\n\r[Venoumous Freemode] The version on this server is not up to date. Please update now.\n\r")
+    end
+end, "GET", "", "")
