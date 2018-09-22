@@ -18,28 +18,9 @@ All notable changes to this project will be documented [here](CHANGELOG.md).
 
 ## Installation
 - Download or clone the gamemode.
-- **Copy** all folders to your resources folder.
-- Add the resources to your server config file.
-```
-# you probably don't want to change these!
-# only change them if you're using a server with multiple network interfaces
-endpoint_add_tcp "0.0.0.0:30120"
-endpoint_add_udp "0.0.0.0:30120"
-
-set mysql_connection_string "server=127.0.0.1;database=venomous;userid=DB_USERNAME;password=DB_PASSWORD;sslmode=none;"
-
-start mapmanager
-start spawnmanager
-start sessionmanager
-start fivem
-start hardcap
-start rconlog
-start mysql-async
-start NativeUI
-start vf_base
-start vf_sync
-start vf_baseapps
-start vf_mtest
-start vf_phone
+- **Copy** all folders to your `resources` folder.
+- **Copy** the `venomous.cfg` to the same folder as your `server.cfg`.
+- Add `exec venomous.cfg` to your `server.cfg`.
+- Edit the `venomous.cfg` to your liking.
 ```
 
