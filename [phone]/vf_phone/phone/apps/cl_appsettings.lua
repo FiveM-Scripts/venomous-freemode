@@ -118,6 +118,9 @@ local settings = {
             {
                 ItemName = "On",
                 OnSelect = function()
+                    if not Phone.SleepMode then
+                        TriggerEvent("vf_utils:queueHelpText", "This will signal other apps to not send any notifications to you. You might miss out on crucial messages.", 10)
+                    end
                     Phone.SleepMode = true
                 end
             },

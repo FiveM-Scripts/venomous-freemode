@@ -2,6 +2,8 @@
 
 A phone resource which uses built-in natives and scaleforms instead of being built on top of NUI.
 
+Uses functionality from `vf_utils`
+
 ## Developing
 
 To externally add a new app to the phone, hook onto the `vf_phone:setup` call and pass a table with all the information to the `vf_phone:addApp` event.
