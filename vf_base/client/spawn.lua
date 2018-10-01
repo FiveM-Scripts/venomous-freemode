@@ -1,15 +1,10 @@
 firstTick = false
+local ShowLoadingScreen = true
+local spawnPos = generateSpawn()
 
 AddEventHandler('onClientGameTypeStart', function()
-	local spawnPos = generateSpawn()
-    
-    exports.spawnmanager:setAutoSpawnCallback(function()
-        exports.spawnmanager:spawnPlayer({
-            x = spawnPos.x,
-            y = spawnPos.y,
-            z = spawnPos.z,
-            model = 'mp_m_freemode_01'
-        })
+	exports.spawnmanager:setAutoSpawnCallback(function()
+		exports.spawnmanager:spawnPlayer({x = spawnPos.x, y = spawnPos.y, z = spawnPos.z-1.0, model = 'mp_m_freemode_01'})
     end)
 
     exports.spawnmanager:setAutoSpawn(true)
@@ -18,11 +13,16 @@ end)
 
 AddEventHandler('playerSpawned', function(spawn)
 	local playerPed = PlayerPedId()
-	if not IsPlayerSwitchInProgress() then
-		SetManualShutdownLoadingScreenNui(true)
-		SwitchOutPlayer(playerPed, 0, 1)
+	while not HasCollisionLoadedAroundEntity(playerPed) do
+		Wait(1)
 	end
 	
+	Wait(300)
+	
+	if not IsPlayerSwitchInProgress() and ShowLoadingScreen then
+		SwitchOutPlayer(playerPed, 0, 1)
+	end
+
 	if IsPedModel(playerPed, "mp_m_freemode_01") then
 		SetPedComponentVariation(playerPed, 0, math.random(0, 1), 0, 2)
 		SetPedComponentVariation(playerPed, 2, math.random(1, 17), math.random(3, 6), 2)
@@ -34,21 +34,26 @@ AddEventHandler('playerSpawned', function(spawn)
 		SetPedComponentVariation(playerPed, 11, 0, 11, 2)
 	end
 
-	exports.spawnmanager:setAutoSpawn(false)
-	firstTick = true
-
 	if IsPlayerSwitchInProgress() then
-		showLoadingPromt("PCARD_JOIN_GAME", 8000)		
+		showLoadingPromt("PCARD_JOIN_GAME", 8000)
+		TriggerServerEvent('vf_base:LoadPlayer')
 		Citizen.Wait(8000)
-		TriggerServerEvent('freemode:GetPlayerCharacters')
+		TriggerServerEvent('vf_base:GetPlayerCharacters')
 	end
-end)
 
+	firstTick = true
+	exports.spawnmanager:setAutoSpawn(false)
+end)
 
 Citizen.CreateThread(function()
 	while true do
 		Wait(1)
 		if firstTick then
+			if IsControlJustPressed(0, 20) then
+				ShowHudComponentThisFrame(3)
+				ShowHudComponentThisFrame(4)				
+			end
+
 			if GetEntityHealth(PlayerPedId()) <= 0 or IsEntityDead(PlayerPedId()) then
 				deathscale = RequestDeathScreen()
 
@@ -72,7 +77,7 @@ Citizen.CreateThread(function()
 							x, y, z = temp.x, temp.y, temp.z
 						end
 
-						NetworkResurrectLocalPlayer(x, y, z, 0.0, true, false)
+						NetworkResurrectLocalPlayer(x, y, z-1.0, 0.0, true, false)
 						ClearPedBloodDamage(PlayerPedId())
 						ClearPedWetness(PlayerPedId())
 						StopScreenEffect("DeathFailOut")

@@ -1,13 +1,13 @@
 function generateSpawn()
-	for i = 1, #SpawnLocations do
-		math.randomseed(GetGameTimer())
-		math.random(); math.random(); math.random();
-		
-		local number =  math.random(1, #SpawnLocations)
-		local location = SpawnLocations[number]
+	math.randomseed(GetGameTimer())
+    local keys = {}
 
-		return location
-	end
+    for key, value in pairs(SpawnLocations) do
+        keys[#keys+1] = key
+    end
+   
+    index = keys[math.random(1, #keys)]
+    return SpawnLocations[index]
 end
 
 function GetRandomMultiPlayerModel(modelhash)
@@ -52,3 +52,19 @@ function GetRandomMultiPlayerModel(modelhash)
 		SetModelAsNoLongerNeeded(modelhash)
 	end
 end
+
+RegisterNetEvent("vf_base:DisplayCashValue")
+AddEventHandler("vf_base:DisplayCashValue", function(value)
+	StatSetInt("MP0_WALLET_BALANCE", value, true)
+	ShowHudComponentThisFrame(4)
+
+	CancelEvent()
+end)
+
+RegisterNetEvent("vf_base:DisplayBankValue")
+AddEventHandler("vf_base:DisplayBankValue", function(value)
+	StatSetInt("BANK_BALANCE", value, true)
+	ShowHudComponentThisFrame(3)
+	
+	CancelEvent()
+end)

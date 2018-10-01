@@ -1,7 +1,7 @@
 Phone = {
     Visible = false,
-    Theme = 5,
-    Wallpaper = 11,
+    Theme = GetResourceKvpInt("vf_phone_theme") or 5,
+    Wallpaper = GetResourceKvpInt("vf_phone_wallpaper") or 11,
     SleepMode = false
 }
 local wasBackOverridenByApp = false -- To stop duplicate back input when backing from app with back key overriden
@@ -63,6 +63,7 @@ Citizen.CreateThread(function()
             Phone.Visible = true
             SetMobilePhoneScale(285.0)
             CreateMobilePhone(0)
+            SetMobilePhonePosition()
             Apps.Start("Main")
         end
 

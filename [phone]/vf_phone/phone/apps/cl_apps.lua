@@ -1,23 +1,30 @@
 Apps = {
     ["Main"] = AppMain,
-    AppPlayerlist,
     AppSettings
 }
 
 function Apps.Start(app)
     if Apps[app] then
+        if app == "Main" then
+            Apps.Kill()
+        end
         Apps.CurrentApp = Apps[app]
         if Apps.CurrentApp.Init then
-            Apps.CurrentApp.Init()
+            Apps.CurrentApp.Init(Phone.Scaleform, Apps.Kill)
         end
     end
 end
 
 function Apps.Kill()
     if Apps.CurrentApp then
-        if Apps.CurrentApp == Apps["Main"] then
+        if Apps.CurrentApp.Kill then
+            Apps.CurrentApp.Kill()
+        end
+        local lastApp = Apps.CurrentApp
+        Apps.CurrentApp = nil
+
+        if lastApp == Apps["Main"] then
             PlaySoundFrontend(-1, "Hang_Up", "Phone_SoundSet_Michael")
-            Apps.CurrentApp = nil
             Phone.Kill()
         else
             PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Default")

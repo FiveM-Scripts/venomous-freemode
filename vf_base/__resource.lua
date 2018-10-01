@@ -11,12 +11,13 @@ client_scripts {
     'utils/player.lua',
     'utils/screens.lua',
     'client/character.lua',
-    'client/spawn.lua',
+    'client/spawn.lua'
 }
 
 server_scripts {
     '@mysql-async/lib/MySQL.lua',
     'config/freemode.lua',
     'server/database.lua',
+    'server/player.lua',
     'server/general.lua'
 }
