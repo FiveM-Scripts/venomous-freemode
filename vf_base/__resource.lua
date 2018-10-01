@@ -18,6 +18,5 @@ server_scripts {
     'config/freemode.lua',
     'server/database.lua',
     'server/player.lua',
-    'server/commands.lua',
     'server/general.lua'
 }
