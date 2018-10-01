@@ -14,7 +14,7 @@ All notable changes to this project will be documented [here](CHANGELOG.md).
 
 - [NativeUI](https://github.com/FrazzIe/NativeUILua) 
 - [MySQL Community Server](https://dev.mysql.com/downloads/mysql/)
-- [mysql-async](https://github.com/brouznouf/fivem-mysql-async)
+- [ghmattimysql](https://github.com/GHMatti/ghmattimysql#install)
 
 ## Installation
 - Download or clone the gamemode.
