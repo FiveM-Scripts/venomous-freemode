@@ -118,11 +118,11 @@ local settings = {
         }
     },
     {
-        SettingName = "Sleep Mode",
+        SettingName = GetLabelText("CELL_801"),
         SettingIcon = 26,
         Items = {
             {
-                ItemName = "On",
+                ItemName = GetLabelText("CELL_830"),
                 OnSelect = function()
                     if not Phone.SleepMode then
                         TriggerEvent("vf_utils:queueHelpText", "This will signal other apps to not send any notifications to you. You might miss out on crucial messages.", 10)
@@ -131,7 +131,7 @@ local settings = {
                 end
             },
             {
-                ItemName = "Off",
+                ItemName = GetLabelText("CELL_831"),
                 ItemIcon = 1,
                 OnSelect = function()
                     Phone.SleepMode = false
