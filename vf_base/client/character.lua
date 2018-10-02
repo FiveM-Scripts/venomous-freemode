@@ -277,7 +277,7 @@ function AddSaveSelection(menu)
             if IsScreenFadedOut() then
                 DoScreenFadeIn(300)
                 while not IsScreenFadedIn() do
-                    Wait(300)
+                    Wait(400)
                 end
             end
 
