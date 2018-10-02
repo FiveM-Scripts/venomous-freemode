@@ -133,47 +133,96 @@ end
 
 function AddAppearanceSelection(menu)
     local submenu = _charPool:AddSubMenu(menu, GetLabelText("FACE_APP"), GetLabelText("FACE_MM_H6"))
-    local newitem = NativeUI.CreateListItem(GetLabelText("FACE_APP_STY"), genders, 1, GetLabelText("FACE_APP_H"))
-    submenu:AddItem(newitem)
+    if IsPedMale(PlayerPedId()) then
+        hairstyles = { GetLabelText("CC_M_HS_1"), GetLabelText("CC_M_HS_2"), GetLabelText("CC_M_HS_3"), GetLabelText("CC_M_HS_4"),
+                       GetLabelText("CC_M_HS_5"), GetLabelText("CC_M_HS_6"), GetLabelText("CC_M_HS_7"),
+                       GetLabelText("CC_M_HS_8"), GetLabelText("CC_M_HS_9"), GetLabelText("CC_M_HS_10"),
+                       GetLabelText("CC_M_HS_11"), GetLabelText("CC_M_HS_12"), GetLabelText("CC_M_HS_13"),
+                       GetLabelText("CC_M_HS_14"), GetLabelText("CC_M_HS_15"), GetLabelText("CC_M_HS_16"),
+                       GetLabelText("CC_M_HS_17"), GetLabelText("CC_M_HS_18"), GetLabelText("CC_M_HS_19"),
+                       GetLabelText("CC_M_HS_20"), GetLabelText("CC_M_HS_21"), GetLabelText("CC_M_HS_22")
+                    }
+    else
+        hairstyles = { GetLabelText("CC_F_HS_1"), GetLabelText("CC_F_HS_2"), GetLabelText("CC_F_HS_3"),
+                       GetLabelText("CC_F_HS_4"), GetLabelText("CC_F_HS_5"), GetLabelText("CC_F_HS_6"),
+                       GetLabelText("CC_F_HS_7"), GetLabelText("CC_F_HS_8"), GetLabelText("CC_F_HS_9"),
+                       GetLabelText("CC_F_HS_10"), GetLabelText("CC_F_HS_11"), GetLabelText("CC_F_HS_12"),
+                       GetLabelText("CC_F_HS_13"), GetLabelText("CC_F_HS_14"), GetLabelText("CC_F_HS_15"),
+                       GetLabelText("CC_F_HS_16"), GetLabelText("CC_F_HS_17"), GetLabelText("CC_F_HS_18"),
+                       GetLabelText("CC_F_HS_19"), GetLabelText("CC_F_HS_20"), GetLabelText("CC_F_HS_21"),
+                       GetLabelText("CC_F_HS_22"), GetLabelText("CC_F_HS_23")
+                   }
+    end
 
-    local newitem = NativeUI.CreateListItem(GetLabelText("FACE_HAT"), genders, 1, GetLabelText("FACE_APP_H"))
-    submenu:AddItem(newitem)
+    local HairItem = NativeUI.CreateListItem(GetLabelText("FACE_HAIR"), hairstyles, 1, GetLabelText("FACE_APP_H"))
+    submenu:AddItem(HairItem)
 
-    local newitem = NativeUI.CreateListItem(GetLabelText("FACE_GLS"), genders, 1, GetLabelText("FACE_APP_H"))
-    submenu:AddItem(newitem)
+    local hairColors = {
+        {22, 19, 19},
+        {30, 28, 25},
+        {76, 56, 45},
+        {69, 34, 24},
+        {123, 59, 31},
+        {149, 68, 35},
+        {165, 87, 50},
+        {175, 111, 72}, 
+        {159, 105, 68},
+        {198, 152, 108},
+    }
 
-    hairColors = {
-    [0] = {22, 19, 19, 255}, -- 0
-    [1] = {30, 28, 25, 255}, -- 1
-    [2] = {76, 56, 45, 255}, -- 2
-    [3] = {69, 34, 24, 255}, -- 3
-    [4] = {123, 59, 31, 255}, -- 4
-    [5] = {149, 68, 35, 255}, -- 5
-    [6] = {165, 87, 50, 255}, -- 6
-    [7] = {123, 59, 31, 255}, -- 4
-    [8] = {149, 68, 35, 255}, -- 5
-    [9] = {165, 87, 50, 255}, -- 6    
-}
-    local hairs = NativeUI.CreateListItem("Hair color", hairColors, 1, "")
-    submenu:AddItem(hairs)
+    local hairColor = NativeUI.CreateColourPanel(GetLabelText("IB_COLOR"), hairColors)
+    HairItem:AddPanel(hairColor)
 
-    local hairColor = NativeUI.CreateColourPanel("Hair Color", hairColors)
-
-    submenu.OnListSelect = function(sender, item, index)
-        if item == newitem then
-
+    submenu.OnListChange = function(sender, item, index)
+        if item == HairItem then
+            hairId = index
+            SetPedComponentVariation(PlayerPedId(), 2, hairId, 2, 0)
         end
     end
 end
 
 function AddApparelSelection(menu)
+    local glasses = {}
+    local hats = { GetLabelText("CELL_831"), GetLabelText("HT_FMM_2_0")}
     local submenu = _charPool:AddSubMenu(menu, GetLabelText("FACE_APPA"), GetLabelText("FACE_MM_H7"))
-    local newitem = NativeUI.CreateListItem(GetLabelText("PIM_MAGMSTL"), genders, 1, GetLabelText("FACE_APP_H"))
 
-    submenu:AddItem(newitem)
-    submenu.OnListSelect = function(sender, item, index)
-        if item == newitem then
+    local StyleItem = NativeUI.CreateListItem(GetLabelText("FACE_APP_STY"), genders , 1, GetLabelText("FACE_APP_H"))
+    submenu:AddItem(StyleItem)
 
+    TotalGlasses = GetNumberOfPedPropDrawableVariations(PlayerPedId(), 1)
+    for i = 0, TotalGlasses do
+        table.insert(glasses, i)
+    end
+
+    local Hatitem = NativeUI.CreateListItem(GetLabelText("FACE_HAT"), hats, 0, GetLabelText("FACE_APP_H"))
+    submenu:AddItem(Hatitem)
+
+    local glassesItem = NativeUI.CreateListItem(GetLabelText("FACE_GLS"), glasses, 1, GetLabelText("FACE_APP_H"))
+    submenu:AddItem(glassesItem)
+
+    submenu.OnListChange = function(sender, item, index)
+        if item == StyleItem then
+
+        elseif item == Hatitem then
+            hatValue = item:IndexToItem(index)
+            print(hatValue)
+            if hatValue == GetLabelText("CELL_831") then
+                hatId = 8
+                if IsPedPropValid(PlayerPedId(), 0, hatId, 0) then
+                    SetPedPropIndex(PlayerPedId(), 0, hatId, 0, true)
+                end
+            elseif hatValue == GetLabelText("HT_FMM_2_0") then
+                hatId = 2
+                if IsPedPropValid(PlayerPedId(), 0, hatId, 0) then
+                    SetPedPropIndex(PlayerPedId(), 0, hatId, 0, true)
+                end             
+            end
+
+        elseif item == glassesItem then
+            glassValue = item:IndexToItem(index)
+            if IsPedPropValid(PlayerPedId(), 1, glassValue, 0) then
+                SetPedPropIndex(PlayerPedId(), 1, glassValue, 0, true)
+            end
         end
     end
 end
@@ -248,20 +297,19 @@ function DisplayCharacterCreatorMenu(menu)
 	AddSaveSelection(menu)
 end
 
-Citizen.CreateThread(function ()
-	while true do
-		Wait(1)
-		if IsCharacterCreated then
-			if _charPool:IsAnyMenuOpen() then
-				_charPool:ProcessMenus()
-			end
-		end
+Citizen.CreateThread(function()
+    while true do
+        Wait(0)
+        if IsPlayerPlaying(PlayerId()) and IsCharacterCreated then
+            if _charPool:IsAnyMenuOpen() then
+                _charPool:ProcessMenus()
+            end
 
-		if DoesCamExist(cam) and not IsPlayerSwitchInProgress() then
-			if not _charPool:IsAnyMenuOpen() then
-				charMenu:Visible(not charMenu:Visible())
-			end
-		end
-	end
+            if DoesCamExist(cam) and not IsPlayerSwitchInProgress() then
+                if not _charPool:IsAnyMenuOpen() then
+                    charMenu:Visible(not charMenu:Visible())
+                end
+            end
+        end        
+    end
 end)
-
