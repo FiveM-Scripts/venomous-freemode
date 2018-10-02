@@ -16,47 +16,47 @@ end
 
 local settings = {
     {
-        SettingName = "Theme",
+        SettingName = GetLabelText("CELL_720"),
         SettingIcon = 23,
         Items = {
             {
-                ItemName = "Theme 1",
+                ItemName = GetLabelText("CELL_820"),
                 OnSelect = function()
                     SetTheme(1)
                 end
             },
             {
-                ItemName = "Theme 2",
+                ItemName = GetLabelText("CELL_821"),
                 OnSelect = function()
                     SetTheme(2)
                 end
             },
             {
-                ItemName = "Theme 3",
+                ItemName = GetLabelText("CELL_822"),
                 OnSelect = function()
                     SetTheme(3)
                 end
             },
             {
-                ItemName = "Theme 4",
+                ItemName = GetLabelText("CELL_823"),
                 OnSelect = function()
                     SetTheme(4)
                 end
             },
             {
-                ItemName = "Theme 5",
+                ItemName = GetLabelText("CELL_824"),
                 OnSelect = function()
                     SetTheme(5)
                 end
             },
             {
-                ItemName = "Theme 6",
+                ItemName = GetLabelText("CELL_825"),
                 OnSelect = function()
                     SetTheme(6)
                 end
             },
             {
-                ItemName = "Theme 7",
+                ItemName = GetLabelText("CELL_826"),
                 OnSelect = function()
                     SetTheme(7)
                 end
@@ -64,47 +64,53 @@ local settings = {
         }
     },
     {
-        SettingName = "Wallpaper",
+        SettingName = GetLabelText("CELL_740"),
         SettingIcon = 25,
         Items = {
             {
-                ItemName = "Wallpaper 1",
+                ItemName = GetLabelText("CELL_844"),
+                OnSelect = function()
+                    SetWallpaper(4)
+                end
+            },        
+            {
+                ItemName = GetLabelText("CELL_845"),
                 OnSelect = function()
                     SetWallpaper(5)
                 end
             },
             {
-                ItemName = "Wallpaper 2",
+                ItemName = GetLabelText("CELL_846"),
                 OnSelect = function()
                     SetWallpaper(6)
                 end
             },
             {
-                ItemName = "Wallpaper 3",
+                ItemName = GetLabelText("CELL_847"),
                 OnSelect = function()
                     SetWallpaper(7)
                 end
             },
             {
-                ItemName = "Wallpaper 4",
+                ItemName = GetLabelText("CELL_848"),
                 OnSelect = function()
                     SetWallpaper(8)
                 end
             },
             {
-                ItemName = "Wallpaper 5",
+                ItemName = GetLabelText("CELL_849"),
                 OnSelect = function()
                     SetWallpaper(9)
                 end
             },
             {
-                ItemName = "Wallpaper 6",
+                ItemName = GetLabelText("CELL_850"),
                 OnSelect = function()
                     SetWallpaper(10)
                 end
             },
             {
-                ItemName = "Wallpaper 7",
+                ItemName = GetLabelText("CELL_851"),
                 OnSelect = function()
                     SetWallpaper(11)
                 end
@@ -112,11 +118,11 @@ local settings = {
         }
     },
     {
-        SettingName = "Sleep Mode",
+        SettingName = GetLabelText("CELL_801"),
         SettingIcon = 26,
         Items = {
             {
-                ItemName = "On",
+                ItemName = GetLabelText("CELL_830"),
                 OnSelect = function()
                     if not Phone.SleepMode then
                         TriggerEvent("vf_utils:queueHelpText", "This will signal other apps to not send any notifications to you. You might miss out on crucial messages.", 10)
@@ -125,7 +131,7 @@ local settings = {
                 end
             },
             {
-                ItemName = "Off",
+                ItemName = GetLabelText("CELL_831"),
                 ItemIcon = 1,
                 OnSelect = function()
                     Phone.SleepMode = false
