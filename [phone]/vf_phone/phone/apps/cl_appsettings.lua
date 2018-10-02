@@ -16,7 +16,7 @@ end
 
 local settings = {
     {
-        SettingName = "Theme",
+        SettingName = GetLabelText("CELL_720"),
         SettingIcon = 23,
         Items = {
             {
@@ -64,7 +64,7 @@ local settings = {
         }
     },
     {
-        SettingName = "Wallpaper",
+        SettingName = GetLabelText("CELL_740"),
         SettingIcon = 25,
         Items = {
             {
