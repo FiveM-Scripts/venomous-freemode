@@ -92,7 +92,9 @@ local function cleanUpEntities()
 end
 
 function MissionSnitch.Init()
+    ClearPrints()
     cleanUpEntities()
+    
     playerPed = PlayerPedId()
     if GetScreenEffectIsActive("MP_Celeb_Win") then
         StopScreenEffect("MP_Celeb_Win")
@@ -100,9 +102,17 @@ function MissionSnitch.Init()
 
     ClearPlayerWantedLevel(PlayerId())
 
-    destBlip = AddBlipForCoord(destCoords)
-    SetBlipNameFromTextFile(destBlip, "BLIP_DEST")
-    SetBlipRoute(destBlip, true)
+    if not DoesEntityExist(destBlip) then
+        destBlip = AddBlipForCoord(destCoords)
+        SetBlipNameFromTextFile(destBlip, "BLIP_DEST")
+        SetBlipRoute(destBlip, true)
+    end
+
+    if not IsPlayerSwitchInProgress() then
+        SwitchOutPlayer(playerPed, 32, 1)
+    end
+
+    Wait(5000)
 
     if IsModelValid(vehicleHash) then
         RequestModel(vehicleHash)
@@ -122,9 +132,11 @@ function MissionSnitch.Init()
         TriggerMusicEvent("MP_MC_CMH_IAA_PREP_START")
         TriggerMusicEvent("MP_MC_CMH_VEHICLE_CHASE")
 
-        Wait(500)
-        notify("CHAR_MARTIN", 6, GetLabelText("BLIP_352"), GetLabelText("BLIP_133"), 'A snitch in custody is about to hand over the location of my cocaine enterprise. stop him!', 140)
-       
+        SetPedIntoVehicle(playerPed, missionVeh, -1)
+        N_0xd8295af639fd9cb8(playerPed)
+
+        Wait(6000)
+        notify("CHAR_MARTIN", 6, GetLabelText("BLIP_352"), GetLabelText("BLIP_133"), 'A snitch in custody is about to hand over the location of my cocaine enterprise. stop him!', 8)
         missionStage = 1
     end
 end
@@ -136,10 +148,12 @@ function MissionSnitch.Tick()
        MissionSnitch.Kill()
     end 
 
-    if IsEntityInZone(PlayerPedId(), "SKID") then
+    if IsEntityInZone(playerPed, "SKID") then
         if not SpawnedEnemies then
             CreateEnemyPeds()
             ped = CreateTarget(458.281, -1000.52954, 24.9148, 272.934)
+            DecorSetBool(ped, "m_snitch_entity", true)
+
             SpawnedEnemies = true
              missionStage = 2
         end
@@ -186,7 +200,7 @@ function MissionSnitch.Kill()
     if missionStage == 3 then
         if not IsEntityDead(playerPed) then
             if not GetScreenEffectIsActive("MP_Celeb_Win") then
-                StartScreenEffect("MP_Celeb_Win", 500, false)
+                StartScreenEffect("MP_Celeb_Win", 5000, false)
             end
         end
          missionStage = 0
@@ -214,7 +228,8 @@ function MissionSnitch.Kill()
     TriggerMusicEvent("MP_MC_STOP")
 
     SetMaxWantedLevel(5)
-
     SetPlayerWantedLevel(PlayerId(), 0, false)
-    SetPlayerWantedLevelNow(PlayerPedId(), true)
+    SetPlayerWantedLevelNow(playerPed, true)
+
+    TriggerServerEvent('vf_base:AddCash', GetRandomIntInRange(50, 2000))
 end
