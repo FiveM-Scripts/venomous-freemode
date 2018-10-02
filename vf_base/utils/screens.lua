@@ -143,7 +143,7 @@ end
 function SetPlayerScores(currentRankLimit, nextRankLimit, playersPreviousXP, playersCurrentXP, rank)
     if not HasHudScaleformLoaded(19) then
         RequestHudScaleform(19)
-        Wait(60)
+        Wait(100)
     end
 
     BeginScaleformMovieMethodHudComponent(19, "SET_RANK_SCORES")
