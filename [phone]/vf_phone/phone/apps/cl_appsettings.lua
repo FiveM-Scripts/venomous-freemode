@@ -92,7 +92,7 @@ local settings = {
                 end
             },
             {
-                ItemName =GetLabelText("CELL_848"),
+                ItemName = GetLabelText("CELL_848"),
                 OnSelect = function()
                     SetWallpaper(8)
                 end
