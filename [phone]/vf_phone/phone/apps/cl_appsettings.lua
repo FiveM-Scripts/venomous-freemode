@@ -20,43 +20,43 @@ local settings = {
         SettingIcon = 23,
         Items = {
             {
-                ItemName = "Theme 1",
+                ItemName = GetLabelText("CELL_820"),
                 OnSelect = function()
                     SetTheme(1)
                 end
             },
             {
-                ItemName = "Theme 2",
+                ItemName = GetLabelText("CELL_821"),
                 OnSelect = function()
                     SetTheme(2)
                 end
             },
             {
-                ItemName = "Theme 3",
+                ItemName = GetLabelText("CELL_822"),
                 OnSelect = function()
                     SetTheme(3)
                 end
             },
             {
-                ItemName = "Theme 4",
+                ItemName = GetLabelText("CELL_823"),
                 OnSelect = function()
                     SetTheme(4)
                 end
             },
             {
-                ItemName = "Theme 5",
+                ItemName = GetLabelText("CELL_824"),
                 OnSelect = function()
                     SetTheme(5)
                 end
             },
             {
-                ItemName = "Theme 6",
+                ItemName = GetLabelText("CELL_825"),
                 OnSelect = function()
                     SetTheme(6)
                 end
             },
             {
-                ItemName = "Theme 7",
+                ItemName = GetLabelText("CELL_826"),
                 OnSelect = function()
                     SetTheme(7)
                 end
