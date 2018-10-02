@@ -68,43 +68,49 @@ local settings = {
         SettingIcon = 25,
         Items = {
             {
-                ItemName = "Wallpaper 1",
+                ItemName = GetLabelText("CELL_844"),
+                OnSelect = function()
+                    SetWallpaper(4)
+                end
+            },        
+            {
+                ItemName = GetLabelText("CELL_845"),
                 OnSelect = function()
                     SetWallpaper(5)
                 end
             },
             {
-                ItemName = "Wallpaper 2",
+                ItemName = GetLabelText("CELL_846"),
                 OnSelect = function()
                     SetWallpaper(6)
                 end
             },
             {
-                ItemName = "Wallpaper 3",
+                ItemName = GetLabelText("CELL_847"),
                 OnSelect = function()
                     SetWallpaper(7)
                 end
             },
             {
-                ItemName = "Wallpaper 4",
+                ItemName =GetLabelText("CELL_848"),
                 OnSelect = function()
                     SetWallpaper(8)
                 end
             },
             {
-                ItemName = "Wallpaper 5",
+                ItemName = GetLabelText("CELL_849"),
                 OnSelect = function()
                     SetWallpaper(9)
                 end
             },
             {
-                ItemName = "Wallpaper 6",
+                ItemName = GetLabelText("CELL_850"),
                 OnSelect = function()
                     SetWallpaper(10)
                 end
             },
             {
-                ItemName = "Wallpaper 7",
+                ItemName = GetLabelText("CELL_851"),
                 OnSelect = function()
                     SetWallpaper(11)
                 end
