@@ -2,6 +2,13 @@ local warningDisplayed
 warning = nil
 deathscale = nil
 
+function DisplayNotification(text)
+    SetNotificationTextEntry("STRING")
+    SetNotificationBackgroundColor(140)
+    AddTextComponentString(text)
+    DrawNotification(false, false)
+end
+
 function showLoadingPromt(label, time)
     Citizen.CreateThread(function()
         BeginTextCommandBusyString(tostring(label))
