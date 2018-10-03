@@ -6,3 +6,4 @@
 - Added multiple missions.
 - Added money system using the native money ui.
 - Added basic time and weather sync for all players.
+- Added idle timer.

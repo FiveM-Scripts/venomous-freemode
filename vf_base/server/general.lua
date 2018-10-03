@@ -35,3 +35,8 @@ PerformHttpRequest("https://raw.githubusercontent.com/FiveM-Scripts/venomous-fre
         print("\n\r[Venomous Freemode] The version on this server is not up to date. Please update now.\n\r")
     end
 end, "GET", "", "")
+
+RegisterServerEvent("vf_base:KickRes")
+AddEventHandler("vf_base:KickRes", function(reason)
+	DropPlayer(source, tostring(reason))
+end)

@@ -20,7 +20,7 @@ AddEventHandler('playerSpawned', function(spawn)
 	Wait(300)
 	
 	if not IsPlayerSwitchInProgress() and ShowLoadingScreen then
-		SwitchOutPlayer(playerPed, 0, 1)
+		SwitchOutPlayer(playerPed, 32, 1)
 	end
 
 	if IsPedModel(playerPed, "mp_m_freemode_01") then
