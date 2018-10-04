@@ -73,6 +73,25 @@ function Player:AddCash(source, value)
 	CancelEvent()
 end
 
+function Player:AddXp(source, value)
+	if IsDatabaseVerified then
+		local src = source
+		local pLicense = Player:GetLicense(src)
+
+		exports.ghmattimysql:scalar("SELECT xp FROM venomous_players WHERE license = @license", { ['license'] = tostring(pLicense)}, function (XpResult)
+			if XpResult then
+				local newvalue = XpResult + value
+				
+				exports.ghmattimysql:execute("UPDATE venomous_players SET xp=@value WHERE license = @license", {['license'] = tostring(pLicense), ['value'] = tostring(newvalue)})
+				TriggerClientEvent('vf_base:DisplayXpValue', src, newvalue)
+				XpResult = nil
+			end
+		end)
+
+	end
+	CancelEvent()
+end
+
 function Player:AddBank(source, value)
 	if IsDatabaseVerified then
 		local src = source
@@ -140,6 +159,17 @@ AddEventHandler('vf_base:AddCash', function(value)
 		if data then
 			local newValue = data.cash + value
 			Player:AddCash(src, newValue)
+		end
+	end)
+end)
+
+RegisterServerEvent('vf_base:AddXp')
+AddEventHandler('vf_base:AddXp', function(value)
+	local src = source
+	Player:Find(src, function(data)
+		if data then
+			local newValue = data.xp + value
+			Player:AddXp(src, newValue)
 		end
 	end)
 end)
