@@ -232,4 +232,5 @@ function MissionSnitch.Kill()
     SetPlayerWantedLevelNow(playerPed, true)
 
     TriggerServerEvent('vf_base:AddCash', GetRandomIntInRange(50, 2000))
+    TriggerServerEvent('vf_base:AddXp', GetRandomIntInRange(50, 100))
 end
