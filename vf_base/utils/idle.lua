@@ -4,7 +4,11 @@ local TimerSoundPlayed = false
 
 local arriveTime = nil
 local NotificationSoundLocked = false
+local currentSound
 local time
+
+local mins
+local secs
 
 local function ConvertTime(ms, timerSound)
   local MilliSeconds = tonumber(ms) / 1000
@@ -22,14 +26,6 @@ local function ConvertTime(ms, timerSound)
     elseif tonumber(mins) >= 01 then
     	return mins.."m "..secs .."s"
     else
-    	if tonumber(secs) <= 10 then
-    		if not TimerSoundPlayed then
-    			local sound = GetSoundId()
-    			PlaySoundFrontend(sound, "Timer_10s", "DLC_TG_Dinner_Sounds", false)
-    			TimerSoundPlayed = true
-    		end
-    	end
-
     	return secs .."s"
     end
   end
@@ -47,7 +43,7 @@ local function DisplayIdleText(time)
 
     SetNotificationTextEntry("HUD_ILDETIME")
     AddTextComponentSubstringPlayerName(time)
-    SetNotificationBackgroundColor(140)
+    SetNotificationBackgroundColor(161)
     notify = DrawNotification(false, false)
 
     return notify
@@ -64,7 +60,7 @@ end
 
 Citizen.CreateThread(function()
 	while true do
-		Wait(50000)
+		Wait(60000)
 		if NetworkIsGameInProgress() and IsPlayerPlaying(PlayerId()) and firstTick then
 			if not IsPlayerSwitchInProgress() then
 				playerPed = PlayerPedId()
@@ -76,8 +72,24 @@ Citizen.CreateThread(function()
 						IsTimerStarted = true
 					end
 				end
-
 				prevPos = currentPos
+			end
+		end
+	end
+end)
+
+Citizen.CreateThread(function()
+	while true do
+		Wait(1000)
+		if NetworkIsGameInProgress() and IsPlayerPlaying(PlayerId()) and firstTick then
+			if not IsPlayerSwitchInProgress() then
+				if IsTimerStarted then
+					if tonumber(mins) <= 01 and tonumber(secs) <= 10 then
+						PlaySoundFrontend(-1, "MP_IDLE_TIMER", "HUD_FRONTEND_DEFAULT_SOUNDSET", true)
+					elseif tonumber(mins) <= 01 and tonumber(secs) <= 01 then
+						PlaySoundFrontend(-1, "MP_IDLE_KICK", "HUD_FRONTEND_DEFAULT_SOUNDSET", true)
+					end
+				end
 			end
 		end
 	end
@@ -96,8 +108,20 @@ Citizen.CreateThread(function()
 					arriveTime = nil
 					newTime = nil
 					NotificationSoundLocked = false
+					StopSound(GetSoundId())
 					RemoveNotification(idleNotification)
 					IsTimerStarted = false
+				elseif IsPedInAnyVehicle(playerPed, false) then
+					if GetEntitySpeed(GetVehiclePedIsUsing(playerPed)) >= 1.0 then
+						arriveTime = nil
+						newTime = nil
+						NotificationSoundLocked = false
+						RemoveNotification(idleNotification)
+						IsTimerStarted = false
+					else
+						displayCounter = ConvertTime(time, 10)
+						idleNotification = DisplayIdleText(displayCounter)
+					end
 				elseif GetGameTimer() < newTime then
 					displayCounter = ConvertTime(time, 10)
 					idleNotification = DisplayIdleText(displayCounter)

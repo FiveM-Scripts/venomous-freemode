@@ -8,8 +8,11 @@ client_scripts {
     '@NativeUI/NativeUI.lua',
     'config/freemode.lua',
     'config/spawn.lua',
+    'config/vehicles.lua',
     'utils/player.lua',
     'utils/screens.lua',
+    'utils/vehicles.lua',
+    'client/interaction.lua',
     'client/character.lua',
     'client/spawn.lua',
     'utils/idle.lua'

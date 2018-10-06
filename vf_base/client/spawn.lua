@@ -48,11 +48,49 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		Wait(1)
-		if firstTick then
+		if NetworkIsGameInProgress() and firstTick then
 			if IsControlJustPressed(0, 20) then
 				ShowHudComponentThisFrame(3)
-				ShowHudComponentThisFrame(4)				
+				ShowHudComponentThisFrame(4)
+
+				if not HasHudScaleformLoaded(19) then
+					RequestHudScaleform(19)
+					Wait(100)
+				end
+				
+				BeginScaleformMovieMethodHudComponent(19, "SHOW")
+				EndScaleformMovieMethodReturn()
 			end
+
+			if DoesEntityExist(personalVeh) then
+				if DecorExistOn(personalVeh, "vf_personalvehicle") then
+					if IsPedInVehicle(PlayerPedId(), personalVeh, false) then
+						local blip = GetBlipFromEntity(personalVeh)
+						if DoesBlipExist(blip) then
+							RemoveBlip(blip)
+						end
+					else
+						if not DoesBlipExist(pvBlip) then
+							pvModel = GetEntityModel(personalVeh)
+							pvBlip = AddBlipForEntity(personalVeh)
+
+							if IsThisModelAPlane(pvModel) then
+								SetBlipSprite(pvBlip, 16)
+							elseif IsThisModelAHeli(pvModel) then
+								SetBlipSprite(pvBlip, 43)
+							else
+								SetBlipSprite(pvBlip, 225)
+							end
+
+							SetBlipNameFromTextFile(pvBlip, "PVEHICLE")
+							SetBlipColour(pvBlip, 4)
+
+							SetBlipFlashes(pvBlip, true)
+							SetBlipFlashTimer(pvBlip, 10000)
+						end
+					end
+				end
+			end			
 
 			if GetEntityHealth(PlayerPedId()) <= 0 or IsEntityDead(PlayerPedId()) then
 				deathscale = RequestDeathScreen()
@@ -62,8 +100,14 @@ Citizen.CreateThread(function()
 						DoScreenFadeOut(500)
 						while not IsScreenFadedOut() do
 							HideHudAndRadarThisFrame()
-							Citizen.Wait(500)
+							Wait(500)
 						end
+
+						if DoesEntityExist(personalVeh) then
+							if DecorExistOn(personalVeh, "vf_personalvehicle") then
+								DestroyPV(personalVeh)
+							end
+						end						
 
 						local x,y,z = table.unpack(GetEntityCoords(PlayerPedId()))
 						local _, vector = GetNthClosestVehicleNode(x, y, z, math.random(20, 180), 0, 0, 0)
@@ -85,10 +129,8 @@ Citizen.CreateThread(function()
 						SetScaleformMovieAsNoLongerNeeded(deathscale)
 						SetScaleformMovieAsNoLongerNeeded(Instructional)
 
-						DoScreenFadeIn(800)
-						while not IsScreenFadedIn() do
-							Citizen.Wait(0)
-						end
+						Wait(800)
+						DoScreenFadeIn(500)
 
 						locksound = false
 					end

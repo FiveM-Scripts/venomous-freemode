@@ -275,10 +275,9 @@ function AddSaveSelection(menu)
             _charPool:Remove()
 
             if IsScreenFadedOut() then
+                Wait(500)
                 DoScreenFadeIn(300)
-                while not IsScreenFadedIn() do
-                    Wait(400)
-                end
+                Wait(400)
             end
 
         	SimulatePlayerInputGait(PlayerId(), 1.0, 8500, 1.0, 1, 0)
@@ -300,16 +299,18 @@ end
 Citizen.CreateThread(function()
     while true do
         Wait(0)
-        if IsPlayerPlaying(PlayerId()) and IsCharacterCreated then
-            if _charPool:IsAnyMenuOpen() then
-                _charPool:ProcessMenus()
-            end
+        if NetworkIsGameInProgress() and IsPlayerPlaying(PlayerId()) then
+            if IsCharacterCreated then
+                if _charPool:IsAnyMenuOpen() then
+                    _charPool:ProcessMenus()
+                end
 
-            if DoesCamExist(cam) and not IsPlayerSwitchInProgress() then
-                if not _charPool:IsAnyMenuOpen() then
-                    charMenu:Visible(not charMenu:Visible())
+                if DoesCamExist(cam) and not IsPlayerSwitchInProgress() then
+                    if not _charPool:IsAnyMenuOpen() then
+                        charMenu:Visible(not charMenu:Visible())
+                    end
                 end
             end
-        end        
+        end
     end
 end)
