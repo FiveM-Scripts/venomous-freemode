@@ -61,7 +61,7 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Wait(60000)
-		if NetworkIsGameInProgress() and IsPlayerPlaying(PlayerId()) and firstTick then
+		if NetworkIsGameInProgress() and IsPlayerPlaying(PlayerId()) and firstTick and Config.enableIdleKick then
 			if not IsPlayerSwitchInProgress() then
 				playerPed = PlayerPedId()
 				currentPos = GetEntityCoords(playerPed, true)
@@ -81,7 +81,7 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		Wait(1000)
-		if NetworkIsGameInProgress() and IsPlayerPlaying(PlayerId()) and firstTick then
+		if NetworkIsGameInProgress() and IsPlayerPlaying(PlayerId()) and firstTick and Config.enableIdleKick then
 			if not IsPlayerSwitchInProgress() then
 				if IsTimerStarted then
 					if tonumber(mins) <= 01 and tonumber(secs) <= 10 then
@@ -98,7 +98,7 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		Wait(0)
-		if IsPlayerPlaying(PlayerId()) and NetworkIsGameInProgress() then
+		if IsPlayerPlaying(PlayerId()) and NetworkIsGameInProgress() and Config.enableIdleKick then
 			player = PlayerId()
 			playerPed = PlayerPedId()
 
