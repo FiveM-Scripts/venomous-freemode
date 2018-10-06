@@ -9,6 +9,15 @@ function DisplayNotification(text)
     DrawNotification(false, false)
 end
 
+function DisplayNotificationWithImg(icon, type, sender, title, text, color)
+    SetNotificationTextEntry("STRING")
+    AddTextComponentString(text)
+    SetNotificationBackgroundColor(color)
+    SetNotificationMessage(icon, icon, true, type, sender, title, text)
+    DrawNotification(false, true)
+    PlaySoundFrontend(GetSoundId(), "Text_Arrive_Tone", "Phone_SoundSet_Default", true)
+end
+
 function showLoadingPromt(label, time)
     Citizen.CreateThread(function()
         BeginTextCommandBusyString(tostring(label))
@@ -150,7 +159,7 @@ end
 function SetPlayerScores(currentRankLimit, nextRankLimit, playersPreviousXP, playersCurrentXP, rank)
     if not HasHudScaleformLoaded(19) then
         RequestHudScaleform(19)
-        Wait(100)
+        Wait(200)
     end
 
     BeginScaleformMovieMethodHudComponent(19, "SET_RANK_SCORES")

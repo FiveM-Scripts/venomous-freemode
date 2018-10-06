@@ -1,4 +1,5 @@
 Config = {
 	enableTextChat = true,
-	idleSecondsUntilKick = 300
+	enableIdleKick = true,
+	idleSecondsUntilKick = 600
 }

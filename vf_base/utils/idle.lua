@@ -61,7 +61,7 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Wait(60000)
-		if NetworkIsGameInProgress() and IsPlayerPlaying(PlayerId()) and firstTick then
+		if NetworkIsGameInProgress() and IsPlayerPlaying(PlayerId()) and firstTick and Config.enableIdleKick then
 			if not IsPlayerSwitchInProgress() then
 				playerPed = PlayerPedId()
 				currentPos = GetEntityCoords(playerPed, true)
@@ -81,7 +81,7 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		Wait(1000)
-		if NetworkIsGameInProgress() and IsPlayerPlaying(PlayerId()) and firstTick then
+		if NetworkIsGameInProgress() and IsPlayerPlaying(PlayerId()) and firstTick and Config.enableIdleKick then
 			if not IsPlayerSwitchInProgress() then
 				if IsTimerStarted then
 					if tonumber(mins) <= 01 and tonumber(secs) <= 10 then
@@ -97,8 +97,8 @@ end)
 
 Citizen.CreateThread(function()
 	while true do
-		Wait(1)
-		if IsPlayerPlaying(PlayerId()) and NetworkIsGameInProgress() then
+		Wait(0)
+		if IsPlayerPlaying(PlayerId()) and NetworkIsGameInProgress() and Config.enableIdleKick then
 			player = PlayerId()
 			playerPed = PlayerPedId()
 
@@ -110,7 +110,7 @@ Citizen.CreateThread(function()
 					NotificationSoundLocked = false
 					StopSound(GetSoundId())
 					RemoveNotification(idleNotification)
-					IsTimerStarted = false					
+					IsTimerStarted = false
 				elseif IsPedInAnyVehicle(playerPed, false) then
 					if GetEntitySpeed(GetVehiclePedIsUsing(playerPed)) >= 1.0 then
 						arriveTime = nil
@@ -120,8 +120,8 @@ Citizen.CreateThread(function()
 						IsTimerStarted = false
 					else
 						displayCounter = ConvertTime(time, 10)
-						idleNotification = DisplayIdleText(displayCounter)						
-					end					
+						idleNotification = DisplayIdleText(displayCounter)
+					end
 				elseif GetGameTimer() < newTime then
 					displayCounter = ConvertTime(time, 10)
 					idleNotification = DisplayIdleText(displayCounter)
