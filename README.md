@@ -8,14 +8,6 @@ This allows you to remove parts at your will, add custom extensions without conf
 ## Changelog    
 All notable changes to this project will be documented [here](CHANGELOG.md).
 
-## Requirements
-- [ghmattimysql](https://github.com/GHMatti/ghmattimysql#install)
-- [MySQL Community Server](https://dev.mysql.com/downloads/mysql/)
-- [NativeUI](https://github.com/FrazzIe/NativeUILua) 
+## Documentation
+Documentation for the gamemode can be found [here](https://venomous.fivem-scripts.org)
 
-## Installation
-- Download or clone the gamemode.
-- **Copy** all folders to your `resources` folder.
-- **Copy** the `venomous.cfg` to the same folder as your `server.cfg`.
-- Add `exec venomous.cfg` to your `server.cfg`.
-- Edit the `venomous.cfg` to your liking.

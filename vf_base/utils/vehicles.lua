@@ -10,7 +10,7 @@ function DestroyPV(personalVeh)
 		end
 
 		Wait(5000)
-        SetEntityAsNoLongerNeeded(personalVeh)
+        DeleteEntity(personalVeh)
         personalVeh = nil
     else
         DisplayNotification(GetLabelText("PIM_HEMV1"))
