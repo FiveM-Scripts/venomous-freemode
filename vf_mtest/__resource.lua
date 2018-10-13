@@ -5,6 +5,7 @@ client_scripts {
     "cl_entityenum.lua",
     "missions/cl_ruinermadness.lua",
     "missions/cl_dispatch.lua",
+    "missions/cl_securityvan.lua", 
     "missions/cl_snitch.lua",    
     "missions/cl_missions.lua",
     "cl_missionsapp.lua"

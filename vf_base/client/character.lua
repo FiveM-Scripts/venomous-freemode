@@ -281,6 +281,7 @@ function AddSaveSelection(menu)
             end
 
         	SimulatePlayerInputGait(PlayerId(), 1.0, 8500, 1.0, 1, 0)
+
             SetPlayerScores(1, 2000, 1, 1000, 1)
         	hidehud = false
         end

@@ -1,8 +1,10 @@
 Missions = {
     MissionRuinerMadness,
     MissionDispatch,
-    MissionSnitch
+    MissionSnitch,
+    MissionSecurityVan
 }
+
 local currentMission
 
 function Missions.Start(mission)
