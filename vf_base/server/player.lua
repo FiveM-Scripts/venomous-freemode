@@ -33,9 +33,6 @@ function Player:Find(source, callback)
 			exports.ghmattimysql:execute("SELECT * FROM venomous_players WHERE license = @license", Parameters, function(data)
 				for k, v in pairs(data) do
 					if callback then
-						for k,v in pairs(v) do
-							print(k, v)
-						end
 						callback(v)
 					end
 				end
