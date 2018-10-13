@@ -92,9 +92,10 @@ local function cleanUpEntities()
 end
 
 function MissionSnitch.Init()
+    TriggerMusicEvent("MP_MC_STOP")
     ClearPrints()
     cleanUpEntities()
-    
+
     playerPed = PlayerPedId()
     if GetScreenEffectIsActive("MP_Celeb_Win") then
         StopScreenEffect("MP_Celeb_Win")
@@ -145,7 +146,7 @@ function MissionSnitch.Tick()
     local playerCoords = GetEntityCoords(playerPed)
 
     if IsPedDeadOrDying(playerPed) then
-       MissionSnitch.Kill()
+       Missions.Kill()
     end 
 
     if IsEntityInZone(playerPed, "SKID") then
@@ -190,7 +191,7 @@ function MissionSnitch.Tick()
                 BeginTextCommandPrint("FM_IHELP_LCP")
                 EndTextCommandPrint(0.1, true)
             else
-                MissionSnitch.Kill()
+                Missions.Kill()
             end
         end
     end
@@ -220,6 +221,7 @@ function MissionSnitch.Kill()
     if DoesEntityExist(missionVeh) then
         if IsPedInVehicle(playerPed, missionVeh, false) then
             TaskLeaveVehicle(playerPed, missionVeh, 1)
+            TriggerServerEvent('vf_base:AddCash', GetRandomIntInRange(50, 2000))
         end
 
         SetEntityAsNoLongerNeeded(missionVeh)
@@ -230,6 +232,4 @@ function MissionSnitch.Kill()
     SetMaxWantedLevel(5)
     SetPlayerWantedLevel(PlayerId(), 0, false)
     SetPlayerWantedLevelNow(playerPed, true)
-
-    TriggerServerEvent('vf_base:AddCash', GetRandomIntInRange(50, 2000))
 end

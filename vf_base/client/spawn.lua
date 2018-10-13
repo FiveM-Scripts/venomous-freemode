@@ -84,12 +84,14 @@ Citizen.CreateThread(function()
 
 							SetBlipNameFromTextFile(pvBlip, "PVEHICLE")
 							SetBlipColour(pvBlip, 4)
-
-							SetBlipFlashes(pvBlip, true)
-							SetBlipFlashTimer(pvBlip, 10000)
 						end
 					end
-				end
+					if GetEntityHealth(personalVeh) <= 0 and DoesBlipExist(pvBlip) then
+						SetEntityAsNoLongerNeeded(personalVeh)
+						RemoveBlip(pvBlip)
+						personalVeh = nil
+					end
+				end			
 			end			
 
 			if GetEntityHealth(PlayerPedId()) <= 0 or IsEntityDead(PlayerPedId()) then

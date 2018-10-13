@@ -180,7 +180,7 @@ function MissionDispatch.Tick()
                 BeginTextCommandPrint("FM_IHELP_LCP")
                 EndTextCommandPrint(0.1, true)
             else
-                MissionDispatch.Kill()
+                Missions.Kill()
             end
         end
     end

@@ -33,6 +33,9 @@ function Player:Find(source, callback)
 			exports.ghmattimysql:execute("SELECT * FROM venomous_players WHERE license = @license", Parameters, function(data)
 				for k, v in pairs(data) do
 					if callback then
+						for k,v in pairs(v) do
+							print(k, v)
+						end
 						callback(v)
 					end
 				end
@@ -57,7 +60,7 @@ end
 function Player:AddCash(source, value)
 	if IsDatabaseVerified then
 		local src = source
-		local pLicense = Player:GetLicense(src)
+		local pLicense = Player:GetLicense(src)		
 
 		exports.ghmattimysql:scalar("SELECT cash FROM venomous_players WHERE license = @license", { ['license'] = tostring(pLicense)}, function (CashResult)
 			if CashResult then
@@ -65,6 +68,8 @@ function Player:AddCash(source, value)
 				
 				exports.ghmattimysql:execute("UPDATE venomous_players SET cash=@value WHERE license = @license", {['license'] = tostring(pLicense), ['value'] = tostring(newvalue)})
 				TriggerClientEvent('vf_base:DisplayCashValue', src, newvalue)
+				
+				local newvalue = nil
 				CashResult = nil
 			end
 		end)
@@ -111,6 +116,7 @@ function Player:ClearCash(source)
 	exports.ghmattimysql:execute("SELECT cash FROM venomous_players WHERE license = @license", { ['@license'] = tostring(pLicense)}, function (result)
 		if(result) then
 			local newValue = 0
+			print('new cash value is ' .. newValue)
 
 			exports.ghmattimysql:execute("UPDATE venomous_players SET cash=@newValue WHERE license = @license", {['license'] = tostring(pLicense), ['newValue'] = 0})
 			TriggerClientEvent('vf_base:DisplayCashValue', src, newValue)
@@ -160,7 +166,7 @@ AddEventHandler('vf_base:ClearCash', function(value)
 	local src = source
 	Player:Find(src, function(data)
 		if data then
-			Player:ClearCash(src, value)
+			Player:ClearCash(src)
 		end
 	end)
 end)

@@ -14,6 +14,9 @@ AddEventHandler('vf_base:LoadPlayer', function()
 			local cash = data.cash
 			local bank = data.bank
 
+			print('Cash ' .. cash)
+			print('Bank ' .. bank)
+
 			TriggerEvent('vf_base:GetPlayerCharacters', src)			
 			TriggerClientEvent('vf_base:DisplayCashValue', src, cash)
 			TriggerClientEvent('vf_base:DisplayBankValue', src, bank)

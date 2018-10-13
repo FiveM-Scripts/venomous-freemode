@@ -55,9 +55,8 @@ end
 
 RegisterNetEvent("vf_base:DisplayCashValue")
 AddEventHandler("vf_base:DisplayCashValue", function(value)
-	StatSetInt("MP0_WALLET_BALANCE", value, true)
+	StatSetInt("MP0_WALLET_BALANCE", value, false)
 	ShowHudComponentThisFrame(4)
-
 	CancelEvent()
 end)
 
