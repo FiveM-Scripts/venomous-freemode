@@ -41,9 +41,7 @@ AddEventHandler('vf_ammunation:LoadPlayer', function()
 		exports.ghmattimysql:scalar("SELECT license FROM venomous_weapons WHERE license = @license", Parameters, function(result)
 			if result then
 				exports.ghmattimysql:execute("SELECT weapon FROM venomous_weapons WHERE license = @license", Parameters, function(data)
-					for k, v in pairs(data) do
-						TriggerClientEvent('vf_ammunation:LoadWeapons', src, v.weapon)
-					end
+					TriggerClientEvent('vf_ammunation:LoadWeapons', src, data)
 				end)
 			end
 		end)

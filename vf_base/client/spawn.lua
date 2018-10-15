@@ -127,9 +127,11 @@ Citizen.CreateThread(function()
 						ClearPedBloodDamage(PlayerPedId())
 						ClearPedWetness(PlayerPedId())
 						StopScreenEffect("DeathFailOut")
+						
 
 						SetScaleformMovieAsNoLongerNeeded(deathscale)
 						SetScaleformMovieAsNoLongerNeeded(Instructional)
+						
 						TriggerServerEvent('vf_ammunation:LoadPlayer')
 						
 						Wait(800)

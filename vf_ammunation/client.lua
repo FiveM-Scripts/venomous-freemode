@@ -118,11 +118,6 @@ local function DisplayNotificaition(label)
   PlaySoundFrontend(-1, "ERROR", "HUD_AMMO_SHOP_SOUNDSET", true)
 end
 
-AddEventHandler('playerSpawned', function(spawn)
-  local playerPed = PlayerPedId()
-    TriggerServerEvent('vf_ammunation:LoadPlayer')
-end)
-
 RegisterNetEvent("vf_ammunation:nocash")
 AddEventHandler("vf_ammunation:nocash", function(weaponHash, weaponName)
   DisplayNotificaition("BB_NOMONEY")
@@ -160,9 +155,12 @@ AddEventHandler("vf_ammunation:giveWeapon", function(weaponHash, weaponName)
 end)
 
 RegisterNetEvent("vf_ammunation:LoadWeapons")
-AddEventHandler("vf_ammunation:LoadWeapons", function(weaponHash)
-  if IsWeaponValid(weaponHash) then
-    GiveWeaponToPed(playerPed, weaponHash, -1, false, false)
+AddEventHandler("vf_ammunation:LoadWeapons", function(weapons)
+  for k,v in pairs(weapons) do
+    weaponHash = v.weapon
+    if IsWeaponValid(weaponHash) then
+      GiveWeaponToPed(PlayerPedId(), weaponHash, -1, false, false)
+    end
   end
 end)
 
