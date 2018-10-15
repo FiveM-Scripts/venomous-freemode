@@ -166,11 +166,12 @@ end)
 
 Citizen.CreateThread(function()
   playerId = PlayerId()
-  playerPed = PlayerPedId()
 
   while true do
     Wait(1)
     if NetworkIsGameInProgress() and IsPlayerPlaying(playerId) then
+      playerPed = PlayerPedId()
+      
       if not BlipsCreated then
         for _, item in pairs(blips) do
           item.blip = AddBlipForCoord(item.x, item.y, item.z)
