@@ -1,3 +1,5 @@
+StoreCurrency = "$"
+
 storeGroups = {
    {["name"] = GetLabelText("VAULT_WMENUT_8"), ["id"] = "explosives"},
    {["name"] = GetLabelText("VAULT_WMENUT_2"), ["id"] = "pistols"},
