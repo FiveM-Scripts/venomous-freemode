@@ -5,6 +5,8 @@ AddEventHandler("vf_phone:addApp", function(handler)
 end)
 
 Citizen.CreateThread(function()
-    Wait(100)
+    while not NetworkIsGameInProgress() or not IsPlayerPlaying(PlayerId()) do
+        Wait(1)
+    end
     TriggerEvent("vf_phone:setup")
 end)
