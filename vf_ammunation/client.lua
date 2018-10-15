@@ -85,7 +85,7 @@ local function CreateWeaponMenu(menu)
         for c, weapon in pairs(w.items) do
           if IsWeaponValid(GetHashKey(weapon.model)) then
             local newitem = NativeUI.CreateItem(weapon.name, "")
-            newitem:RightLabel("€ " .. weapon.price)
+            newitem:RightLabel(StoreCurrency .. " " .. weapon.price)
             weaponGroup:AddItem(newitem)
             newitem.Activated = function(ParentMenu, SelectedItem)
               if SelectedItem == newitem then
