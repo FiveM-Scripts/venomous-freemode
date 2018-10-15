@@ -4,4 +4,7 @@ AddEventHandler("vf_phone:addApp", function(handler)
     end
 end)
 
-TriggerEvent("vf_phone:setup")
+Citizen.CreateThread(function()
+    Wait(100)
+    TriggerEvent("vf_phone:setup")
+end)
