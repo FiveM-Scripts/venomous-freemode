@@ -93,49 +93,6 @@ function Player:AddBank(source, value)
 	CancelEvent()
 end
 
-function Player:RemoveCash(source, value)
-	local src = source
-	local pLicense = Player:GetLicense(src)
-
-	exports.ghmattimysql:execute("SELECT cash FROM venomous_players WHERE license = @license", { ['@license'] = tostring(pLicense)}, function (result)
-		if(result) then
-			local newValue = result - value
-			exports.ghmattimysql:execute("UPDATE venomous_players SET cash=@newValue WHERE license = @license", {['license'] = tostring(pLicense), ['newValue'] = tostring(newValue)})
-			TriggerClientEvent('vf_base:DisplayCashValue', src, newValue)
-		end
-	end)
-	CancelEvent()
-end
-function Player:ClearCash(source)
-	local src = source
-	local pLicense = Player:GetLicense(src)
-	
-	exports.ghmattimysql:execute("SELECT cash FROM venomous_players WHERE license = @license", { ['@license'] = tostring(pLicense)}, function (result)
-		if(result) then
-			local newValue = 0
-			print('new cash value is ' .. newValue)
-
-			exports.ghmattimysql:execute("UPDATE venomous_players SET cash=@newValue WHERE license = @license", {['license'] = tostring(pLicense), ['newValue'] = 0})
-			TriggerClientEvent('vf_base:DisplayCashValue', src, newValue)
-		end
-	end)
-	CancelEvent()
-end
-
-function Player:ClearBank(source)
-	local src = source
-	local pLicense = Player:GetLicense(src)
-	
-	exports.ghmattimysql:execute("SELECT bank FROM venomous_players WHERE license = @license", { ['@license'] = tostring(pLicense)}, function (result)
-		if(result) then
-			local newValue = 0
-			exports.ghmattimysql:execute("UPDATE venomous_players SET bank=@newValue WHERE license = @license", {['license'] = tostring(pLicense), ['newValue'] = newValue})
-			TriggerClientEvent('vf_base:DisplayBankValue', src, newValue)
-		end
-	end)
-	CancelEvent()
-end
-
 RegisterServerEvent('vf_base:AddCash')
 AddEventHandler('vf_base:AddCash', function(value)
 	local src = source
@@ -159,11 +116,14 @@ AddEventHandler('vf_base:AddBank', function(value)
 end)
 
 RegisterServerEvent('vf_base:ClearCash')
-AddEventHandler('vf_base:ClearCash', function(value)
+AddEventHandler('vf_base:ClearCash', function(source, value)
 	local src = source
+
 	Player:Find(src, function(data)
 		if data then
-			Player:ClearCash(src)
+			local newValue = data.cash - value
+			exports.ghmattimysql:execute("UPDATE venomous_players SET cash=@newValue WHERE license = @license", {['license'] = tostring(data.license), ['newValue'] = tostring(newValue)}, function() end)
+			TriggerClientEvent('vf_base:DisplayCashValue', source, newValue)
 		end
 	end)
 end)
@@ -171,9 +131,12 @@ end)
 RegisterServerEvent('vf_base:ClearBank')
 AddEventHandler('vf_base:ClearBank', function(value)
 	local src = source
+
 	Player:Find(src, function(data)
 		if data then
-			Player:ClearBank(src, value)
+			local newValue = data.bank - value
+			exports.ghmattimysql:execute("UPDATE venomous_players SET bank=@newValue WHERE license = @license", {['license'] = tostring(data.license), ['newValue'] = tostring(newValue)}, function() end)
+			TriggerClientEvent('vf_base:DisplayBankValue', source, newValue)
 		end
 	end)
 end)

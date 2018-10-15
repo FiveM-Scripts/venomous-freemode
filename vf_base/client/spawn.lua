@@ -130,7 +130,8 @@ Citizen.CreateThread(function()
 
 						SetScaleformMovieAsNoLongerNeeded(deathscale)
 						SetScaleformMovieAsNoLongerNeeded(Instructional)
-
+						TriggerServerEvent('vf_ammunation:LoadPlayer')
+						
 						Wait(800)
 						DoScreenFadeIn(500)
 
