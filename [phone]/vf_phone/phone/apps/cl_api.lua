@@ -4,4 +4,9 @@ AddEventHandler("vf_phone:addApp", function(handler)
     end
 end)
 
-TriggerEvent("vf_phone:setup")
+Citizen.CreateThread(function()
+    while not NetworkIsGameInProgress() or not IsPlayerPlaying(PlayerId()) do
+        Wait(1)
+    end
+    TriggerEvent("vf_phone:setup")
+end)
