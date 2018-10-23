@@ -8,3 +8,4 @@
 - Added basic time and weather sync for all players.
 - Added idle timer.
 - Added Ammu-Nation stores.
+- Added movie theaters.
