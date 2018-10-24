@@ -4,7 +4,6 @@ Phone = {
     Wallpaper = GetResourceKvpInt("vf_phone_wallpaper") or 11,
     SleepMode = false
 }
-local wasBackOverridenByApp = false -- To stop duplicate back input when backing from app with back key overriden
 
 Citizen.CreateThread(function()
     while true do
@@ -43,16 +42,6 @@ Citizen.CreateThread(function()
 			SetTextRenderId(renderId)
 			DrawScaleformMovie(Phone.Scaleform, 0.0998, 0.1775, 0.1983, 0.364, 255, 255, 255, 255);
             SetTextRenderId(1)
-            
-            if Apps.CurrentApp.OverrideBack then
-                wasBackOverridenByApp = true
-            elseif IsControlJustPressed(0, 202) then
-                if wasBackOverridenByApp then
-                    wasBackOverridenByApp = false
-                else
-                    Apps.Kill()
-                end
-            end
         elseif IsControlJustPressed(0, 300) then
             PlaySoundFrontend(-1, "Pull_Out", "Phone_SoundSet_Default")
             Phone.Scaleform = RequestScaleformMovie("CELLPHONE_IFRUIT")
@@ -63,15 +52,7 @@ Citizen.CreateThread(function()
             Phone.Visible = true
             SetMobilePhoneScale(285.0)
             CreateMobilePhone(0)
-            SetMobilePhonePosition()
-            Apps.Start("Main")
         end
-
-        --[[for i = 0, 1000 do
-            if IsControlJustPressed(0, i) then
-                print(i)
-            end
-        end]]--
     end
 end)
 
