@@ -1,21 +1,21 @@
-local helpTexts = {}
+local HelpTexts = {}
 
-AddEventHandler("vf_utils:queueHelpText", function(text, duration)
+function QueueHelpText(text, duration)
     if type(text) == "string" and type(duration) == "number" then
-        table.insert(helpTexts, { text = text, duration = duration })
+        table.insert(HelpTexts, { text = text, duration = duration })
     end
-end)
+end
 
 -- Decrementing
 Citizen.CreateThread(function()
     while true do
-        if #helpTexts == 0 then
+        if #HelpTexts == 0 then
             Wait(1)
         else
             Wait(1000)
-            helpTexts[1].duration = helpTexts[1].duration - 1
-            if helpTexts[1].duration == 0 then
-                table.remove(helpTexts, 1)
+            HelpTexts[1].duration = HelpTexts[1].duration - 1
+            if HelpTexts[1].duration == 0 then
+                table.remove(HelpTexts, 1)
             end
         end
     end
@@ -25,8 +25,8 @@ end)
 Citizen.CreateThread(function()
     while true do
         Wait(1)
-        if helpTexts[1] then
-            AddTextEntry("_vf_utils_helptext", helpTexts[1].text)
+        if HelpTexts[1] then
+            AddTextEntry("_vf_utils_helptext", HelpTexts[1].text)
             DisplayHelpTextThisFrame("_vf_utils_helptext")
         end
     end

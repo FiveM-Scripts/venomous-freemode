@@ -6,30 +6,15 @@ Uses functionality from `vf_utils`
 
 ## Developing
 
-To externally add a new app to the phone, hook onto the `vf_phone:setup` call and pass a table with all the information to the `vf_phone:addApp` event.
+Docs coming soon, have an example for now:
 
-Here's an example app:
 ```lua
-AppTest = {
-    AppName = "Hello World", -- App Name to be shown on the app drawer and header
-    AppIcon = 13, -- App Icon to be shown on the app drawer
-    OverrideBack = true -- Override backspace killing the app (useful for apps with sub-menus)
-}
-
-function AppTest.Init(phoneScaleform --[[ The phone's scaleform to draw the app on ]], kill --[[ Function to call for app kill ]])
-    -- Called on app start
-end
-
-function AppTest.Tick()
-    -- Called every tick
-end
-
-function AppTest.Kill()
-    -- Called on app kill
-end
-
 AddEventHandler("vf_phone:setup", function()
-    -- Add the app by passing the AppTest table
-    TriggerEvent("vf_phone:addApp", AppTest)
+	local app = exports.vf_phone:CreateApp("Hello World", 24) -- Name and Icon
+	local mainScreen = app.CreateListScreen() -- Creates a new List Screen
+	app.SetLauncherScreen(mainScreen) -- Sets it as "main" screen (this screen will be shown when app is launched)
+	mainScreen.AddDummyItem("I'm a dummy", 0) -- Name and Icon
+	mainScreen.AddCallbackItem("Hello", 0, function() print("World") end) -- Name, Icon and Callback
+	mainScreen.AddScreenItem("Don't Click", 0, app.CreateListScreen()) -- Name, Icon and Screen
 end)
 ```

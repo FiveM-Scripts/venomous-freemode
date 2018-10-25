@@ -42,6 +42,7 @@ Citizen.CreateThread(function()
 				for k,v in pairs(CinemaCoords) do
 					local blip = AddBlipForCoord(v.x, v.y, v.z)
 					SetBlipSprite(blip, 135)
+					SetBlipAsShortRange(blip, true)
 				end
 				DoesCinemaBlipsExist = true
 			end
