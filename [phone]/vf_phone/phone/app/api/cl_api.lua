@@ -1,6 +1,9 @@
-function CreateApp(name, icon)
-    return App.CreateApp(name, icon)
-end
+AddEventHandler("vf_phone:CreateApp", function(name, icon, cb)
+    local app = App.CreateApp(name, icon)
+    if type(cb) == "table" then -- Functions are tables I guess according to msgpack
+        cb(app)
+    end
+end)
 
 --[[
 function GetAppIcons()

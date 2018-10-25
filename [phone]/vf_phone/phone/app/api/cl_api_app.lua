@@ -11,7 +11,7 @@ function App.CreateApp(name, icon)
         App.GetIcon = function() return icon end
         App.CreateListScreen = function() return Screen.CreateListScreen(id) end
         App.SetLauncherScreen = function(screen)
-            if type(screen) == "table" and type(screen.GetID) == "function" and Apps[id].Screens[screen.GetID()] then
+            if type(screen) == "table" and type(screen.GetID) == "table" --[[ Wtf Msgpack?!?! ]] and Apps[id].Screens[screen.GetID()] then
                 Apps[id].LauncherScreen = Apps[id].Screens[screen.GetID()]
             end
         end

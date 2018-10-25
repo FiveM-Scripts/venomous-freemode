@@ -14,7 +14,3 @@ client_scripts {
 dependencies {
     "vf_utils"
 }
-
-exports {
-    "CreateApp"
-}

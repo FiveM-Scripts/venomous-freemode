@@ -137,17 +137,18 @@ local _Settings = {
 }
 
 AddEventHandler("vf_phone:setup", function()
-    local app = CreateApp(GetLabelText("CELL_16"), 24)
-    local mainScreen = app.CreateListScreen()
-    app.SetLauncherScreen(mainScreen)
-    for _, setting in ipairs(_Settings) do
-        local settingMenu = app.CreateListScreen()
-        for _, item in ipairs(setting.Items) do
-            if not item.Icon then
-                item.Icon = 10
+    TriggerEvent("vf_phone:CreateApp", GetLabelText("CELL_16"), 24, function(app)
+        local mainScreen = app.CreateListScreen()
+        app.SetLauncherScreen(mainScreen)
+        for _, setting in ipairs(_Settings) do
+            local settingMenu = app.CreateListScreen()
+            for _, item in ipairs(setting.Items) do
+                if not item.Icon then
+                    item.Icon = 10
+                end
+                settingMenu.AddCallbackItem(item.Name, item.Icon, item.OnSelect)
             end
-            settingMenu.AddCallbackItem(item.Name, item.Icon, item.OnSelect)
+            mainScreen.AddScreenItem(setting.Name, setting.Icon, settingMenu)
         end
-        mainScreen.AddScreenItem(setting.Name, setting.Icon, settingMenu)
-    end
+    end)
 end)

@@ -49,6 +49,11 @@ Citizen.CreateThread(function()
             PushScaleformMovieFunctionParameterInt(Apps.CurrentScreen.Type)
             PushScaleformMovieFunctionParameterInt(selectedItem)
         
+            -- Fix selectedItem in case last item got removed while it was selected
+            if selectedItem > #Apps.CurrentScreen.Items - 1 then
+                selectedItem = #Apps.CurrentScreen.Items - 1
+            end
+
             local navigated = true
             if IsControlJustPressed(0, 300) then -- Up
                 selectedItem = selectedItem - 1
@@ -63,7 +68,7 @@ Citizen.CreateThread(function()
             elseif IsControlJustPressed(0, 255) then -- Enter
                 if #Apps.CurrentScreen.Items > 0 then
                     local item = Apps.CurrentScreen.Items[selectedItem + 1]
-                    if type(item.Callback) == "function" then -- Action
+                    if type(item.Callback) == "table" then -- Action (Should be function, but it isn't because it's a table according to Msgpack!)
                         item.Callback()
                     elseif type(item.Callback) == "number" then -- Screen
                         table.insert(Apps.PrevScreens, Apps.CurrentScreen)
