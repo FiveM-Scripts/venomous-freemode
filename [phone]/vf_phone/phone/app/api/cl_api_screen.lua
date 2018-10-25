@@ -1,9 +1,9 @@
 Screen = {}
 
-function Screen.CreateListScreen(appId)
+function Screen.CreateListScreen(appId, header)
     local id = #Apps[appId].Screens + 1
     local screenType = 13
-    Apps[appId].Screens[id] = {Type = screenType, Items = {}}
+    Apps[appId].Screens[id] = {Type = screenType, Header = header, Items = {}}
 
     local Screen = {}
     Screen.GetID = function() return id end
