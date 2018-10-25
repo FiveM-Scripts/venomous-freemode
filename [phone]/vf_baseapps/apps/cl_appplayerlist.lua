@@ -17,8 +17,9 @@ Citizen.CreateThread(function()
             _PlayerListScreen.ClearItems()
             for i = 0, 64 do
                 if NetworkIsPlayerConnected(i) then
-                    local playerOptionsMenu = _App.CreateListScreen()
-                    _PlayerListScreen.AddScreenItem(GetPlayerName(i), 0, playerOptionsMenu)
+                    local playerName = GetPlayerName(i)
+                    local playerOptionsMenu = _App.CreateListScreen(playerName)
+                    _PlayerListScreen.AddScreenItem(playerName, 0, playerOptionsMenu)
                     playerOptionsMenu.AddCallbackItem("Send Message", 0, function() end)
                 end
             end
