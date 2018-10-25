@@ -1,6 +1,6 @@
 Citizen.CreateThread(function()
     while true do
-        Wait(10000)
+        Wait(1000)
 
         NetworkOverrideClockTime(NetworkGetServerTime())
     end
