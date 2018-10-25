@@ -8,6 +8,11 @@ function Screen.CreateListScreen(app)
     local Screen = {}
     Screen.GetID = function() return id end
     Screen.GetType = function() return screenType end
+    Screen.AddDummyItem = function(name, icon)
+        if (type(name) == "string" or type(name) == "number") and type(icon) == "number" then
+            return Item.AddCallbackItem(app, id, {icon, name}, function() end)
+        end
+    end
     Screen.AddCallbackItem = function(name, icon, callback)
         if (type(name) == "string" or type(name) == "number") and type(icon) == "number" then
             return Item.AddCallbackItem(app, id, {icon, name}, callback)
