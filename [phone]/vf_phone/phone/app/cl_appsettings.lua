@@ -135,6 +135,7 @@ local _Settings = {
         }
     }
 }
+
 AddEventHandler("vf_phone:setup", function()
     local app = CreateApp(GetLabelText("CELL_16"), 24)
     local mainScreen = app.CreateListScreen()
