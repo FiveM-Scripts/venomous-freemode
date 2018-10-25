@@ -1,6 +1,6 @@
 Screen = {}
 
-function _ClearUnusedScreens(appId, screenId)
+local function _ClearUnusedScreens(appId, screenId)
     local toBeRemoved = {}
     for _, item in ipairs(Apps[appId].Screens[screenId].Items) do
         if type(item.Callback) == "integer" then -- It's a screen
@@ -27,42 +27,44 @@ function _ClearUnusedScreens(appId, screenId)
     end
 end
 
-function Screen.CreateListScreen(appId, header)
+local function _CheckListItemCreatable(name, icon)
+    if type(name) == "string" or type(name) == "number" then
+        if type(icon) == "number" or not icon then
+            return true
+        end
+    end
+end
+
+local function _CreateBaseScreen(appId, header, screenType)
     local id = #Apps[appId].Screens + 1
-    local screenType = 13
     Apps[appId].Screens[id] = {Type = screenType, Header = header, Items = {}}
 
-    local Screen = {}
-    Screen.GetID = function() return id end
-    Screen.GetType = function() return screenType end
-    Screen.AddCallbackItem = function(name, icon, callback)
-        if type(name) == "string" or type(name) == "number" then
-            if not icon then
-                icon = 0
-            end
-            if type(icon) == "number" then
-                return Item.AddCallbackItem(appId, id, {icon, name}, callback)
-            end
-        end
-    end
-    Screen.AddScreenItem = function(name, icon, screen)
-        if type(name) == "string" or type(name) == "number" then
-            if not icon then
-                icon = 0
-            end
-            if type(icon) == "number" then
-                return Item.AddScreenItem(appId, id, {icon, name}, screen)
-            end
-        end
-    end
-    Screen.RemoveItem = function(item)
+    local screen = {}
+    screen.GetID = function() return id end
+    screen.GetType = function() return screenType end
+    screen.RemoveItem = function(item)
         if type(item) == "table" and type(item.GetID) == "table" --[[ Once again, thanks for that Msgpack ]] and Apps[appId].Screens[id].Items[item.GetID()] then
-            Item.RemoveItem(appId, id, item.GetID())
+            table.remove(Apps[appId].Screens[id], item.GetID())
         end
     end
-    Screen.ClearItems = function() 
+    screen.ClearItems = function() 
         _ClearUnusedScreens(appId, id)
         Apps[appId].Screens[id].Items = {}
     end
-    return Screen
+    return screen
+end
+
+function Screen.CreateListScreen(appId, header)
+    local screen = _CreateBaseScreen(appId, header, 13)
+    screen.AddCallbackItem = function(name, icon, callback)
+        if _CheckListItemCreatable(name, icon) then
+            return Item.AddCallbackItem(appId, screen.GetID(), {icon or 0, name}, callback)
+        end
+    end
+    screen.AddScreenItem = function(name, icon, screen)
+        if _CheckListItemCreatable(name, icon) then
+            return Item.AddScreenItem(appId, screen.GetID(), {icon or 0, name}, screen)
+        end
+    end
+    return screen
 end

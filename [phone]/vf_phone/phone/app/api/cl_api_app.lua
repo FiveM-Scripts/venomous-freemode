@@ -5,20 +5,20 @@ function App.CreateApp(name, icon)
         local id = #Apps + 1
         Apps[id] = {Name = name, Icon = icon, Screens = {}}
 
-        local App = {}
-        App.GetID = function() return id end
-        App.GetName = function() return name end
-        App.GetIcon = function() return icon end
-        App.CreateListScreen = function(header)
+        local app = {}
+        app.GetID = function() return id end
+        app.GetName = function() return name end
+        app.GetIcon = function() return icon end
+        app.CreateListScreen = function(header)
             if type(header) == "string" or type(header) == "number" or not header then
                 return Screen.CreateListScreen(id, header)
             end
         end
-        App.SetLauncherScreen = function(screen)
+        app.SetLauncherScreen = function(screen)
             if type(screen) == "table" and type(screen.GetID) == "table" --[[ Wtf Msgpack?!?! ]] and Apps[id].Screens[screen.GetID()] then
                 Apps[id].LauncherScreen = Apps[id].Screens[screen.GetID()]
             end
         end
-        return App
+        return app
     end
 end
