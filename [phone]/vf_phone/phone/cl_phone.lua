@@ -1,9 +1,16 @@
 Phone = {
     Visible = false,
-    Theme = GetResourceKvpInt("vf_phone_theme") or 5,
-    Wallpaper = GetResourceKvpInt("vf_phone_wallpaper") or 11,
+    Theme = GetResourceKvpInt("vf_phone_theme"),
+    Wallpaper = GetResourceKvpInt("vf_phone_wallpaper"),
     SleepMode = false
 }
+
+if Phone.Theme == 0 then
+    Phone.Theme = 5
+end
+if Phone.Wallpaper == 0 then
+    Phone.Wallpaper = 11
+end
 
 Citizen.CreateThread(function()
     while true do
