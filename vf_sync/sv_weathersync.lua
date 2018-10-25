@@ -1,4 +1,4 @@
-local weatherTypes = {
+local _WeatherTypes = {
     "CLEAR",
     "EXTRASUNNY",
     "CLOUDS",
@@ -9,12 +9,22 @@ local weatherTypes = {
     "SMOG",
     "FOGGY"
 }
-local currentWeather
-local secondsUntilChange
+local _CurrentWeather
+local _SecondsUntilChange
 
 local function UpdateWeather()
-    currentWeather = weatherTypes[math.random(1, #weatherTypes)]
-    secondsUntilChange = math.random(60, 1800)
+    local prevWeather = _CurrentWeather
+    if _CurrentWeather == "THUNDER" then
+        _CurrentWeather = "RAIN"
+    elseif _CurrentWeather == "RAIN" then
+        _CurrentWeather = "CLEARING"
+    end
+
+    _CurrentWeather = _WeatherTypes[math.random(1, #_WeatherTypes)]
+    if (_CurrentWeather == "THUNDER" or _CurrentWeather == "RAIN") and prevWeather ~= "CLEARING" then
+        _CurrentWeather = "CLEARING"
+    end
+    _SecondsUntilChange = math.random(120, 1800)
 end
 
 Citizen.CreateThread(function()
@@ -23,10 +33,10 @@ Citizen.CreateThread(function()
     while true do
         Wait(1000)
 
-        secondsUntilChange = secondsUntilChange - 1
-        if secondsUntilChange == 0 then
+        _SecondsUntilChange = _SecondsUntilChange - 1
+        if _SecondsUntilChange == 0 then
             UpdateWeather()
         end
-        TriggerClientEvent("vf_sync:syncWeather", -1, currentWeather)
+        TriggerClientEvent("vf_sync:syncWeather", -1, _CurrentWeather)
     end
 end)
