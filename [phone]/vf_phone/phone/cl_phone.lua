@@ -23,7 +23,7 @@ Citizen.CreateThread(function()
                 Phone.VisibleAnimProgress = Phone.VisibleAnimProgress - 3
             end
 
-            local h, m, s = NetworkGetServerTime()
+            local h, m = NetworkGetServerTime()
             PushScaleformMovieFunction(Phone.Scaleform, "SET_TITLEBAR_TIME")
             PushScaleformMovieFunctionParameterInt(h)
             PushScaleformMovieFunctionParameterInt(m)
@@ -57,6 +57,7 @@ Citizen.CreateThread(function()
             end
             Phone.VisibleAnimProgress = 21
             Phone.Visible = true
+            SetMobilePhonePosition()
             SetMobilePhoneScale(285.0)
             CreateMobilePhone(0)
         end
