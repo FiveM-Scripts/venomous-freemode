@@ -1,9 +1,36 @@
 Screen = {}
 
-function Screen.CreateListScreen(appId)
+function _ClearUnusedScreens(appId, screenId)
+    local toBeRemoved = {}
+    for _, item in ipairs(Apps[appId].Screens[screenId].Items) do
+        if type(item.Callback) == "integer" then -- It's a screen
+            table.insert(toBeRemoved, item.Callback)
+        end
+    end
+    -- Check if screen isn't being used anywhere else
+    for id, screen in ipairs(Apps[appId].Screens) do
+        if id ~= screenId then
+            for _, item in ipairs(screen.Items) do
+                if type(item.Callback) == "integer" then
+                    for i, removeScreenId in ipairs(toBeRemoved) do
+                        if removeScreenId == item.Callback then
+                            toBeRemoved[i] = nil
+                        end
+                    end
+                end
+            end
+        end
+        -- Remove unused screens (finally)
+        for _, removeScreenId in ipairs(toBeRemoved) do
+            table.remove(Apps[appId].Screens, removeScreenId)
+        end
+    end
+end
+
+function Screen.CreateListScreen(appId, header)
     local id = #Apps[appId].Screens + 1
     local screenType = 13
-    Apps[appId].Screens[id] = {Type = screenType, Items = {}}
+    Apps[appId].Screens[id] = {Type = screenType, Header = header, Items = {}}
 
     local Screen = {}
     Screen.GetID = function() return id end
@@ -33,6 +60,9 @@ function Screen.CreateListScreen(appId)
             Item.RemoveItem(appId, id, item.GetID())
         end
     end
-    Screen.ClearItems = function() Apps[appId].Screens[id].Items = {} end
+    Screen.ClearItems = function() 
+        _ClearUnusedScreens(appId, id)
+        Apps[appId].Screens[id].Items = {}
+    end
     return Screen
 end

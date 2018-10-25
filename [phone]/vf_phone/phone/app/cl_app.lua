@@ -25,6 +25,16 @@ Citizen.CreateThread(function()
             PushScaleformMovieFunctionParameterInt(Apps.CurrentScreen.Type)
             PopScaleformMovieFunctionVoid()
 
+            local header
+            if Apps.CurrentScreen.Header then
+                header = Apps.CurrentScreen.Header
+            else
+                header = Apps.CurrentApp.Name
+            end
+            PushScaleformMovieFunction(Phone.Scaleform, "SET_HEADER")
+            PushScaleformMovieFunctionParameterString(header)
+            PopScaleformMovieFunctionVoid()
+
             for i, item in ipairs(Apps.CurrentScreen.Items) do
                 PushScaleformMovieFunction(Phone.Scaleform, "SET_DATA_SLOT")
                 PushScaleformMovieFunctionParameterInt(Apps.CurrentScreen.Type)
