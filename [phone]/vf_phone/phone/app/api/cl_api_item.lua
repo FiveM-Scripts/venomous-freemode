@@ -1,7 +1,7 @@
 Item = {}
 
 function Item.AddCallbackItem(appId, screenId, data, callback)
-    if type(callback) == "table" --[[ What are you doing Msgpack??? ]] or type(callback) == "nil" then
+    if type(callback) == "table" --[[ What are you doing Msgpack??? ]] or not callback then
         local id = #Apps[appId].Screens[screenId].Items + 1
         Apps[appId].Screens[screenId].Items[id] = {Data = data, Callback = callback}
 

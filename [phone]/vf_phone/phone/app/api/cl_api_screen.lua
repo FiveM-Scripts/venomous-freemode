@@ -9,13 +9,23 @@ function Screen.CreateListScreen(appId)
     Screen.GetID = function() return id end
     Screen.GetType = function() return screenType end
     Screen.AddCallbackItem = function(name, icon, callback)
-        if (type(name) == "string" or type(name) == "number") and type(icon) == "number" then
-            return Item.AddCallbackItem(appId, id, {icon, name}, callback)
+        if type(name) == "string" or type(name) == "number" then
+            if not icon then
+                icon = 0
+            end
+            if type(icon) == "number" then
+                return Item.AddCallbackItem(appId, id, {icon, name}, callback)
+            end
         end
     end
     Screen.AddScreenItem = function(name, icon, screen)
-        if (type(name) == "string" or type(name) == "number") and type(icon) == "number" then
-            return Item.AddScreenItem(appId, id, {icon, name}, screen)
+        if type(name) == "string" or type(name) == "number" then
+            if not icon then
+                icon = 0
+            end
+            if type(icon) == "number" then
+                return Item.AddScreenItem(appId, id, {icon, name}, screen)
+            end
         end
     end
     Screen.RemoveItem = function(item)

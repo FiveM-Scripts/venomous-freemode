@@ -38,8 +38,8 @@ Citizen.CreateThread(function()
                         end
                     elseif type(data) == "string" then
                         PushScaleformMovieFunctionParameterString(data)
-                    elseif type(data) == "nil" then
-                        PushScaleformMovieFunctionParameterInt(-1)
+                    elseif not data then
+                        PushScaleformMovieFunctionParameterInt()
                     end
                 end
                 PopScaleformMovieFunctionVoid()
