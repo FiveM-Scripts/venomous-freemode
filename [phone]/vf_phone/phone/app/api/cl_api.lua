@@ -43,7 +43,7 @@ Citizen.CreateThread(function()
     phone.IsSleepModeOn = function() return Phone.SleepMode end
     phone.CreateApp = function(name, icon)
         if type(name) == "string" and type(icon) == "number" then
-            App.CreateApp(name, icon)
+            return App.CreateApp(name, icon)
         end
     end
     TriggerEvent("vf_phone:setup", phone)
