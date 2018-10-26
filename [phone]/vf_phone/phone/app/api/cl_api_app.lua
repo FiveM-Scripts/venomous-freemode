@@ -11,12 +11,17 @@ function App.CreateApp(name, icon)
         app.GetIcon = function() return icon end
         app.CreateListScreen = function(header)
             if type(header) == "string" or type(header) == "number" or not header then
-                return Screen.CreateListScreen(id, header)
+                return Screen.CreateListScreen(Apps[id], header)
             end
         end
         app.SetLauncherScreen = function(screen)
             if type(screen) == "table" and type(screen.GetID) == "table" --[[ Wtf Msgpack?!?! ]] and Apps[id].Screens[screen.GetID()] then
                 Apps[id].LauncherScreen = Apps[id].Screens[screen.GetID()]
+            end
+        end
+        app.RemoveScreen = function(screen)
+            if type(screen) == "table" and type(screen.GetID) == "table" --[[ MsgPack -.- ]] and Apps[id].Screens[screen.GetID()] then
+                Screen.RemoveScreen(Apps[id], Apps[id].Screens[screen.GetID()])
             end
         end
         return app
