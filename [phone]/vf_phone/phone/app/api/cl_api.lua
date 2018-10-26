@@ -1,3 +1,4 @@
+--[[
 AddEventHandler("vf_phone:CreateApp", function(name, icon, cb)
     local app = App.CreateApp(name, icon)
     if type(cb) == "table" then -- Functions are tables I guess according to msgpack
@@ -5,7 +6,6 @@ AddEventHandler("vf_phone:CreateApp", function(name, icon, cb)
     end
 end)
 
---[[
 function GetAppIcons()
     return {
         ["APP_CAMERA"] = 1,
@@ -39,5 +39,12 @@ Citizen.CreateThread(function()
     while not NetworkIsGameInProgress() or not IsPlayerPlaying(PlayerId()) do
         Wait(1)
     end
-    TriggerEvent("vf_phone:setup")
+    local phone = {}
+    phone.IsSleepModeOn = function() return Phone.SleepMode end
+    phone.CreateApp = function(name, icon)
+        if type(name) == "string" and type(icon) == "number" then
+            App.CreateApp(name, icon)
+        end
+    end
+    TriggerEvent("vf_phone:setup", phone)
 end)
