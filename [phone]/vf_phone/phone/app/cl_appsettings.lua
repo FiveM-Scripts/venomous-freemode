@@ -136,8 +136,8 @@ local _Settings = {
     }
 }
 
-AddEventHandler("vf_phone:setup", function(Phone)
-    local app = Phone.CreateApp(GetLabelText("CELL_16"), 24)
+AddEventHandler("vf_phone:setup", function(phone)
+    local app = phone.CreateApp(GetLabelText("CELL_16"), 24)
     local mainScreen = app.CreateListScreen()
     app.SetLauncherScreen(mainScreen)
     for _, setting in ipairs(_Settings) do
