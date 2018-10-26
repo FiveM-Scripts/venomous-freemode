@@ -92,7 +92,7 @@ Citizen.CreateThread(function()
                     table.remove(Apps.PrevScreens)
                     selectedItem = 0
                 else
-                    Wait(1) -- Workaround to stop main app from registering back press too
+                    Wait(0) -- Workaround to stop main app from registering back press too
                     Apps.Kill()
                     navigated = false
                 end

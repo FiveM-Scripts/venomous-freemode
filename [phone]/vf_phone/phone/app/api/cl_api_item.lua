@@ -1,31 +1,51 @@
 Item = {}
 
-function Item.AddCallbackItem(appId, screenId, data, callback)
+local function _CreateBaseItem(screen, data, callback)
+    local id = #screen.Items + 1
+    screen.Items[id] = {Data = data, Callback = callback}
+
+    local item = {}
+    item.GetID = function() return id end
+    item.GetData = function() return data end
+    item.GetCallback = function() return callback end
+    return item
+end
+
+function Item.RemoveItem(app, screen, item)
+    local itemIndex
+    -- Check if screen isn't being used anywhere else
+    local removeScreen = true
+    for _, screen in ipairs(app.Screens) do
+        for i, screenItem in ipairs(screen.Items) do
+            if screenItem == item then
+                itemIndex = i
+            elseif screenItem.Callback == item.Callback then
+                removeScreen = false
+            end
+        end
+    end
+    -- Remove screen if possible
+    if removeScreen then
+        table.remove(app.Screens, item.Callback)
+    end
+    -- Remove item
+    table.remove(screen.Items, itemIndex)
+end
+
+function Item.RemoveItemsInScreen(app, screen)
+    for i = #screen.Items, 1, -1 do -- Reverse looping for safe table content removal
+        Item.RemoveItem(app, screen, screen.Items[i])
+    end
+end
+
+function Item.AddCallbackItem(screen, data, callback)
     if type(callback) == "table" --[[ What are you doing Msgpack??? ]] or not callback then
-        local id = #Apps[appId].Screens[screenId].Items + 1
-        Apps[appId].Screens[screenId].Items[id] = {Data = data, Callback = callback}
-
-        local Item = {}
-        Item.GetID = function() return id end
-        Item.GetData = function() return data end
-        Item.GetCallback = function() return callback end
-        return Item
+        return _CreateBaseItem(screen, data, callback)
     end
 end
 
-function Item.AddScreenItem(appId, screenId, data, callbackScreen)
-    if type(callbackScreen) == "table" and type(callbackScreen.GetID) == "table" --[[ Thanks Msgpack ]] and Apps[appId].Screens[callbackScreen.GetID()] then
-        local id = #Apps[appId].Screens[screenId].Items + 1
-        Apps[appId].Screens[screenId].Items[id] = {Data = data, Callback = callbackScreen.GetID()}
-
-        local Item = {}
-        Item.GetID = function() return id end
-        Item.GetData = function() return data end
-        Item.GetCallback = function() return callbackScreen end
-        return Item
+function Item.AddScreenItem(app, screen, data, callbackScreen)
+    if type(callbackScreen) == "table" and type(callbackScreen.GetID) == "table" --[[ Thanks Msgpack ]] and app.Screens[callbackScreen.GetID()] then
+        return _CreateBaseItem(screen, data, callbackScreen.GetID())
     end
-end
-
-function Item.RemoveItem(appId, screenId, itemId)
-    table.remove(Apps[appId].Screens[screenId], itemId)
 end
