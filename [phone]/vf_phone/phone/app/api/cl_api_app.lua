@@ -14,6 +14,11 @@ function App.CreateApp(name, icon)
                 return Screen.CreateListScreen(Apps[id], header)
             end
         end
+        app.CreateCustomScreen = function(screenType, header)
+            if type(screenType) == "number" and (type(header) == "string" or type(header) == "number" or not header) then
+                return Screen.CreateListScreen(Apps[id], header, screenType)
+            end
+        end
         app.SetLauncherScreen = function(screen)
             if type(screen) == "table" and type(screen.GetID) == "table" --[[ Wtf Msgpack?!?! ]] and Apps[id].Screens[screen.GetID()] then
                 Apps[id].LauncherScreen = Apps[id].Screens[screen.GetID()]

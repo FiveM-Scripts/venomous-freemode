@@ -45,3 +45,18 @@ function Screen.CreateListScreen(app, header)
     end
     return screen
 end
+
+function Screen.CreateCustomScreen(app, header, screenType)
+    local screen = _CreateBaseScreen(app, header, screenType)
+    screen.AddCallbackItem = function(data, callback)
+        if type(data) == "table" then
+            return Item.AddCallbackItem(app.Screens[screen.GetID()], data, callback)
+        end
+    end
+    screen.AddScreenItem = function(data, callbackScreen)
+        if type(data) == "table" then
+            return Item.AddScreenItem(app, app.Screens[screen.GetID()], data, callbackScreen)
+        end
+    end
+    return screen
+end
