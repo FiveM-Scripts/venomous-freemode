@@ -16,6 +16,7 @@ AddEventHandler("vf_phone:ReceivePlayerMessage", function(playerServer, message)
         AddTextComponentString(message)
         SetNotificationMessage(headshotTxd, headshotTxd, true, 1, "New Message!", playerName)
         DrawNotification(true, true)
+        PlaySound(-1, "Text_Arrive_Tone", "Phone_SoundSet_Default")
     end
 
     local h, m = NetworkGetServerTime()
