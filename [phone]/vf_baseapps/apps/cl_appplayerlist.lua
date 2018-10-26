@@ -17,7 +17,24 @@ AddEventHandler("vf_phone:setup", function()
                         local playerName = GetPlayerName(i)
                         local playerOptionsMenu = _App.CreateListScreen(playerName)
                         _PlayerListScreen.AddScreenItem(playerName, 0, playerOptionsMenu)
-                        playerOptionsMenu.AddCallbackItem("Send Message", 0, function() end)
+                        playerOptionsMenu.AddCallbackItem("Send Message", 0, function()
+                            Wait(0) -- Stop from instantly confirming message
+                            DisplayOnscreenKeyboard(6, "FMMC_KEY_TIP8", "", "", "", "", "", 60)
+                            while UpdateOnscreenKeyboard() ~= 1 and UpdateOnscreenKeyboard() ~= 2 do
+                                Wait(0)
+                            end
+                            if UpdateOnscreenKeyboard() == 1 then
+                                local message = GetOnscreenKeyboardResult()
+                                SetNotificationTextEntry("STRING")
+                                if #message == 0 then
+                                    AddTextComponentString("~r~Message too short!")
+                                else
+                                    TriggerServerEvent("vf_phone:SendPlayerMessage", GetPlayerServerId(i), message)
+                                    AddTextComponentString("~g~Message sent!")
+                                end
+                                DrawNotification(true, true)
+                            end
+                        end)
                     end
                 end
             end

@@ -16,7 +16,7 @@ function App.CreateApp(name, icon)
         end
         app.CreateCustomScreen = function(screenType, header)
             if type(screenType) == "number" and (type(header) == "string" or type(header) == "number" or not header) then
-                return Screen.CreateListScreen(Apps[id], header, screenType)
+                return Screen.CreateCustomScreen(Apps[id], header, screenType)
             end
         end
         app.SetLauncherScreen = function(screen)
