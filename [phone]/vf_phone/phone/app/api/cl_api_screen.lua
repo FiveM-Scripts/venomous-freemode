@@ -11,7 +11,6 @@ end
 local function _CreateBaseScreen(app, header, screenType)
     local id = #app.Screens + 1
     app.Screens[id] = {Type = screenType, Header = header, Items = {}}
-    print(id)
 
     local screen = {}
     screen.GetID = function() return id end
