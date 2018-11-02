@@ -64,6 +64,11 @@ Citizen.CreateThread(function()
 			end
 
 			if PlayerJoinedCinema then
+				if IsEntityDead(PlayerPed) then
+					SetEntityInvincible(PlayerPed, false)
+					SetEntityVisible(PlayerPed, true, 0)
+				end
+
 				if not IsMovieStarted then
 					N_0x2201c576facaebe8(2, "PL_CINEMA_MULTIPLAYER", 10)
 					SetTvChannel(2)
