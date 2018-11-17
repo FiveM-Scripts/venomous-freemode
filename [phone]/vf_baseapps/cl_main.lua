@@ -1,0 +1,1 @@
+IsDebug = GetResourceMetadata(GetCurrentResourceName(), "resource_debugmode", 0) == "1"

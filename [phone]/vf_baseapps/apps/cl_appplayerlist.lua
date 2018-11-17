@@ -12,7 +12,7 @@ AddEventHandler("vf_phone:setup", function(phone)
             Wait(1000)
             _PlayerListScreen.ClearItems()
             for i = 0, 64 do
-                if NetworkIsPlayerConnected(i) and i ~= PlayerId() then
+                if NetworkIsPlayerConnected(i) and (IsDebug or i ~= PlayerId()) then
                     local playerName = GetPlayerName(i)
                     local playerOptionsMenu = _App.CreateListScreen(playerName)
                     _PlayerListScreen.AddScreenItem(playerName, 0, playerOptionsMenu)
