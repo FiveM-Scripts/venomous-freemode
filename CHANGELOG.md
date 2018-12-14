@@ -9,3 +9,4 @@
 - Added idle timer.
 - Added Ammu-Nation stores.
 - Added movie theaters.
+- Added loading screen
