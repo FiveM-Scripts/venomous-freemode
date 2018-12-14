@@ -2,7 +2,8 @@ Phone = {
     Visible = false,
     Theme = GetResourceKvpInt("vf_phone_theme"),
     Wallpaper = GetResourceKvpInt("vf_phone_wallpaper"),
-    SleepMode = false
+    SleepMode = false,
+    InApp = false
 }
 
 if Phone.Theme == 0 then

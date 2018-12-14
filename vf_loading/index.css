@@ -1,0 +1,115 @@
+@font-face {
+	font-family: "Pricedown";
+	src: url("pricedown.ttf");
+}
+
+html, body {
+	height: 100%;
+	width: 100%;
+	margin: 0%;
+	overflow: hidden;
+	background: black;
+}
+
+p, h1 {
+	color: white;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes zoom {
+  0% {
+    background-size: 100% 100%;
+  }
+  100% {
+    background-size: 105% 105%;
+  }
+}
+.zoomanim {
+	animation: zoom 60s;
+}
+
+@keyframes shrink {
+  0% {
+    background-size: 105% 105%;
+  }
+  100% {
+    background-size: 100% 100%;
+  }
+}
+.shrinkanim {
+	animation: shrink 60s;
+}
+
+#background {
+	height: 100%;
+	width: 100%;
+}
+
+.box {
+	border-radius: 2px;
+  background: linear-gradient(to right, rgba(33, 33, 33, 0.8), rgba(33, 33, 33, 0.9));
+}
+
+#infobox {
+	display: none;
+	height: 70%;
+	width: 75%;
+	position: absolute;
+	top: 0;
+	bottom: 20%;
+	left: 0;
+	right: 10%;
+	margin: auto;
+}
+
+#infobox * {
+	display: none;
+	margin: 2%;
+}
+
+#infobox > #infoheader {
+	font-size: 2vw;
+}
+
+#infobox > #infotext {
+	float: left;
+	padding-right: 43%;
+	font-size: 1.5vw;
+}
+
+#infobox > #infoimg {
+	height: 92%;
+	width: 40%;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+#loadingbox {
+	height: 4%;
+	width: 10%;
+	position: absolute;
+	bottom: 5%;
+	right: 5%;
+}
+
+#loadingbox * {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	margin: auto;
+}
+
+#loadingtext {
+	float: left;
+	margin-left: 8%;
+	vertical-align: text-top;
+	font-size: 1vw;
+}
+
+#loadingimg {
+	height: 1.25vw;
+	width: 1.25vw;
+	float: right;
+	margin-right: 8%;
+}

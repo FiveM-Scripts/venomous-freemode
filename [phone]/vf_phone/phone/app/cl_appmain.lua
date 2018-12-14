@@ -4,7 +4,7 @@ Citizen.CreateThread(function()
     while true do
         Wait(0)
 
-        if Phone.Visible and not Apps.CurrentApp then
+        if Phone.Visible and not Phone.InApp then
             for i = 0, 8 do
                 PushScaleformMovieFunction(Phone.Scaleform, "SET_DATA_SLOT")
                 PushScaleformMovieFunctionParameterInt(1)
