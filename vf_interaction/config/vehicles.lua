@@ -30,4 +30,7 @@ DefaultVehicles = {
         "phantom2",
         "technical",
         "technical2",
+        "thruster",
+        "viseris",
+        "nero",
     }

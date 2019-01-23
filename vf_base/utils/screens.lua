@@ -102,60 +102,6 @@ function RequestDeathScreen()
 	return deathscale
 end
 
-function CreateWarningMessage(title, text, subtext)
-    Warningbutton = RequestScaleformMovie("instructional_buttons")
-    while not HasScaleformMovieLoaded(Warningbutton) do
-        Citizen.Wait(0)
-    end
-
-    PushScaleformMovieFunction(Warningbutton, "CLEAR_ALL")
-    PopScaleformMovieFunctionVoid()
-    
-    PushScaleformMovieFunction(Warningbutton, "SET_CLEAR_SPACE")
-    PushScaleformMovieFunctionParameterInt(200)
-    PopScaleformMovieFunctionVoid()
-
-    PushScaleformMovieFunction(Warningbutton, "SET_DATA_SLOT")
-    PushScaleformMovieFunctionParameterInt(0)
-    SetButton(GetControlInstructionalButton(2, 191, true))
-    SetButtonMessage(GetLabelText("HUD_CONTINUE"))
-    PopScaleformMovieFunctionVoid()
-
-    PushScaleformMovieFunction(Warningbutton, "DRAW_INSTRUCTIONAL_BUTTONS")
-    PopScaleformMovieFunctionVoid()
-
-    local popup = RequestScaleformMovie("POPUP_WARNING")
-    while not HasScaleformMovieLoaded(popup) do
-        Citizen.Wait(1)
-    end
-
-    PushScaleformMovieFunction(popup, "SHOW_POPUP_WARNING")
-    PushScaleformMovieFunctionParameterFloat(500.0)
-    PushScaleformMovieFunctionParameterString(tostring(title))
-    PushScaleformMovieFunctionParameterString(tostring(text))
-
-    if subtext then
-        PushScaleformMovieFunctionParameterString(tostring(subtext))
-    else
-        PushScaleformMovieFunctionParameterString("")
-    end
-
-    PushScaleformMovieFunctionParameterBool(true)
-    PushScaleformMovieFunctionParameterInt(0)
-
-    PopScaleformMovieFunctionVoid()
-    PlaySoundFrontend(-1, "CHALLENGE_UNLOCKED", "HUD_AWARDS", true)
-    warningDisplayed = true
-
-    return popup
-end
-
-function DisplayWarningMessage(warning)
-    ClearAllHelpMessages()
-    HideHudAndRadarThisFrame()
-    DrawScaleformMovieFullscreen(warning, 255, 255, 255, 255, 0)
-end
-
 function SetPlayerScores(currentRankLimit, nextRankLimit, playersPreviousXP, playersCurrentXP, rank)
     if not HasHudScaleformLoaded(19) then
         RequestHudScaleform(19)
@@ -176,22 +122,6 @@ Citizen.CreateThread(function()
         Citizen.Wait(1)
         if IsPlayerSwitchInProgress() or hidehud then
             HideHudAndRadarThisFrame()
-        end
-
-        if HasScaleformMovieLoaded(warning) and warningDisplayed then
-            DisplayWarningMessage(warning)
-            if HasScaleformMovieLoaded(Warningbutton) then
-                DrawScaleformMovieFullscreen(Warningbutton, 255, 255, 255, 255, 0)
-            end
-
-            DisableControlAction(0, 106, true)
-
-            if IsControlJustPressed(0, 201) then
-                PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", true)
-                SetScaleformMovieAsNoLongerNeeded(Warningbutton)
-                SetScaleformMovieAsNoLongerNeeded(warning)
-                warningDisplayed = false
-            end
         end
 
         if HasHudScaleformLoaded(19) then

@@ -118,6 +118,12 @@ local function DisplayNotificaition(label)
   PlaySoundFrontend(-1, "ERROR", "HUD_AMMO_SHOP_SOUNDSET", true)
 end
 
+RegisterNetEvent("vf_ammunation:getStock")
+AddEventHandler('vf_ammunation:getStock', function()
+  print('load the weapons for te current player')
+  TriggerServerEvent('vf_ammunation:LoadPlayer')
+end)
+
 RegisterNetEvent("vf_ammunation:nocash")
 AddEventHandler("vf_ammunation:nocash", function(weaponHash, weaponName)
   DisplayNotificaition("BB_NOMONEY")

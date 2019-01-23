@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+  <link href="../ui/style.css" rel="stylesheet">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+  <script src="../ui/script.js"></script>
+</head>
+
+<body>
+  <div id="bank-app" style="display: none;">
+
+    <!-- Custom Whitdraw Modal -->
+    <div class="modal" id="CustomWhitdraw" tabindex="-1" role="dialog" aria-labelledby="CustomWhitdrawLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="CustomWhitdrawLabel"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="row">
+                <div class="col">
+                  <input type="number" name="whitdraw-amount" id="whitdraw-amount" value="0" class="form-control" required="required">
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" id="whitdraw-custom" class="btn btn-danger whitdraw-button"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom Deposit Modal -->
+    <div class="modal" id="CustomDeposit" tabindex="-1" role="dialog" aria-labelledby="CustomDepositLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="CustomDepositLabel"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="row">
+                <div class="col">
+                  <input type="number" name="deposit-amount" id="deposit-amount" value="0" class="form-control" required="required">
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" id="deposit-custom" class="btn btn-danger deposit-button"></button>
+          </div>
+        </div>
+      </div>
+    </div>    
+
+    <div class="container">
+      <div class="bank-app">
+        <div class="htitle">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-8">
+                <img src ="../ui/img/logo.png">
+              </div>
+              <div class="col-lg-4">
+                <p class="text-right">
+                  <span class="account-balance"> </span>&nbsp;<span class="total-amount"> </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content">          
+          <div class="clearfix">&nbsp;</div>
+          <div id="mainMenu">
+            <div class="service-box">
+              <div class="container">
+                <div class="alert alert-danger" role="alert">
+                  <h3 class="alert-heading"><span class="player-name"></span></h3>
+                  <p class="text-center service-title"></p>
+                </div>
+              </div>
+            </div>
+
+          <div class="container">
+            <div class="row">
+              <div class="col-sm">&nbsp;</div>
+              <div class="col-sm">
+                <div class="clearfix">&nbsp;</div>
+                <button type="button" id="showDeposit" class="btn btn-danger btn-lg btn-block deposit-button"></button>
+                <div class="clearfix">&nbsp;</div>
+                <button type="button" id="showWhitdraw" class="btn btn-danger btn-lg btn-block whitdraw-button"></button>
+                <!-- <div class="clearfix">&nbsp;</div>
+                <button type="button" id="showTransactions" class="btn btn-danger btn-lg btn-block transactions-button"></button>
+                <div class="clearfix">&nbsp;</div> !-->
+                <div class="clearfix">&nbsp;</div>
+                <button type="button" id="exit" class="btn btn-danger btn-lg btn-block exit-button"></button>                
+              </div>
+              <div class="col-sm">&nbsp;</div>
+            </div>
+          </div>
+
+          <div class="clearfix">&nbsp;</div>
+        </div>
+
+          <div id="deposit">
+          <div class="container">
+            <div class="alert alert-danger" role="alert">
+              <h3 class="alert-heading player-name"></h3>
+              <p class="text-center deposit-helper"></p>
+            </div>
+          </div>
+
+          <div class="container">
+            <div class="row">
+              <div class="col-sm">
+                <div class="clearfix">&nbsp;</div>
+                <input type="button" value="50" class="btn btn-danger btn-lg btn-block depositButton">
+                <div class="clearfix">&nbsp;</div>
+                <input type="button" value="100" class="btn btn-danger btn-lg btn-block depositButton">
+                <div class="clearfix">&nbsp;</div>
+                <input type="button" value="150" class="btn btn-danger btn-lg btn-block depositButton">
+              </div>
+              <div class="col-sm">
+                <div class="clearfix">&nbsp;</div>
+                <input type="button" value="200" class="btn btn-danger btn-lg btn-block depositButton">
+                <div class="clearfix">&nbsp;</div>
+                <input type="button" value="250" class="btn btn-danger btn-lg btn-block depositButton">
+                <div class="clearfix">&nbsp;</div>
+                <input type="button" value="300" class="btn btn-danger btn-lg btn-block depositButton">
+                <div class="clearfix">&nbsp;</div>
+                <div class="clearfix">&nbsp;</div>
+                <div class="clearfix">&nbsp;</div>
+
+                <button type="button" data-toggle="showMenu" class="btn btn-danger btn-lg btn-block menu-button"></button>
+
+              </div>
+              <div class="col-sm">
+                <div class="clearfix">&nbsp;</div>
+                <input type="button" value="500" class="btn btn-danger btn-lg btn-block depositButton">
+                <div class="clearfix">&nbsp;</div>
+                <input type="button" value="10000" class="btn btn-danger btn-lg btn-block depositButton">
+                <div class="clearfix">&nbsp;</div>
+                <button type="button" class="btn btn-danger btn-lg btn-block custom-button" data-toggle="modal" data-target="#CustomDeposit"></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="clearfix">&nbsp;</div>
+        </div>        
+
+          <div id="whitdraw">
+          <div class="container">
+            <div class="alert alert-danger" role="alert">
+              <h3 class="alert-heading player-name"></h3>
+              <p class="text-center whitdraw-helper"></p>
+            </div>
+          </div>
+
+          <div class="container">
+            <div class="row">
+              <div class="col-sm">
+                <div class="clearfix">&nbsp;</div>
+                <input type="button" value="50" class="btn btn-danger btn-lg btn-block whitdrawButton">
+                <div class="clearfix">&nbsp;</div>
+                <input type="button" value="100" class="btn btn-danger btn-lg btn-block whitdrawButton">
+                <div class="clearfix">&nbsp;</div>
+                <input type="button" value="150" class="btn btn-danger btn-lg btn-block whitdrawButton">
+              </div>
+              <div class="col-sm">
+                <div class="clearfix">&nbsp;</div>
+                <input type="button" value="200" class="btn btn-danger btn-lg btn-block whitdrawButton">
+                <div class="clearfix">&nbsp;</div>
+                <input type="button" value="250" class="btn btn-danger btn-lg btn-block whitdrawButton">
+                <div class="clearfix">&nbsp;</div>
+                <input type="button" value="300" class="btn btn-danger btn-lg btn-block whitdrawButton">
+                <div class="clearfix">&nbsp;</div>
+                <div class="clearfix">&nbsp;</div>
+                <div class="clearfix">&nbsp;</div>
+
+                <button type="button" data-toggle="showMenu" class="btn btn-danger btn-lg btn-block menu-button"></button>
+
+              </div>
+              <div class="col-sm">
+                <div class="clearfix">&nbsp;</div>
+                <input type="button" value="500" class="btn btn-danger btn-lg btn-block whitdrawButton">
+                <div class="clearfix">&nbsp;</div>
+                <input type="button" value="10000" class="btn btn-danger btn-lg btn-block whitdrawButton">
+                <div class="clearfix">&nbsp;</div>
+                <button type="button" class="btn btn-danger btn-lg btn-block custom-button" data-toggle="modal" data-target="#CustomWhitdraw"></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="clearfix">&nbsp;</div>
+        </div>       
+
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
