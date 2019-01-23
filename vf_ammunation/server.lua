@@ -25,6 +25,10 @@ AddEventHandler('vf_ammunation:item-selected', function(model, price, name)
 			TriggerEvent('vf_base:ClearCash', src, price)
 			Ammunation:New(user.license, model)
 			TriggerClientEvent('vf_ammunation:giveWeapon', src, model, name)
+		elseif user.bank >= tonumber(price) then
+			TriggerEvent('vf_base:ClearBank', src, price)
+			Ammunation:New(user.license, model)
+			TriggerClientEvent('vf_ammunation:giveWeapon', src, model, name)
 		else
 			TriggerClientEvent('vf_ammunation:nocash', src)
 		end

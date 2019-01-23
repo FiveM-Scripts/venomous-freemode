@@ -22,19 +22,20 @@ function GetRandomMultiPlayerModel(modelhash)
 
 			SetPlayerModel(PlayerId(), modelhash)
 		end
+
+		SetPedHeadBlendData(PlayerPedId(), 0, math.random(45), 0,math.random(45), math.random(5), math.random(5),1.0,1.0,1.0,true)
+		SetPedHairColor(PlayerPedId(), math.random(1, 4), 1)
 		
-		if IsPedMale(playerPed) then
+		if IsPedMale(PlayerPedId()) then
 			SetPedComponentVariation(PlayerPedId(), 0, math.random(0, 5), 0, 2)
 			SetPedComponentVariation(PlayerPedId(), 2, math.random(1, 17), 3, 2)
-			SetPedComponentVariation(PlayerPedId(), 3, 164, 0, 2)
+			SetPedComponentVariation(PlayerPedId(), 3, 0, 0, 2)
 
-			SetPedComponentVariation(PlayerPedId(), 4, 1, math.random(2), 2)
-			SetPedComponentVariation(PlayerPedId(), 6, math.random(0, 6), 0, 2)
-			SetPedComponentVariation(PlayerPedId(), 10, 7, 0, 2)
-
+			SetPedComponentVariation(PlayerPedId(), 4, 1, math.random(0, 15), 2)
+			SetPedComponentVariation(PlayerPedId(), 6, 3, math.random(0, 15), 2)
 			SetPedComponentVariation(PlayerPedId(), 8, 0, 240, 0)
-			SetPedComponentVariation(PlayerPedId(), 11, 0, 240, 0)
-			SetPedHairColor(PlayerPedId(), math.random(1, 4), 1)
+			SetPedComponentVariation(PlayerPedId(), 10, 0, 0, 2)
+			SetPedComponentVariation(PlayerPedId(), 11, 0, math.random(0, 5), 0)			
 		else
 			SetPedComponentVariation(PlayerPedId(), 0, 0, 0, 2)
 			SetPedComponentVariation(PlayerPedId(), 2, math.random(1, 17), 3, 2)
@@ -45,8 +46,6 @@ function GetRandomMultiPlayerModel(modelhash)
 			SetPedComponentVariation(PlayerPedId(), 8, 2, 2, 2)
 			SetPedComponentVariation(PlayerPedId(), 10, 7, 0, 2)
 			SetPedComponentVariation(PlayerPedId(), 11, 0, 2, 2)
-			
-			SetPedHairColor(PlayerPedId(), math.random(1, 4), 1)
 		end
 
 		SetModelAsNoLongerNeeded(modelhash)
@@ -63,7 +62,6 @@ end)
 RegisterNetEvent("vf_base:DisplayBankValue")
 AddEventHandler("vf_base:DisplayBankValue", function(value)
 	StatSetInt("BANK_BALANCE", value, true)
-	ShowHudComponentThisFrame(3)
-	
+	ShowHudComponentThisFrame(3)	
 	CancelEvent()
 end)

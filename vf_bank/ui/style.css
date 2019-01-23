@@ -1,0 +1,114 @@
+@font-face {
+  font-family: "ChaletComprimeCologneSixty";
+  src: url("./fonts/ChaletComprimeCologneSixty.ttf");
+}
+
+html {
+  height:100%;
+  margin:0;
+}
+
+body{
+  background: none;
+  background-position: top;
+  background-repeat: no-repeat;
+  font-family: "Arial Black", Gadget, sans-serif
+  font-style: normal;
+  color: rgb(0, 0, 0);
+}
+
+.bank-app {
+  background-color: rgba(255,255,255, 0.9);
+  border: 0px solid #fff; 
+  border-radius: 5px;   
+  overflow: auto;
+  margin-top: 50px;
+  min-height: 580px;
+  -webkit-user-select: none;  
+  -moz-user-select: none;    
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.bank-app .content {
+  min-height: 320px;
+  padding-bottom: 10px;
+}
+
+.bank-app .htitle {
+  max-height: 80px;
+  border-color: rgb(252, 175, 23);
+  border-bottom-color: rgb(252, 175, 23);  
+  color: #000;
+  font-size: 25px;
+  font-family: 'ChaletComprimeCologneSixty';
+  position: auto;
+}
+
+.bank-app .htitle span{ 
+  font-size: 28px;
+  color: #000;
+  font-family: 'ChaletComprimeCologneSixty';
+  line-height: 2.1;
+  position: relative;
+}
+
+.bank-app .htitle img{
+  margin-top:  8px;
+  margin-left: 6px;
+  max-height:  55px;
+}
+
+.bank-app .htitle h2{
+  font-size: 50px;
+  font-family: 'ChaletComprimeCologneSixty';
+  margin: 20px;
+  padding: 0px 0px 5px 0px;
+  background: none;
+  display: inline-block;
+  color: #fff;  
+}
+
+.bank-app .htitle h3{
+  font-family: 'ChaletComprimeCologneSixty';
+  margin: 20px;
+  padding: 0px 0px 5px 0px;
+  background: none;
+  display: inline-block;
+  color: #fff;  
+}
+
+.bank-app .service-box {
+  margin-bottom: 60px;
+}
+
+.bank-app .service-title {
+  font-size: 16px;
+}
+
+.bank-app h3
+{
+  font-family: 'ChaletComprimeCologneSixty';
+  padding: 0px 0px 2px 0px;
+  background: none;
+  display: inline-block;
+}
+
+.bank-app h2
+{
+  font-size: 33px;
+  padding: 5px 0px 5px 0px;
+  font-family: 'ChaletComprimeCologneSixty';
+}
+
+.alert-danger {
+  border-color: rgb(252, 175, 23);
+  background-image: linear-gradient(to right, rgb(220,20,0), rgb(220,20,25));
+  color: #fff;
+}
+
+.btn-danger {
+   border-color: rgb(252, 175, 23);
+   background-image: linear-gradient(to right, rgb(220,20,0), rgb(220,20,25));
+   color: #fff;
+}

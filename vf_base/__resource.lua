@@ -1,6 +1,6 @@
-resource_manifest_version '05cfa83c-a124-4cfa-a768-c24a5811d8f9'
+resource_manifest_version '44febabe-d386-4d18-afbe-5e627f4af937'
 resource_type 'gametype' { name = 'venomous-freemode' }
-resource_version '1.0'
+resource_version '1.1'
 
 dependencies {'ghmattimysql', 'NativeUI'}
 
@@ -12,10 +12,7 @@ client_scripts {
     'utils/player.lua',
     'utils/screens.lua',
     'utils/vehicles.lua',
-    'client/interaction.lua',
-    'client/character.lua',
-    'client/spawn.lua',
-    'utils/idle.lua'
+    'client/spawn.lua'
 }
 
 server_scripts {
