@@ -4,7 +4,7 @@
 
 - Fixed random bugs.
 - Players can now use vending machines to restore health when `vf_vending` is loaded.
-- Players can manage use ATM's to deposit and withdraw money.
+- Players can use ATM's to deposit and withdraw money.
 - Dropped the interaction menu from the base resource and created a separated resource `vf_interaction`.
 
 ## 1.0
