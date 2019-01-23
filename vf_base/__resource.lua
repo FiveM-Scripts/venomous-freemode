@@ -12,8 +12,7 @@ client_scripts {
     'utils/player.lua',
     'utils/screens.lua',
     'utils/vehicles.lua',
-    'client/spawn.lua',
---    'utils/idle.lua'
+    'client/spawn.lua'
 }
 
 server_scripts {
