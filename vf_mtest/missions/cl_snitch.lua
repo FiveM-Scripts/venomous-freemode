@@ -191,6 +191,7 @@ function MissionSnitch.Tick()
                 BeginTextCommandPrint("FM_IHELP_LCP")
                 EndTextCommandPrint(0.1, true)
             else
+                payOut = true
                 Missions.Kill()
             end
         end
@@ -221,7 +222,10 @@ function MissionSnitch.Kill()
     if DoesEntityExist(missionVeh) then
         if IsPedInVehicle(playerPed, missionVeh, false) then
             TaskLeaveVehicle(playerPed, missionVeh, 1)
-            TriggerServerEvent('vf_base:AddCash', GetRandomIntInRange(50, 2000))
+            if payOut then
+                TriggerServerEvent('vf_mtest:playercut', GetRandomIntInRange(5000, 20000))
+                payOut = false
+            end
         end
 
         SetEntityAsNoLongerNeeded(missionVeh)

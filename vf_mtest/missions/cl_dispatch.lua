@@ -180,6 +180,7 @@ function MissionDispatch.Tick()
                 BeginTextCommandPrint("FM_IHELP_LCP")
                 EndTextCommandPrint(0.1, true)
             else
+                payOut = true
                 Missions.Kill()
             end
         end
@@ -199,6 +200,11 @@ function MissionDispatch.Kill()
 
     if DoesEntityExist(vehicle) then
         DeleteVehicle(vehicle)
+    end
+
+    if payOut then
+        TriggerServerEvent('vf_mtest:playercut', GetRandomIntInRange(5000, 20000))
+        payOut = false
     end
     
     ClearPrints()

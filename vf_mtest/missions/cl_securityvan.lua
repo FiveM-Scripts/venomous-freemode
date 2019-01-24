@@ -212,7 +212,8 @@ function MissionSecurityVan.Kill()
     print('Closing Mission')
 
     if payOut then
-        TriggerServerEvent('vf_base:AddCash', GetRandomIntInRange(1000, 5000))
+        TriggerServerEvent('vf_mtest:playercut', GetRandomIntInRange(5000, 20000))
+        payOut = false
     end
 
     if DoesEntityExist(securityCase) or DoesBlipExist(securityCaseBlip) then

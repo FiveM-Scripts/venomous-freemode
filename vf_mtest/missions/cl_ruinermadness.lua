@@ -38,6 +38,7 @@ function MissionRuinerMadness.Init()
     while not HasModelLoaded(insurgent2Hash) do
         Wait(0)
     end
+
     insurgent2 = CreateVehicle(insurgent2Hash, 2796.07, -707.95, 4.12, 101.43, true)
     SetModelAsNoLongerNeeded(insurgent2)
     DecorSetBool(insurgent2, "m_ruinermadness_entity", true)
@@ -47,6 +48,7 @@ function MissionRuinerMadness.Init()
     SetVehicleAsNoLongerNeeded(insurgent2)
 
     SetMaxWantedLevel(0)
+    SetWantedLevelMultiplier(0.0)
     TriggerMusicEvent("MP_MC_CMH_SUB_FINALE_START")
     TriggerMusicEvent("MP_MC_CMH_VEHICLE_CHASE")
 end
@@ -66,8 +68,9 @@ function MissionRuinerMadness.Tick()
             local ruiner2Hash = GetHashKey("ruiner2")
             RequestModel(ruiner2Hash)
             while not HasModelLoaded(ruiner2Hash) do
-                Wait(0)
+                Wait(10)
             end
+
             local playerHeading = GetEntityHeading(insurgent2)
             local targetHeading
             if playerHeading < 181 then
@@ -75,12 +78,15 @@ function MissionRuinerMadness.Tick()
             else
                 targetHeading = playerHeading - 180
             end
+
             local ruiner2 = CreateVehicle(ruiner2Hash, coords.x, coords.y, coords.z, targetHeading, true)
-            SetModelAsNoLongerNeeded(ruiner2Hash)
+            while not DoesEntityExist(ruiner2) do
+                Wait(10)
+            end
+            
             DecorSetBool(ruiner2, "m_ruinermadness_entity", true)
             SetVehicleDoorsLocked(ruiner2, 4)
-            SetVehicleEngineOn(ruiner2, true, true)
-            SetVehicleAsNoLongerNeeded(ruiner2)
+            SetVehicleEngineOn(ruiner2, true, true)           
             
             local enemy = CreatePed(4, GetEntityModel(playerPed), coords.x, coords.y, coords.z, 0.0, true)
             DecorSetBool(enemy, "m_ruinermadness_entity", true)
@@ -93,7 +99,6 @@ function MissionRuinerMadness.Tick()
             SetPedIntoVehicle(enemy, ruiner2, -1)
             TaskCombatPed(enemy, playerPed, 0, 16)
             SetPedKeepTask(enemy, true)
-            SetPedAsNoLongerNeeded(enemy)
 
             local enemy2 = CreatePed(4, GetEntityModel(playerPed), coords.x, coords.y, coords.z, 0.0, true)
             DecorSetBool(enemy2, "m_ruinermadness_entity", true)
@@ -107,14 +112,25 @@ function MissionRuinerMadness.Tick()
             GiveWeaponToPed(enemy2, GetHashKey("WEAPON_APPISTOL"), 999999, false, true)
             SetPedAccuracy(enemy2, 80)
             TaskCombatPed(enemy2, playerPed, 0, 16)
-            SetPedKeepTask(enemy2, true)
+            SetPedKeepTask(enemy2, true)            
+
+            Wait(1400)
+
+            SetVehicleAsNoLongerNeeded(ruiner2)            
+            SetPedAsNoLongerNeeded(enemy)
             SetPedAsNoLongerNeeded(enemy2)
         end
         spawnEnemyTime = 15000
     end
 
-    if Vdist2(playerCoords, destCoords) < 5.0 or IsPedDeadOrDying(playerPed) then
+    if Vdist2(playerCoords, destCoords) < 5.0 then
+        payOut = true
         Missions.Kill()
+    else
+        if IsPedDeadOrDying(playerPed) then
+            payOut = false
+            Missions.Kill()
+        end
     end
 end
 
@@ -123,6 +139,20 @@ function MissionRuinerMadness.Kill()
     ClearPrints()
     RemoveBlip(destBlip)
 
+    if payOut then
+        TriggerServerEvent('vf_mtest:playercut', GetRandomIntInRange(5000, 20000))
+        payOut = false
+    end
+
+    if DoesEntityExist(insurgent2) then
+        if IsPedInVehicle(playerPed, insurgent2, false) then
+            TaskLeaveVehicle(playerPed, insurgent2, 0)
+            Wait(3000)
+        end
+        DeleteEntity(insurgent2)
+    end
+
+    SetWantedLevelMultiplier(1.0)
     SetMaxWantedLevel(5)
     TriggerMusicEvent("MP_MC_STOP")
 end
