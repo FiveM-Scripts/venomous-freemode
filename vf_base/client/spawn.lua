@@ -124,7 +124,12 @@ Citizen.CreateThread(function()
 	while true do
 		Wait(300)
 		if firstTick then
-			IsPedDead = GetEntityHealth(playerPed) <= 0
+			playerPed = PlayerPedId()
+			if GetEntityHealth(playerPed) <= 0 then
+				IsPedDead = true
+			else
+				IsPedDead = false
+			end
 		end
 	end
 end)

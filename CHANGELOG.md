@@ -1,5 +1,9 @@
 # Changelog    
 
+## 1.1.1
+
+- Fixed deathscreen loop when the player changed his skin.
+
 ## 1.1
 
 - Fixed random bugs.
