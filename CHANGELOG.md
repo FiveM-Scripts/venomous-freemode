@@ -1,5 +1,10 @@
 # Changelog    
 
+## 1.1.1
+
+- Fixed death screen loop when the player changed his skin.
+- Removed NativeUI from vf_base.
+
 ## 1.1
 
 - Fixed random bugs.

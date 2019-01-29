@@ -10,3 +10,5 @@ client_scripts {
     "missions/cl_missions.lua",
     "cl_missionsapp.lua"
 }
+
+server_script "sv_missionsapp.lua"
