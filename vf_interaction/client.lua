@@ -1,9 +1,9 @@
 DoesInteractionMenuExist = false
 IsPlayerNearImpoundGate = false
-
 personalVeh = nil
 gateBlip = nil
 gateHash = "prop_facgate_08"
+playerPed = nil
 
 function DisplayWarning(text)
     BeginTextCommandDisplayHelp(text)
@@ -63,7 +63,11 @@ function VehiclesInventoryMenu(menu)
 
     local doorStatus = {
         GetLabelText("BM_UNLOCKED"),
-        GetLabelText("PM_UCON_LCK")
+        GetLabelText("PM_UCON_LCK"),
+        GetLabelText("CMM_MOD_ST28"),
+        GetLabelText("CMM_MOD_S12"),
+        GetLabelText("CMOD_MOD_HOD"),
+        GetLabelText("PM_CJACK_1")
     }
 
     vehItem = NativeUI.CreateListItem(GetLabelText("PIM_TRPV"), personalVehicles, 1, GetLabelText("MPCT_PERVEH1B"))
@@ -116,14 +120,24 @@ function VehiclesInventoryMenu(menu)
                 if Selected == tostring(GetLabelText("PM_UCON_LCK")) then
                     SetVehicleDoorsLocked(personalVeh, 2)
                     SetVehicleDoorsLockedForAllPlayers(personalVeh, 0)
+                elseif Selected == tostring(GetLabelText("CMM_MOD_ST28")) then
+                   SetVehicleDoorOpen(personalVeh, 1, false, false)
+                elseif Selected == tostring(GetLabelText("CMM_MOD_S12")) then
+                    if IsVehicleDoorFullyOpen(personalVeh, 5) then
+                        print('Close ' .. GetLabelText("CMM_MOD_S12"))
+                        SetVehicleDoorShut(personalVeh, 5, false)
+                    else
+                        SetVehicleDoorOpen(personalVeh, 5, false, false)
+                    end
 
-                    DisplayNotification(GetLabelText("PIM_TDPV") .. " " .. GetLabelText("PM_UCON_LCK"))
+                elseif Selected == tostring(GetLabelText("PM_CJACK_1")) then
+                    SetVehicleDoorsShut(personalVeh, false)
                 else
                     SetVehicleDoorsLocked(personalVeh, 1)
                     DisplayNotification(GetLabelText("PIM_TDPV") .. " " .. GetLabelText("PM_UCON_ULK"))
-                end            
+                end           
+            end
         end
-    end
 
     local vehRepair = UIMenuItem.New(GetLabelText("BLIP_544"), "")
     vehRepair:RightLabel('$ ' .. Costs.repair_vehicle)
@@ -148,14 +162,52 @@ function VehiclesInventoryMenu(menu)
     end
 end
 
-Citizen.CreateThread(function()
-	while true do
-		Wait(10)
-        if not DoesInteractionMenuExist then
-            playerID = PlayerId()
-            playerName = GetPlayerName(playerID)
-            playerPed = PlayerPedId()
+Citizen.CreateThread(function()    
+    ClearPrints()
+    ClearAllHelpMessages()
 
+    while true do
+        Wait(250)
+        if DoesEntityExist(personalVeh) then
+            if GetVehicleEngineHealth(personalVeh) == 0 then
+                Vehicles.Destroy(personalVeh)
+            else
+                if IsPedInVehicle(PlayerPedId() , personalVeh, true) then
+                    SetBlipDisplay(pvBlip, 0)
+                else
+                    vehicleC = GetEntityCoords(personalVeh, true)
+                    if DoesBlipExist(pvBlip) then
+                        SetBlipDisplay(pvBlip, 2)
+                    end
+                end
+            end
+        end
+    end
+end)
+
+Citizen.CreateThread(function()
+    local CAT = 'mod_mnu'
+    local CurrentSlot = 0
+    while HasAdditionalTextLoaded(CurrentSlot) and not HasThisAdditionalTextLoaded(CAT, CurrentSlot) do
+        Wait(0)
+        CurrentSlot = CurrentSlot + 1
+    end
+
+    if not HasThisAdditionalTextLoaded(CAT, CurrentSlot) then
+        ClearAdditionalText(CurrentSlot, true)
+        RequestAdditionalText(CAT, CurrentSlot)
+        while not HasThisAdditionalTextLoaded(CAT, CurrentSlot) do
+            Citizen.Wait(0)
+        end
+    end
+
+    playerID = PlayerId()
+    playerName = GetPlayerName(playerID)
+    playerPed = PlayerPedId()    
+
+    while true do
+        Wait(10)
+        if not DoesInteractionMenuExist then
             _menuPool = MenuPool.New()
             mainMenu = UIMenu.New(playerName, "~b~" .. GetLabelText("INPUT_INTERACTION_MENU"))
             _menuPool:Add(mainMenu)
@@ -171,31 +223,6 @@ Citizen.CreateThread(function()
         _menuPool:ProcessMenus()
         if IsControlJustPressed(1, 244) then
             mainMenu:Visible(not mainMenu:Visible())
-        end
-    end
-end)
-
-Citizen.CreateThread(function()
-    ClearPrints()
-    ClearAllHelpMessages()
-    RemoveNotification(GetCurrentNotification())
-
-    while true do
-        Wait(50)
-        
-        if DoesEntityExist(personalVeh) then
-            if GetEntityHealth(playerPed) == 0 then
-                Vehicles.Destroy(personalVeh)
-            else
-                if IsPedInVehicle(playerPed, personalVeh, true) then
-                    SetBlipDisplay(pvBlip, 0)
-                else
-                    vehicleC = GetEntityCoords(personalVeh, true)
-                    if DoesBlipExist(pvBlip) then
-                        SetBlipDisplay(pvBlip, 2)
-                    end
-                end
-            end
         end
     end
 end)
