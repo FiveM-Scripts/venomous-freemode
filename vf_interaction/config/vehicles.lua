@@ -3,6 +3,8 @@ DefaultVehicles = {
         "BALLER",
         "BANSHEE",
         "BATI",
+        "BATI2",
+        "casco",
         "BESTIAGTS",
         "FLASHGT",
         "FUROREGT",
@@ -33,4 +35,5 @@ DefaultVehicles = {
         "thruster",
         "viseris",
         "nero",
+        "terbyte"
     }
