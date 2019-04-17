@@ -15,6 +15,8 @@ local SpawnedEnemies = false
 DecorRegister("m_dispatch_entity", 2)
 
 local enemyGroup = AddRelationshipGroup("m_dispatch_enemygroup")
+SetRelationshipBetweenGroups(5, GetHashKey("m_dispatch_enemygroup"), GetHashKey("PLAYER"))
+SetRelationshipBetweenGroups(5, GetHashKey("PLAYER"), GetHashKey("m_dispatch_enemygroup"))
 
 local function CreateTargetVehicle(model, x, y, z, rot)
     local modelHash = tostring(model)
@@ -124,10 +126,10 @@ function MissionDispatch.Init()
         SetPedIntoVehicle(playerPed, missionVeh, -1)
         SetVehicleHasBeenOwnedByPlayer(missionVeh, true)
         SetMaxWantedLevel(0)
-
+        SetVehicleRadioEnabled(playerPed, false)
         SetModelAsNoLongerNeeded(vehicleHash)
 
-       -- TriggerMusicEvent("MP_MC_CMH_SILO_PREP_START")
+        TriggerMusicEvent("MP_MC_CMH_SILO_PREP_START")
         TriggerMusicEvent("MP_MC_CMH_ACTION")
         missionStage = 1
     end
