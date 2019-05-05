@@ -1,3 +1,5 @@
+inventoryItems = {}
+
 function generateSpawn()
 	math.randomseed(GetGameTimer())
     local keys = {}
@@ -65,3 +67,13 @@ AddEventHandler("vf_base:DisplayBankValue", function(value)
 	ShowHudComponentThisFrame(3)	
 	CancelEvent()
 end)
+
+RegisterNetEvent('vf_base:refresh_inventory')
+AddEventHandler('vf_base:refresh_inventory', function(array)
+    inventoryItems = array
+    GetInventory()
+end)
+
+function GetInventory()
+	return inventoryItems
+end
