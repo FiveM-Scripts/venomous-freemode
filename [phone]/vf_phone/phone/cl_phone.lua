@@ -26,26 +26,26 @@ Citizen.CreateThread(function()
             end
 
             local h, m = NetworkGetServerTime()
-            PushScaleformMovieFunction(Phone.Scaleform, "SET_TITLEBAR_TIME")
-            PushScaleformMovieFunctionParameterInt(h)
-            PushScaleformMovieFunctionParameterInt(m)
-            PopScaleformMovieFunctionVoid()
+            BeginScaleformMovieMethod(Phone.Scaleform, "SET_TITLEBAR_TIME")
+            ScaleformMovieMethodAddParamInt(h)
+            ScaleformMovieMethodAddParamInt(m)
+            EndScaleformMovieMethod()
 
-            PushScaleformMovieFunction(Phone.Scaleform, "SET_SLEEP_MODE")
-            PushScaleformMovieFunctionParameterBool(Phone.SleepMode)
-            PopScaleformMovieFunctionVoid()
+            BeginScaleformMovieMethod(Phone.Scaleform, "SET_SLEEP_MODE")
+            ScaleformMovieMethodAddParamBool(Phone.SleepMode)
+            EndScaleformMovieMethod()
 
-            PushScaleformMovieFunction(Phone.Scaleform, "SET_THEME")
-            PushScaleformMovieFunctionParameterInt(Phone.Theme)
-            PopScaleformMovieFunctionVoid()
+            BeginScaleformMovieMethod(Phone.Scaleform, "SET_THEME")
+            ScaleformMovieMethodAddParamInt(Phone.Theme)
+            EndScaleformMovieMethod()
 
-            PushScaleformMovieFunction(Phone.Scaleform, "SET_BACKGROUND_IMAGE")
-            PushScaleformMovieFunctionParameterInt(Phone.Wallpaper)
-            PopScaleformMovieFunctionVoid()
+            BeginScaleformMovieMethod(Phone.Scaleform, "SET_BACKGROUND_IMAGE")
+            ScaleformMovieMethodAddParamInt(Phone.Wallpaper)
+            EndScaleformMovieMethod()
 
-            PushScaleformMovieFunction(Phone.Scaleform, "SET_SIGNAL_STRENGTH")
-            PushScaleformMovieFunctionParameterInt(GetZoneScumminess(GetZoneAtCoords(GetEntityCoords(PlayerPedId()))))
-            PopScaleformMovieFunctionVoid()
+            BeginScaleformMovieMethod(Phone.Scaleform, "SET_SIGNAL_STRENGTH")
+            ScaleformMovieMethodAddParamInt(GetZoneScumminess(GetZoneAtCoords(GetEntityCoords(PlayerPedId()))))
+            EndScaleformMovieMethod()
 
             local renderID = GetMobilePhoneRenderId()
 			SetTextRenderId(renderId)
@@ -61,7 +61,7 @@ Citizen.CreateThread(function()
             Phone.Visible = true
             SetMobilePhonePosition()
             SetMobilePhoneScale(285.0)
-            CreateMobilePhone(0)
+            CreateMobilePhone()
         end
     end
 end)

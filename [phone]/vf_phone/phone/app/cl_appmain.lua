@@ -6,29 +6,33 @@ Citizen.CreateThread(function()
 
         if Phone.Visible and not Phone.InApp then
             for i = 0, 8 do
-                PushScaleformMovieFunction(Phone.Scaleform, "SET_DATA_SLOT")
-                PushScaleformMovieFunctionParameterInt(1)
-                PushScaleformMovieFunctionParameterInt(i)
+                BeginScaleformMovieMethod(Phone.Scaleform, "SET_DATA_SLOT")
+                ScaleformMovieMethodAddParamInt(1)
+                ScaleformMovieMethodAddParamInt(i)
                 if Apps[i + 1] and Apps[i + 1].Icon then
-                    PushScaleformMovieFunctionParameterInt(Apps[i + 1].Icon)
+                    ScaleformMovieMethodAddParamInt(Apps[i + 1].Icon)
                 else
-                    PushScaleformMovieFunctionParameterInt(3)
+                    ScaleformMovieMethodAddParamInt(3)
                 end
-                PopScaleformMovieFunctionVoid()
+                EndScaleformMovieMethod()
             end
 
-            PushScaleformMovieFunction(Phone.Scaleform, "DISPLAY_VIEW")
-            PushScaleformMovieFunctionParameterInt(1)
-            PushScaleformMovieFunctionParameterInt(selectedItem)
-            PopScaleformMovieFunctionVoid()
+            BeginScaleformMovieMethod(Phone.Scaleform, "DISPLAY_VIEW")
+            ScaleformMovieMethodAddParamInt(1)
+            ScaleformMovieMethodAddParamInt(selectedItem)
+            EndScaleformMovieMethod()
 
-            PushScaleformMovieFunction(Phone.Scaleform, "SET_HEADER")
+            BeginScaleformMovieMethod(Phone.Scaleform, "SET_HEADER")
             if Apps[selectedItem + 1] and Apps[selectedItem + 1].Name then
-                PushScaleformMovieFunctionParameterString(Apps[selectedItem + 1].Name)
+                BeginTextCommandScaleformString("STRING")
+                AddTextComponentString(Apps[selectedItem + 1].Name)
+                EndTextCommandScaleformString()
             else
-                PushScaleformMovieFunctionParameterString("")
+                BeginTextCommandScaleformString("STRING")
+                AddTextComponentString("")
+                EndTextCommandScaleformString()
             end
-            PopScaleformMovieFunctionVoid()
+            EndScaleformMovieMethod()
 
             local navigated = true
             if IsControlJustPressed(3, 172) then -- INPUT_CELLPHONE_UP (arrow up)

@@ -43,43 +43,48 @@ Citizen.CreateThread(function()
                     end
                 end
             else
-                PushScaleformMovieFunction(Phone.Scaleform, "SET_DATA_SLOT_EMPTY")
-                PushScaleformMovieFunctionParameterInt(_CurrentScreen.Type)
-                PopScaleformMovieFunctionVoid()
+                BeginScaleformMovieMethod(Phone.Scaleform, "SET_DATA_SLOT_EMPTY")
+                ScaleformMovieMethodAddParamInt(_CurrentScreen.Type)
+                EndScaleformMovieMethod()
 
-                local header
+                local header = ""
                 if _CurrentScreen.Header then
                     header = _CurrentScreen.Header
-                else
+                elseif _CurrentApp.Name then
                     header = _CurrentApp.Name
                 end
-                PushScaleformMovieFunction(Phone.Scaleform, "SET_HEADER")
-                PushScaleformMovieFunctionParameterString(header)
-                PopScaleformMovieFunctionVoid()
+                BeginScaleformMovieMethod(Phone.Scaleform, "SET_HEADER")
+                BeginTextCommandScaleformString("STRING")
+                AddTextComponentString(header)
+                EndTextCommandScaleformString()
+                EndScaleformMovieMethod()
 
                 for i, item in ipairs(_CurrentScreen.Items) do
-                    PushScaleformMovieFunction(Phone.Scaleform, "SET_DATA_SLOT")
-                    PushScaleformMovieFunctionParameterInt(_CurrentScreen.Type)
-                    PushScaleformMovieFunctionParameterInt(i - 1)
+                    BeginScaleformMovieMethod(Phone.Scaleform, "SET_DATA_SLOT")
+                    ScaleformMovieMethodAddParamInt(_CurrentScreen.Type)
+                    ScaleformMovieMethodAddParamInt(i - 1)
                     for _, data in ipairs(item.Data) do
                         if type(data) == "number" then
                             if math.type(data) == "integer" then
-                                PushScaleformMovieFunctionParameterInt(data)
+                                ScaleformMovieMethodAddParamInt(data)
                             else
-                                PushScaleformMovieFunctionParameterFloat(data)
+                                ScaleformMovieMethodAddParamFloat(data)
                             end
                         elseif type(data) == "string" then
-                            PushScaleformMovieFunctionParameterString(data)
+                            BeginTextCommandScaleformString("STRING")
+                            AddTextComponentString(data)
+                            EndTextCommandScaleformString()
                         elseif not data then
-                            PushScaleformMovieFunctionParameterInt()
+                            ScaleformMovieMethodAddParamInt()
                         end
                     end
-                    PopScaleformMovieFunctionVoid()
+                    EndScaleformMovieMethod()
                 end
             
-                PushScaleformMovieFunction(Phone.Scaleform, "DISPLAY_VIEW")
-                PushScaleformMovieFunctionParameterInt(_CurrentScreen.Type)
-                PushScaleformMovieFunctionParameterInt(_SelectedItem)
+                BeginScaleformMovieMethod(Phone.Scaleform, "DISPLAY_VIEW")
+                ScaleformMovieMethodAddParamInt(_CurrentScreen.Type)
+                ScaleformMovieMethodAddParamInt(_SelectedItem)
+                EndScaleformMovieMethod()
             
                 -- Fix _SelectedItem in case last item got removed while it was selected
                 if _SelectedItem > #_CurrentScreen.Items - 1 then
