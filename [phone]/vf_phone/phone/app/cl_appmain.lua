@@ -31,30 +31,31 @@ Citizen.CreateThread(function()
             PopScaleformMovieFunctionVoid()
 
             local navigated = true
-            if IsControlJustPressed(0, 300) then -- Up
+            if IsControlJustPressed(3, 172) then -- INPUT_CELLPHONE_UP (arrow up)
                 selectedItem = selectedItem - 3
                 if selectedItem < 0 then
                     selectedItem = 9 + selectedItem
                 end
-            elseif IsControlJustPressed(0, 299) then -- Down
+            elseif IsControlJustPressed(3, 173) then -- INPUT_CELLPHONE_DOWN (arrow down)
                 selectedItem = selectedItem + 3
                 if selectedItem > 8 then
                     selectedItem = selectedItem - 9
                 end
-            elseif IsControlJustPressed(0, 307) then -- Right
+            elseif IsControlJustPressed(3, 175) then -- INPUT_CELLPHONE_RIGHT (arrow right)
                 selectedItem = selectedItem + 1
                 if selectedItem > 8 then
                     selectedItem = 0
                 end
-            elseif IsControlJustPressed(0, 308) then -- Left
+            elseif IsControlJustPressed(3, 174) then -- INPUT_CELLPHONE_LEFT (arrow left)
                 selectedItem = selectedItem - 1
                 if selectedItem < 0 then
                     selectedItem = 8
                 end
             else
-                if IsControlJustPressed(0, 255) then -- Enter
+                if IsControlJustPressed(3, 176) then -- INPUT_CELLPHONE_SELECT (enter / lmb)
+                    Wait(0) -- Workaround to next app from registering enter press too
                     Apps.Start(selectedItem + 1)
-                elseif IsControlJustPressed(0, 202) then -- Back
+                elseif IsControlJustPressed(3, 177) then -- INPUT_CELLPHONE_CANCEL (backspace / esc / rmb)
                     Phone.Kill()
                 end
                 navigated = false

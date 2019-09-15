@@ -37,6 +37,7 @@ Citizen.CreateThread(function()
                             screenFound = true
                         end
                     end
+
                     if not screenFound then -- No existing screen found
                         Apps.Kill()
                     end
@@ -86,17 +87,17 @@ Citizen.CreateThread(function()
                 end
 
                 local navigated = true
-                if IsControlJustPressed(0, 300) then -- Up
+                if IsControlJustPressed(3, 172) then -- INPUT_CELLPHONE_UP (arrow up)
                     _SelectedItem = _SelectedItem - 1
                     if _SelectedItem < 0 then
                         _SelectedItem = #_CurrentScreen.Items - 1
                     end
-                elseif IsControlJustPressed(0, 299) then -- Down
+                elseif IsControlJustPressed(3, 173) then -- INPUT_CELLPHONE_DOWN (arrow down)
                     _SelectedItem = _SelectedItem + 1
                     if _SelectedItem > #_CurrentScreen.Items - 1 then
                         _SelectedItem = 0
                     end
-                elseif IsControlJustPressed(0, 255) then -- Enter
+                elseif IsControlJustPressed(3, 176) then -- INPUT_CELLPHONE_SELECT (enter / lmb)
                     if #_CurrentScreen.Items > 0 then
                         local item = _CurrentScreen.Items[_SelectedItem + 1]
                         if type(item.Callback) == "table" then -- Action (Should be function, but it isn't because it's a table according to Msgpack!)
@@ -107,7 +108,7 @@ Citizen.CreateThread(function()
                             _SelectedItem = 0
                         end
                     end
-                elseif IsControlJustPressed(0, 202) then -- Back
+                elseif IsControlJustPressed(3, 177) then -- INPUT_CELLPHONE_CANCEL (backspace / esc / rmb)
                     if #_PrevScreens > 0 then
                         _CurrentScreen = _PrevScreens[#_PrevScreens]
                         table.remove(_PrevScreens)
@@ -120,6 +121,7 @@ Citizen.CreateThread(function()
                 else
                     navigated = false
                 end
+
                 if navigated then
                     PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Default")
                 end
