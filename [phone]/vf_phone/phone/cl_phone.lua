@@ -25,7 +25,7 @@ Citizen.CreateThread(function()
                 Phone.VisibleAnimProgress = Phone.VisibleAnimProgress - 3
             end
 
-            local h, m = NetworkGetServerTime()
+            local h, m = GetClockHours(), GetClockMinutes()
             BeginScaleformMovieMethod(Phone.Scaleform, "SET_TITLEBAR_TIME")
             ScaleformMovieMethodAddParamInt(h)
             ScaleformMovieMethodAddParamInt(m)
