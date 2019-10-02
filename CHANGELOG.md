@@ -1,4 +1,17 @@
 # Changelog    
+## 1.1.2
+
+### Added
+- Added Smoke on the Water, a pharmacy that sells prescription marijuana for "medical" purposes.
+- Added convenience stores where players can purchase items.
+
+## Fixed
+vf_phone: Display current time instead of network time
+vf_baseapps: Change new text message text
+vf_baseapps: Show no players item in playerlist
+vf_phone: Change no items screen deletion logic
+vf_phone: Update native names
+vf_phone: Control & Pause Menu related improvements
 
 ## 1.1.1
 
