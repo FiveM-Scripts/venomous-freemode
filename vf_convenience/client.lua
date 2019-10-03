@@ -201,7 +201,7 @@ Citizen.CreateThread(function()
           speech = "SHOP_NO_COPS_END"
         end
       else
-        speech ""
+        speech = ""
       end
     end
 
