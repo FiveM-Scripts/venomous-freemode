@@ -17,8 +17,6 @@ Citizen.CreateThread(function()
 			Wait(800)
 		end
 
-		print('Ready to start the intro')
-
 		if not IsPlayerSwitchInProgress() then
 			SetEntityVisible(PlayerPedId(), false, 0)
 			SwitchOutPlayer(PlayerPedId(), 32, 1)
