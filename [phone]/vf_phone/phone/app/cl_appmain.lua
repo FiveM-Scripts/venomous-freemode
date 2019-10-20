@@ -6,55 +6,60 @@ Citizen.CreateThread(function()
 
         if Phone.Visible and not Phone.InApp then
             for i = 0, 8 do
-                PushScaleformMovieFunction(Phone.Scaleform, "SET_DATA_SLOT")
-                PushScaleformMovieFunctionParameterInt(1)
-                PushScaleformMovieFunctionParameterInt(i)
+                BeginScaleformMovieMethod(Phone.Scaleform, "SET_DATA_SLOT")
+                ScaleformMovieMethodAddParamInt(1)
+                ScaleformMovieMethodAddParamInt(i)
                 if Apps[i + 1] and Apps[i + 1].Icon then
-                    PushScaleformMovieFunctionParameterInt(Apps[i + 1].Icon)
+                    ScaleformMovieMethodAddParamInt(Apps[i + 1].Icon)
                 else
-                    PushScaleformMovieFunctionParameterInt(3)
+                    ScaleformMovieMethodAddParamInt(3)
                 end
-                PopScaleformMovieFunctionVoid()
+                EndScaleformMovieMethod()
             end
 
-            PushScaleformMovieFunction(Phone.Scaleform, "DISPLAY_VIEW")
-            PushScaleformMovieFunctionParameterInt(1)
-            PushScaleformMovieFunctionParameterInt(selectedItem)
-            PopScaleformMovieFunctionVoid()
+            BeginScaleformMovieMethod(Phone.Scaleform, "DISPLAY_VIEW")
+            ScaleformMovieMethodAddParamInt(1)
+            ScaleformMovieMethodAddParamInt(selectedItem)
+            EndScaleformMovieMethod()
 
-            PushScaleformMovieFunction(Phone.Scaleform, "SET_HEADER")
+            BeginScaleformMovieMethod(Phone.Scaleform, "SET_HEADER")
             if Apps[selectedItem + 1] and Apps[selectedItem + 1].Name then
-                PushScaleformMovieFunctionParameterString(Apps[selectedItem + 1].Name)
+                BeginTextCommandScaleformString("STRING")
+                AddTextComponentString(Apps[selectedItem + 1].Name)
+                EndTextCommandScaleformString()
             else
-                PushScaleformMovieFunctionParameterString("")
+                BeginTextCommandScaleformString("STRING")
+                AddTextComponentString("")
+                EndTextCommandScaleformString()
             end
-            PopScaleformMovieFunctionVoid()
+            EndScaleformMovieMethod()
 
             local navigated = true
-            if IsControlJustPressed(0, 300) then -- Up
+            if IsControlJustPressed(3, 172) then -- INPUT_CELLPHONE_UP (arrow up)
                 selectedItem = selectedItem - 3
                 if selectedItem < 0 then
                     selectedItem = 9 + selectedItem
                 end
-            elseif IsControlJustPressed(0, 299) then -- Down
+            elseif IsControlJustPressed(3, 173) then -- INPUT_CELLPHONE_DOWN (arrow down)
                 selectedItem = selectedItem + 3
                 if selectedItem > 8 then
                     selectedItem = selectedItem - 9
                 end
-            elseif IsControlJustPressed(0, 307) then -- Right
+            elseif IsControlJustPressed(3, 175) then -- INPUT_CELLPHONE_RIGHT (arrow right)
                 selectedItem = selectedItem + 1
                 if selectedItem > 8 then
                     selectedItem = 0
                 end
-            elseif IsControlJustPressed(0, 308) then -- Left
+            elseif IsControlJustPressed(3, 174) then -- INPUT_CELLPHONE_LEFT (arrow left)
                 selectedItem = selectedItem - 1
                 if selectedItem < 0 then
                     selectedItem = 8
                 end
             else
-                if IsControlJustPressed(0, 255) then -- Enter
+                if IsControlJustPressed(3, 176) then -- INPUT_CELLPHONE_SELECT (enter / lmb)
+                    Wait(0) -- Workaround to next app from registering enter press too
                     Apps.Start(selectedItem + 1)
-                elseif IsControlJustPressed(0, 202) then -- Back
+                elseif IsControlJustPressed(3, 177) then -- INPUT_CELLPHONE_CANCEL (backspace / esc / rmb)
                     Phone.Kill()
                 end
                 navigated = false

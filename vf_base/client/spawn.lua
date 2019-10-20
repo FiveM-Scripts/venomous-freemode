@@ -11,25 +11,20 @@ AddEventHandler('onClientGameTypeStart', function()
     exports.spawnmanager:forceRespawn()
 end)
 
-AddEventHandler('playerSpawned', function(spawn)
-	while not NetworkIsGameInProgress() and IsPlayerPlaying(PlayerId()) do
-		Wait(200)
-	end
-
-	while not IsScreenFadedIn() do
-		Wait(200)
-	end
-end)
-
 Citizen.CreateThread(function()
 	if not firstTick then		
+		while not NetworkIsGameInProgress() and IsPlayerPlaying(PlayerId()) do
+			Wait(800)
+		end
+
 		if not IsPlayerSwitchInProgress() then
 			SetEntityVisible(PlayerPedId(), false, 0)
 			SwitchOutPlayer(PlayerPedId(), 32, 1)
 			Wait(3000)
 
 			showLoadingPromt("PCARD_JOIN_GAME", 8000)
-			Wait(1000)		
+			Wait(1000)
+			TriggerServerEvent("vf_base:GetInventory")	
 		end
 
 		GetRandomMultiPlayerModel("mp_m_freemode_01")

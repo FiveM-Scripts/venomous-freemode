@@ -37,48 +37,54 @@ Citizen.CreateThread(function()
                             screenFound = true
                         end
                     end
+
                     if not screenFound then -- No existing screen found
                         Apps.Kill()
                     end
                 end
             else
-                PushScaleformMovieFunction(Phone.Scaleform, "SET_DATA_SLOT_EMPTY")
-                PushScaleformMovieFunctionParameterInt(_CurrentScreen.Type)
-                PopScaleformMovieFunctionVoid()
+                BeginScaleformMovieMethod(Phone.Scaleform, "SET_DATA_SLOT_EMPTY")
+                ScaleformMovieMethodAddParamInt(_CurrentScreen.Type)
+                EndScaleformMovieMethod()
 
-                local header
+                local header = ""
                 if _CurrentScreen.Header then
                     header = _CurrentScreen.Header
-                else
+                elseif _CurrentApp.Name then
                     header = _CurrentApp.Name
                 end
-                PushScaleformMovieFunction(Phone.Scaleform, "SET_HEADER")
-                PushScaleformMovieFunctionParameterString(header)
-                PopScaleformMovieFunctionVoid()
+                BeginScaleformMovieMethod(Phone.Scaleform, "SET_HEADER")
+                BeginTextCommandScaleformString("STRING")
+                AddTextComponentString(header)
+                EndTextCommandScaleformString()
+                EndScaleformMovieMethod()
 
                 for i, item in ipairs(_CurrentScreen.Items) do
-                    PushScaleformMovieFunction(Phone.Scaleform, "SET_DATA_SLOT")
-                    PushScaleformMovieFunctionParameterInt(_CurrentScreen.Type)
-                    PushScaleformMovieFunctionParameterInt(i - 1)
+                    BeginScaleformMovieMethod(Phone.Scaleform, "SET_DATA_SLOT")
+                    ScaleformMovieMethodAddParamInt(_CurrentScreen.Type)
+                    ScaleformMovieMethodAddParamInt(i - 1)
                     for _, data in ipairs(item.Data) do
                         if type(data) == "number" then
                             if math.type(data) == "integer" then
-                                PushScaleformMovieFunctionParameterInt(data)
+                                ScaleformMovieMethodAddParamInt(data)
                             else
-                                PushScaleformMovieFunctionParameterFloat(data)
+                                ScaleformMovieMethodAddParamFloat(data)
                             end
                         elseif type(data) == "string" then
-                            PushScaleformMovieFunctionParameterString(data)
+                            BeginTextCommandScaleformString("STRING")
+                            AddTextComponentString(data)
+                            EndTextCommandScaleformString()
                         elseif not data then
-                            PushScaleformMovieFunctionParameterInt()
+                            ScaleformMovieMethodAddParamInt()
                         end
                     end
-                    PopScaleformMovieFunctionVoid()
+                    EndScaleformMovieMethod()
                 end
             
-                PushScaleformMovieFunction(Phone.Scaleform, "DISPLAY_VIEW")
-                PushScaleformMovieFunctionParameterInt(_CurrentScreen.Type)
-                PushScaleformMovieFunctionParameterInt(_SelectedItem)
+                BeginScaleformMovieMethod(Phone.Scaleform, "DISPLAY_VIEW")
+                ScaleformMovieMethodAddParamInt(_CurrentScreen.Type)
+                ScaleformMovieMethodAddParamInt(_SelectedItem)
+                EndScaleformMovieMethod()
             
                 -- Fix _SelectedItem in case last item got removed while it was selected
                 if _SelectedItem > #_CurrentScreen.Items - 1 then
@@ -86,17 +92,17 @@ Citizen.CreateThread(function()
                 end
 
                 local navigated = true
-                if IsControlJustPressed(0, 300) then -- Up
+                if IsControlJustPressed(3, 172) then -- INPUT_CELLPHONE_UP (arrow up)
                     _SelectedItem = _SelectedItem - 1
                     if _SelectedItem < 0 then
                         _SelectedItem = #_CurrentScreen.Items - 1
                     end
-                elseif IsControlJustPressed(0, 299) then -- Down
+                elseif IsControlJustPressed(3, 173) then -- INPUT_CELLPHONE_DOWN (arrow down)
                     _SelectedItem = _SelectedItem + 1
                     if _SelectedItem > #_CurrentScreen.Items - 1 then
                         _SelectedItem = 0
                     end
-                elseif IsControlJustPressed(0, 255) then -- Enter
+                elseif IsControlJustPressed(3, 176) then -- INPUT_CELLPHONE_SELECT (enter / lmb)
                     if #_CurrentScreen.Items > 0 then
                         local item = _CurrentScreen.Items[_SelectedItem + 1]
                         if type(item.Callback) == "table" then -- Action (Should be function, but it isn't because it's a table according to Msgpack!)
@@ -107,7 +113,7 @@ Citizen.CreateThread(function()
                             _SelectedItem = 0
                         end
                     end
-                elseif IsControlJustPressed(0, 202) then -- Back
+                elseif IsControlJustPressed(3, 177) then -- INPUT_CELLPHONE_CANCEL (backspace / esc / rmb)
                     if #_PrevScreens > 0 then
                         _CurrentScreen = _PrevScreens[#_PrevScreens]
                         table.remove(_PrevScreens)
@@ -120,6 +126,7 @@ Citizen.CreateThread(function()
                 else
                     navigated = false
                 end
+
                 if navigated then
                     PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Default")
                 end
