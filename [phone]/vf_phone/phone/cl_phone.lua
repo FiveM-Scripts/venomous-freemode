@@ -22,7 +22,7 @@ Citizen.CreateThread(function()
             SetMobilePhonePosition(58.0, -21.0 - Phone.VisibleAnimProgress, -60.0)
             SetMobilePhoneRotation(-90.0, Phone.VisibleAnimProgress * 4.0, 0.0)
             if Phone.VisibleAnimProgress > 0 then
-                Phone.VisibleAnimProgress = Phone.VisibleAnimProgress - 3
+                Phone.VisibleAnimProgress = Phone.VisibleAnimProgress - 2
             end
 
             local h, m = GetClockHours(), GetClockMinutes()
