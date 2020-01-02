@@ -65,7 +65,7 @@ Citizen.CreateThread(function()
                 navigated = false
             end
             if navigated then
-                PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Default")
+                PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Michael")
             end
         end
     end
