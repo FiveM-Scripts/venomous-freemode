@@ -4,13 +4,20 @@ local _MessagesScreen
 
 RegisterNetEvent("vf_phone:ReceivePlayerMessage")
 AddEventHandler("vf_phone:ReceivePlayerMessage", function(playerServer, message)
+    while _Phone.GetSignalStrength() == 0 do
+        Wait(1000)
+    end
+
     local player = GetPlayerFromServerId(playerServer)
+
     local headshotId = RegisterPedheadshot(GetPlayerPed(player))
     while not IsPedheadshotReady(headshotId) do
         Wait(0)
     end
+
     local headshotTxd = GetPedheadshotTxdString(headshotId)
     local playerName = GetPlayerName(player)
+
     if not _Phone.IsSleepModeOn() then
         SetNotificationTextEntry("STRING")
         AddTextComponentString(message)
@@ -21,6 +28,7 @@ AddEventHandler("vf_phone:ReceivePlayerMessage", function(playerServer, message)
 
     local h, m = NetworkGetServerTime()
     local _MessageDetailScreen = _App.CreateCustomScreen(7, message.SenderName)
+
     _MessagesScreen.AddCustomScreenItem({h, m, -1, playerName, message}, _MessageDetailScreen)
     _MessageDetailScreen.AddCustomCallbackItem({playerName, message, headshotTxd})
 end)
@@ -29,5 +37,6 @@ AddEventHandler("vf_baseapps:setup", function(phone)
     _Phone = phone
     _App = _Phone.CreateApp(GetLabelText("CELL_1"), 4)
     _MessagesScreen = _App.CreateCustomScreen(6)
+
     _App.SetLauncherScreen(_MessagesScreen)
 end)

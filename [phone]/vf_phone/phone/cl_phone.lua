@@ -44,7 +44,10 @@ Citizen.CreateThread(function()
             ScaleformMovieMethodAddParamInt(Phone.Wallpaper)
             EndScaleformMovieMethod()
 
-            Phone.SignalStrength = GetZoneScumminess(GetZoneAtCoords(GetEntityCoords(PlayerPedId())))
+            local playerCoords = GetEntityCoords(PlayerPedId())
+            local zone = GetZoneAtCoords(playerCoords.x, playerCoords.y, playerCoords.z)
+
+            Phone.SignalStrength = 5 - GetZoneScumminess(zone)
 
             BeginScaleformMovieMethod(Phone.Scaleform, "SET_SIGNAL_STRENGTH")
             ScaleformMovieMethodAddParamInt(Phone.SignalStrength)
