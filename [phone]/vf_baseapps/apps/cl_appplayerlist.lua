@@ -34,7 +34,7 @@ AddEventHandler("vf_baseapps:setup", function(phone)
                             SetNotificationTextEntry("STRING")
                             if phone.GetSignalStrength() == 0 then
                                 AddTextComponentString("~r~No signal!")
-                            elseif #message == 0 then
+                            elseif #message:gsub("%s+", "") == 0 then
                                 AddTextComponentString("~r~Message too short!")
                             else
                                 TriggerServerEvent("vf_phone:SendPlayerMessage", GetPlayerServerId(i), message)
