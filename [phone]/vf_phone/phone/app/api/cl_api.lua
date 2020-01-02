@@ -28,7 +28,7 @@ function GetAppIcons()
 end
 ]]--
 
-Citizen.CreateThread(function()
+--[[Citizen.CreateThread(function()
     while not NetworkIsGameInProgress() or not IsPlayerPlaying(PlayerId()) do
         Wait(1)
     end
@@ -40,4 +40,25 @@ Citizen.CreateThread(function()
         end
     end
     TriggerEvent("vf_phone:setup", phone)
+end)]]--
+
+RegisterNetEvent("vf_phone:requestAccess")
+AddEventHandler("vf_phone:requestAccess", function(id, cb)
+    if type(id) == "string" and type(cb) == "table" then
+        local phone = {}
+        phone.IsSleepModeOn = function() return Phone.SleepMode end
+        phone.CreateApp = function(name, icon)
+            if type(name) == "string" and type(icon) == "number" then
+                return App.CreateApp(id, name, icon)
+            end
+        end
+
+        for i=#Apps, 1, -1 do
+            if Apps[i].Id == id then
+                table.remove(Apps, i)
+            end
+        end
+
+        cb(phone)
+    end
 end)

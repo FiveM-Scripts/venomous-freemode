@@ -136,7 +136,7 @@ local _Settings = {
     }
 }
 
-AddEventHandler("vf_phone:setup", function(phone)
+TriggerEvent("vf_phone:requestAccess", "vf_phone:settings", function(phone)
     local app = phone.CreateApp(GetLabelText("CELL_16"), 24)
     local mainScreen = app.CreateListScreen()
     app.SetLauncherScreen(mainScreen)

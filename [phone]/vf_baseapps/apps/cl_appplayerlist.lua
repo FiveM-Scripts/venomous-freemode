@@ -1,7 +1,7 @@
 local _App
 local _PlayerListScreen
 
-AddEventHandler("vf_phone:setup", function(phone)
+AddEventHandler("vf_baseapps:setup", function(phone)
     _App = phone.CreateApp(GetLabelText("CELL_35"), 11)
     _PlayerListScreen = _App.CreateListScreen()
     _App.SetLauncherScreen(_PlayerListScreen)

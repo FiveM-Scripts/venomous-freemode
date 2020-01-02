@@ -25,7 +25,7 @@ AddEventHandler("vf_phone:ReceivePlayerMessage", function(playerServer, message)
     _MessageDetailScreen.AddCustomCallbackItem({playerName, message, headshotTxd})
 end)
 
-AddEventHandler("vf_phone:setup", function(phone)
+AddEventHandler("vf_baseapps:setup", function(phone)
     _Phone = phone
     _App = _Phone.CreateApp(GetLabelText("CELL_1"), 4)
     _MessagesScreen = _App.CreateCustomScreen(6)

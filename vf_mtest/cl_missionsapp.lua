@@ -1,4 +1,4 @@
-AddEventHandler("vf_phone:setup", function(phone)
+TriggerEvent("vf_phone:requestAccess", "vf_mtest", function(phone)
     local app = phone.CreateApp(GetLabelText("CELL_37"), 14)
     local missionScreen = app.CreateListScreen()
     app.SetLauncherScreen(missionScreen)

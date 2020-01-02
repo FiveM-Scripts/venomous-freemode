@@ -4,3 +4,7 @@ AddEventHandler("vf_baseapps:setDebugStatus", function(status)
 end)
 
 TriggerServerEvent("vf_baseapps:requestDebugStatus")
+
+TriggerEvent("vf_phone:requestAccess", "vf_baseapps", function(phone)
+    TriggerEvent("vf_baseapps:setup", phone)
+end)
