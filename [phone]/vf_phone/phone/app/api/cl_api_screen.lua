@@ -32,7 +32,7 @@ function Screen.RemoveScreen(app, screen)
 end
 
 function Screen.CreateListScreen(app, header)
-    local screen = _CreateBaseScreen(app, header, 13)
+    local screen = _CreateBaseScreen(app, header, 22)
     screen.AddCallbackItem = function(name, icon, callback)
         if _CheckListItemCreatable(name, icon) then
             return Item.AddCallbackItem(app.Screens[screen.GetID()], {icon or 0, name}, callback)

@@ -54,9 +54,7 @@ Citizen.CreateThread(function()
                     header = _CurrentApp.Name
                 end
                 BeginScaleformMovieMethod(Phone.Scaleform, "SET_HEADER")
-                BeginTextCommandScaleformString("STRING")
-                AddTextComponentString(header)
-                EndTextCommandScaleformString()
+                ScaleformMovieMethodAddParamPlayerNameString(header)
                 EndScaleformMovieMethod()
 
                 for i, item in ipairs(_CurrentScreen.Items) do
@@ -71,9 +69,7 @@ Citizen.CreateThread(function()
                                 ScaleformMovieMethodAddParamFloat(data)
                             end
                         elseif type(data) == "string" then
-                            BeginTextCommandScaleformString("STRING")
-                            AddTextComponentString(data)
-                            EndTextCommandScaleformString()
+                            ScaleformMovieMethodAddParamPlayerNameString("~l~" .. data)
                         elseif not data then
                             ScaleformMovieMethodAddParamInt()
                         end
