@@ -47,6 +47,7 @@ AddEventHandler("vf_phone:requestAccess", function(id, cb)
     if type(id) == "string" and type(cb) == "table" then
         local phone = {}
         phone.IsSleepModeOn = function() return Phone.SleepMode end
+        phone.GetSignalStrength = function() return Phone.SignalStrength end
         phone.CreateApp = function(name, icon)
             if type(name) == "string" and type(icon) == "number" then
                 return App.CreateApp(id, name, icon)

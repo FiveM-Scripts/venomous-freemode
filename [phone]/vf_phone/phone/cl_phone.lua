@@ -3,6 +3,7 @@ Phone = {
     Theme = GetResourceKvpInt("vf_phone_theme"),
     Wallpaper = GetResourceKvpInt("vf_phone_wallpaper"),
     SleepMode = false,
+    SignalStrength = 0,
     InApp = false
 }
 
@@ -43,8 +44,10 @@ Citizen.CreateThread(function()
             ScaleformMovieMethodAddParamInt(Phone.Wallpaper)
             EndScaleformMovieMethod()
 
+            Phone.SignalStrength = GetZoneScumminess(GetZoneAtCoords(GetEntityCoords(PlayerPedId())))
+
             BeginScaleformMovieMethod(Phone.Scaleform, "SET_SIGNAL_STRENGTH")
-            ScaleformMovieMethodAddParamInt(GetZoneScumminess(GetZoneAtCoords(GetEntityCoords(PlayerPedId()))))
+            ScaleformMovieMethodAddParamInt(Phone.SignalStrength)
             EndScaleformMovieMethod()
 
             local renderID = GetMobilePhoneRenderId()
