@@ -47,18 +47,18 @@ p, h1 {
 
 .box {
 	border-radius: 2px;
-	background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9));
+	background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9));
 }
 
 #infobox {
 	display: none;
-	height: 70%;
-	width: 75%;
+	height: 76%;
+	width: 65%;
 	position: absolute;
-	top: 0;
+	top: 15px;
 	bottom: 20%;
-	left: 0;
-	right: 10%;
+	left: 32%;
+	right: 5%;
 	margin: auto;
 }
 
@@ -67,18 +67,16 @@ p, h1 {
 	margin: 2%;
 }
 
-#infobox > #infoheader {
-	font-size: 2vw;
-}
+#infobox > #infoheader { font-size: 2vw; }
 
 #infobox > #infotext {
 	float: left;
 	padding-right: 43%;
-	font-size: 1.3vw;
+	font-size: 1.0vw;
 }
 
 #infobox > #infoimg {
-	height: 92%;
+	height: 95%;
 	width: 40%;
 	position: absolute;
 	right: 0;
@@ -86,17 +84,21 @@ p, h1 {
 }
 
 #loadingbox {
-	height: 4%;
+	top: 94%;
+	border-radius: 2px;
+	background: rgba(0, 0, 0, 0.7) !important;	
+	height: 32px;
 	width: 10%;
 	position: absolute;
 	bottom: 5%;
+	left: 87%;
 	right: 5%;
 }
 
 #loadingbox * {
 	position: relative;
-	top: 50%;
-	transform: translateY(-50%);
+	top: 13%;
+	transform: translateY(-1%);
 	margin: auto;
 }
 
@@ -104,7 +106,7 @@ p, h1 {
 	float: left;
 	margin-left: 8%;
 	vertical-align: text-top;
-	font-size: 1vw;
+	font-size: 18px;
 }
 
 #loadingimg {
