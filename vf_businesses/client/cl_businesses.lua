@@ -13,3 +13,4 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with vf_businesses in the file "LICENSE". If not, see <http://www.gnu.org/licenses/>.
 ]]
+
