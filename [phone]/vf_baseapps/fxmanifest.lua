@@ -1,6 +1,8 @@
 fx_version "adamant"
 game "gta5"
 
+dependency "vf_phone"
+
 client_scripts {
     "apps/cl_appplayerlist.lua",
     "apps/cl_appmessages.lua",
