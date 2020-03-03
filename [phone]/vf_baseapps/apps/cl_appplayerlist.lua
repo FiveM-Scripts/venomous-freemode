@@ -1,16 +1,16 @@
-local _App
-local _PlayerListScreen
+local App
+local PlayerListScreen
 
 AddEventHandler("vf_baseapps:setup", function(phone)
-    _App = phone.CreateApp(GetLabelText("CELL_35"), 14)
-    _PlayerListScreen = _App.CreateListScreen()
-    _App.SetLauncherScreen(_PlayerListScreen)
+    App = phone.CreateApp(GetLabelText("CELL_35"), 14)
+    PlayerListScreen = App.CreateListScreen()
+    App.SetLauncherScreen(PlayerListScreen)
 
     Citizen.CreateThread(function()
-        local loopApp = _App
-        while _App == loopApp do -- Destroy this loop (and coroutine) on vf_phone restart
+        local loopApp = App
+        while App == loopApp do -- Destroy this loop (and coroutine) on vf_phone restart
             Wait(1000)
-            _PlayerListScreen.ClearItems()
+            PlayerListScreen.ClearItems()
 
             local hasPlayers = false
             for _, player in pairs(GetActivePlayers()) do
@@ -18,9 +18,9 @@ AddEventHandler("vf_baseapps:setup", function(phone)
                     hasPlayers = true
 
                     local playerName = GetPlayerName(player)
-                    local playerOptionsMenu = _App.CreateListScreen(playerName)
+                    local playerOptionsMenu = App.CreateListScreen(playerName)
 
-                    _PlayerListScreen.AddScreenItem(playerName, 0, playerOptionsMenu)
+                    PlayerListScreen.AddScreenItem(playerName, 0, playerOptionsMenu)
                     playerOptionsMenu.AddCallbackItem(GetLabelText("collision_uy2q01"), 0, function()
                         Wait(0) -- Stop from instantly confirming message
 
@@ -48,7 +48,7 @@ AddEventHandler("vf_baseapps:setup", function(phone)
             end
 
             if not hasPlayers then
-                _PlayerListScreen.AddCallbackItem("No Players")
+                PlayerListScreen.AddCallbackItem("No Players")
             end
         end
     end)
