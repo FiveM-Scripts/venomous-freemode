@@ -14,19 +14,34 @@ You should have received a copy of the GNU Affero General Public License
 along with vf_businesses in the file "LICENSE". If not, see <http://www.gnu.org/licenses/>.
 ]]
 
-RegisterServerEvent('vf_business:LoadPlayer')
-AddEventHandler('vf_ammunation:LoadPlayer', function()
-	local src = source
-
-	TriggerEvent('vf_base:FindPlayer', src, function(user)
-		local Parameters = {['license'] = user.license}
-
-		exports.ghmattimysql:scalar("SELECT license FROM vf_business WHERE license = @license", Parameters, function(result)
-			if result then
-				exports.ghmattimysql:execute("SELECT * FROM vf_business WHERE license = @license", Parameters, function(data)
-					TriggerClientEvent('vf_business:GetData', src, data)
-				end)
+Citizen.CreateThread(function()
+	while true do
+		Wait(400)
+		playerPed = PlayerPedId()
+		coords = GetEntityCoords(playerPed, true)
+		
+		if coords then
+			if Business.IsPlayerNearOffice(coords) then
+				NearOffice = true
+			else
+				NearOffice = false
 			end
-		end)
-	end)
+		end
+	end
+end)
+
+Citizen.CreateThread(function()
+	Business.CreateBlips()
+    while true do
+        Wait(1)
+        if coords then
+        	Business.CreateMarker(coords)
+
+        	if NearOffice then
+        		if IsControlJustPressed(1, 38) then
+        			print('Please let me in?')
+        		end
+            end
+        end
+    end
 end)
