@@ -15,7 +15,7 @@ along with vf_businesses in the file "LICENSE". If not, see <http://www.gnu.org/
 ]]
 
 RegisterServerEvent('vf_business:LoadPlayer')
-AddEventHandler('vf_ammunation:LoadPlayer', function()
+AddEventHandler('vf_business:LoadPlayer', function()
 	local src = source
 
 	TriggerEvent('vf_base:FindPlayer', src, function(user)

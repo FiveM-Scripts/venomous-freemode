@@ -39,8 +39,19 @@ Citizen.CreateThread(function()
 
         	if NearOffice then
         		if IsControlJustPressed(1, 38) then
-        			print('Please let me in?')
+        			oldPos = coords
+        			Business.Enter(Enterx, Entery, Enterz, OfficeIpl)
         		end
+            end
+
+            if Business.IsPlayerNearExit() then
+            	if not IsScreenFadingOut() then
+            		DoScreenFadeOut(200)
+            		Wait(400)
+            		SetEntityCoords(playerPed, oldPos.x, oldPos.y, oldPos.z-1.0)
+            		Wait(400)
+            		DoScreenFadeIn(700)
+            	end
             end
         end
     end

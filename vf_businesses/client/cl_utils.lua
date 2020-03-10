@@ -42,6 +42,13 @@ function Business.CreateBlips()
 	end
 end
 
+function Business.LoadInterior(interiorID)
+	ActivateInteriorEntitySet(interiorID, "office_chairs")
+	ActivateInteriorEntitySet(interiorID, "office_booze")
+
+	RefreshInterior(interiorID)
+end
+
 function Business.SetCompanyName(name)
 	local model = GetHashKey("ex_prop_ex_office_text")
 	banner = RequestScaleformMovie("ORGANISATION_NAME")
@@ -77,9 +84,38 @@ function Business.IsPlayerNearOffice(coords)
 	for k,v in pairs(Config.Locations) do
 		local ix, iy, iz = table.unpack(v["blip"])
 		if GetDistanceBetweenCoords(coords.x, coords.y, coords.z, ix, iy, iz, true) < 2.0 then
+			OfficeIpl = v["ipl"]
+			Enterx, Entery, Enterz = table.unpack(v["spawnin"])
 			return true
 		end
 	end
+end
+
+function Business.IsPlayerNearExit()
+	for k,v in pairs(Config.Locations) do
+		local ix, iy, iz = table.unpack(v["spawnout"])
+		if GetDistanceBetweenCoords(coords.x, coords.y, coords.z, ix, iy, iz, true) < 2.0 then
+			return true
+		end
+	end
+end
+
+function Business.Enter(x, y, z, ipl)
+	DoScreenFadeOut(500)
+
+	RequestIpl(ipl)
+	while not IsIplActive(ipl) do
+		Wait(10)
+	end
+
+	interiorID = GetInteriorAtCoords(x, y, z)
+	Business.LoadInterior(interiorID)
+	Wait(2000)
+	renderID = Business.SetCompanyName("Hello")
+
+    SetEntityCoordsNoOffset(PlayerPedId(), x, y, z)
+    Wait(2000)
+    DoScreenFadeIn(700)
 end
 
 RegisterNetEvent('vf_businesses:GetData')

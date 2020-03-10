@@ -1,7 +1,7 @@
 fx_version 'adamant'
 
 game 'gta5'
-dependency 'ghmattimysql'
+dependency 'vf_base'
 
 client_scripts {
     'config.lua',
