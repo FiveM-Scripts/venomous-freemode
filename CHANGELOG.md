@@ -3,9 +3,9 @@
 ## 1.1.3
 
 ## Fixed
-vf_baseapps and vf_mtest not showing apps initially
-Refactor some code in various resources
-Added manifest files
+- vf_baseapps and vf_mtest not showing apps initially
+- Refactor some code in various resources
+- Added manifest files
 
 ## 1.1.2
 
