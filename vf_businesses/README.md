@@ -1,2 +1,0 @@
-# vf_businesses
-
