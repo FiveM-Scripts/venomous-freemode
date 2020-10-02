@@ -1,3 +1,21 @@
+--[[
+            vf_phone
+            Copyright (C) 2018-2020  FiveM-Scripts
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program in the file "LICENSE".  If not, see <http://www.gnu.org/licenses/>.
+]]
+
 Screen = {}
 
 local function _CheckListItemCreatable(name, icon)
@@ -32,7 +50,7 @@ function Screen.RemoveScreen(app, screen)
 end
 
 function Screen.CreateListScreen(app, header)
-    local screen = _CreateBaseScreen(app, header, 13)
+    local screen = _CreateBaseScreen(app, header, 22)
     screen.AddCallbackItem = function(name, icon, callback)
         if _CheckListItemCreatable(name, icon) then
             return Item.AddCallbackItem(app.Screens[screen.GetID()], {icon or 0, name}, callback)

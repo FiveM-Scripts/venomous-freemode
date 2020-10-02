@@ -1,4 +1,22 @@
 --[[
+            vf_phone
+            Copyright (C) 2018-2020  FiveM-Scripts
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program in the file "LICENSE".  If not, see <http://www.gnu.org/licenses/>.
+]]
+
+--[[
 function GetAppIcons()
     return {
         ["APP_CAMERA"] = 1,
@@ -28,7 +46,7 @@ function GetAppIcons()
 end
 ]]--
 
-Citizen.CreateThread(function()
+--[[Citizen.CreateThread(function()
     while not NetworkIsGameInProgress() or not IsPlayerPlaying(PlayerId()) do
         Wait(1)
     end
@@ -40,4 +58,26 @@ Citizen.CreateThread(function()
         end
     end
     TriggerEvent("vf_phone:setup", phone)
+end)]]--
+
+RegisterNetEvent("vf_phone:requestAccess")
+AddEventHandler("vf_phone:requestAccess", function(id, cb)
+    if type(id) == "string" and type(cb) == "table" then
+        local phone = {}
+        phone.IsSleepModeOn = function() return Phone.SleepMode end
+        phone.GetSignalStrength = function() return Phone.SignalStrength end
+        phone.CreateApp = function(name, icon)
+            if type(name) == "string" and type(icon) == "number" then
+                return App.CreateApp(id, name, icon)
+            end
+        end
+
+        for i=#Apps, 1, -1 do
+            if Apps[i].Id == id then
+                table.remove(Apps, i)
+            end
+        end
+
+        cb(phone)
+    end
 end)

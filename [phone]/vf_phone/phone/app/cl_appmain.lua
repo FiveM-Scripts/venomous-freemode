@@ -1,4 +1,22 @@
-local selectedItem = 4
+--[[
+            vf_phone
+            Copyright (C) 2018-2020  FiveM-Scripts
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program in the file "LICENSE".  If not, see <http://www.gnu.org/licenses/>.
+]]
+
+local SelectedItem = 4
 
 Citizen.CreateThread(function()
     while true do
@@ -19,13 +37,13 @@ Citizen.CreateThread(function()
 
             BeginScaleformMovieMethod(Phone.Scaleform, "DISPLAY_VIEW")
             ScaleformMovieMethodAddParamInt(1)
-            ScaleformMovieMethodAddParamInt(selectedItem)
+            ScaleformMovieMethodAddParamInt(SelectedItem)
             EndScaleformMovieMethod()
 
             BeginScaleformMovieMethod(Phone.Scaleform, "SET_HEADER")
-            if Apps[selectedItem + 1] and Apps[selectedItem + 1].Name then
+            if Apps[SelectedItem + 1] and Apps[SelectedItem + 1].Name then
                 BeginTextCommandScaleformString("STRING")
-                AddTextComponentString(Apps[selectedItem + 1].Name)
+                AddTextComponentString(Apps[SelectedItem + 1].Name)
                 EndTextCommandScaleformString()
             else
                 BeginTextCommandScaleformString("STRING")
@@ -36,36 +54,36 @@ Citizen.CreateThread(function()
 
             local navigated = true
             if IsControlJustPressed(3, 172) then -- INPUT_CELLPHONE_UP (arrow up)
-                selectedItem = selectedItem - 3
-                if selectedItem < 0 then
-                    selectedItem = 9 + selectedItem
+                SelectedItem = SelectedItem - 3
+                if SelectedItem < 0 then
+                    SelectedItem = 9 + SelectedItem
                 end
             elseif IsControlJustPressed(3, 173) then -- INPUT_CELLPHONE_DOWN (arrow down)
-                selectedItem = selectedItem + 3
-                if selectedItem > 8 then
-                    selectedItem = selectedItem - 9
+                SelectedItem = SelectedItem + 3
+                if SelectedItem > 8 then
+                    SelectedItem = SelectedItem - 9
                 end
             elseif IsControlJustPressed(3, 175) then -- INPUT_CELLPHONE_RIGHT (arrow right)
-                selectedItem = selectedItem + 1
-                if selectedItem > 8 then
-                    selectedItem = 0
+                SelectedItem = SelectedItem + 1
+                if SelectedItem > 8 then
+                    SelectedItem = 0
                 end
             elseif IsControlJustPressed(3, 174) then -- INPUT_CELLPHONE_LEFT (arrow left)
-                selectedItem = selectedItem - 1
-                if selectedItem < 0 then
-                    selectedItem = 8
+                SelectedItem = SelectedItem - 1
+                if SelectedItem < 0 then
+                    SelectedItem = 8
                 end
             else
                 if IsControlJustPressed(3, 176) then -- INPUT_CELLPHONE_SELECT (enter / lmb)
                     Wait(0) -- Workaround to next app from registering enter press too
-                    Apps.Start(selectedItem + 1)
+                    Apps.Start(SelectedItem + 1)
                 elseif IsControlJustPressed(3, 177) then -- INPUT_CELLPHONE_CANCEL (backspace / esc / rmb)
                     Phone.Kill()
                 end
                 navigated = false
             end
             if navigated then
-                PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Default")
+                PlaySoundFrontend(-1, "Menu_Navigate", "Phone_SoundSet_Michael")
             end
         end
     end

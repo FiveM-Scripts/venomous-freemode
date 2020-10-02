@@ -1,26 +1,26 @@
-local _App
-local _PlayerListScreen
+local App
+local PlayerListScreen
 
-AddEventHandler("vf_phone:setup", function(phone)
-    _App = phone.CreateApp(GetLabelText("CELL_35"), 11)
-    _PlayerListScreen = _App.CreateListScreen()
-    _App.SetLauncherScreen(_PlayerListScreen)
+AddEventHandler("vf_baseapps:setup", function(phone)
+    App = phone.CreateApp(GetLabelText("CELL_35"), 14)
+    PlayerListScreen = App.CreateListScreen()
+    App.SetLauncherScreen(PlayerListScreen)
 
     Citizen.CreateThread(function()
-        local loopApp = _App
-        while _App == loopApp do -- Destroy this loop (and coroutine) on vf_phone restart
+        local loopApp = App
+        while App == loopApp do -- Destroy this loop (and coroutine) on vf_phone restart
             Wait(1000)
-            _PlayerListScreen.ClearItems()
+            PlayerListScreen.ClearItems()
 
             local hasPlayers = false
-            for i = 0, 255 do
-                if NetworkIsPlayerConnected(i) and (IsDebug or i ~= PlayerId()) then
+            for _, player in pairs(GetActivePlayers()) do
+                if IsDebug or player ~= PlayerId() then
                     hasPlayers = true
 
-                    local playerName = GetPlayerName(i)
-                    local playerOptionsMenu = _App.CreateListScreen(playerName)
+                    local playerName = GetPlayerName(player)
+                    local playerOptionsMenu = App.CreateListScreen(playerName)
 
-                    _PlayerListScreen.AddScreenItem(playerName, 0, playerOptionsMenu)
+                    PlayerListScreen.AddScreenItem(playerName, 0, playerOptionsMenu)
                     playerOptionsMenu.AddCallbackItem(GetLabelText("collision_uy2q01"), 0, function()
                         Wait(0) -- Stop from instantly confirming message
 
@@ -32,7 +32,9 @@ AddEventHandler("vf_phone:setup", function(phone)
                         if UpdateOnscreenKeyboard() == 1 then
                             local message = GetOnscreenKeyboardResult()
                             SetNotificationTextEntry("STRING")
-                            if #message == 0 then
+                            if phone.GetSignalStrength() == 0 then
+                                AddTextComponentString("~r~No signal!")
+                            elseif #message:gsub("%s+", "") == 0 then
                                 AddTextComponentString("~r~Message too short!")
                             else
                                 TriggerServerEvent("vf_phone:SendPlayerMessage", GetPlayerServerId(i), message)
@@ -46,7 +48,7 @@ AddEventHandler("vf_phone:setup", function(phone)
             end
 
             if not hasPlayers then
-                _PlayerListScreen.AddCallbackItem("No Players")
+                PlayerListScreen.AddCallbackItem("No Players")
             end
         end
     end)

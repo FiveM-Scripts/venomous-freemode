@@ -1,8 +1,27 @@
+--[[
+            vf_phone
+            Copyright (C) 2018-2020  FiveM-Scripts
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program in the file "LICENSE".  If not, see <http://www.gnu.org/licenses/>.
+]]
+
 Phone = {
     Visible = false,
     Theme = GetResourceKvpInt("vf_phone_theme"),
     Wallpaper = GetResourceKvpInt("vf_phone_wallpaper"),
     SleepMode = false,
+    SignalStrength = 0,
     InApp = false
 }
 
@@ -22,7 +41,7 @@ Citizen.CreateThread(function()
             SetMobilePhonePosition(58.0, -21.0 - Phone.VisibleAnimProgress, -60.0)
             SetMobilePhoneRotation(-90.0, Phone.VisibleAnimProgress * 4.0, 0.0)
             if Phone.VisibleAnimProgress > 0 then
-                Phone.VisibleAnimProgress = Phone.VisibleAnimProgress - 3
+                Phone.VisibleAnimProgress = Phone.VisibleAnimProgress - 2
             end
 
             local h, m = GetClockHours(), GetClockMinutes()
@@ -43,8 +62,13 @@ Citizen.CreateThread(function()
             ScaleformMovieMethodAddParamInt(Phone.Wallpaper)
             EndScaleformMovieMethod()
 
+            local playerCoords = GetEntityCoords(PlayerPedId())
+            local zone = GetZoneAtCoords(playerCoords.x, playerCoords.y, playerCoords.z)
+
+            Phone.SignalStrength = 5 - GetZoneScumminess(zone)
+
             BeginScaleformMovieMethod(Phone.Scaleform, "SET_SIGNAL_STRENGTH")
-            ScaleformMovieMethodAddParamInt(GetZoneScumminess(GetZoneAtCoords(GetEntityCoords(PlayerPedId()))))
+            ScaleformMovieMethodAddParamInt(Phone.SignalStrength)
             EndScaleformMovieMethod()
 
             local renderID = GetMobilePhoneRenderId()
