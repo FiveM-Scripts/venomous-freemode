@@ -119,7 +119,8 @@ AddEventHandler('vf_base:FindPlayer', function(source, callback)
 			pLicense = v
 		end
 	end
-
+	local pLicense = Player:GetLicense(src)
+	local identifier = Player:GetIdentifier(src)
 	local Parameters = {['license'] = pLicense}
 
 	exports.ghmattimysql:scalar("SELECT license FROM venomous_players WHERE license = @license", Parameters, function(result)
