@@ -10,4 +10,4 @@ This allows you to remove parts at your will, add custom extensions without conf
 All notable changes to this project will be documented [here](CHANGELOG.md).
 
 ## Documentation
-Documentation for the gamemode can be found [here](https://venomous.fivem-scripts.org)
+Documentation for the gamemode can be found [here](https://fivem-scripts.github.io/venomous-docs)
